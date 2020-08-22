@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:post/views/newPost/newPostView.dart';
 import 'package:post/views/notifications/noificationsView.dart';
 
@@ -17,6 +18,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
+        .copyWith(systemNavigationBarColor: Colors.white));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Post",
