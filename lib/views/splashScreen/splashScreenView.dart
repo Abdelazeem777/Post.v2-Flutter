@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
               scale: 2.5,
             ),
           ),
-          flightShuttleBuilder: (flightContext, animation, flightDirection,
+          /* flightShuttleBuilder: (flightContext, animation, flightDirection,
               fromHeroContext, toHeroContext) {
             final Hero toHero = toHeroContext.widget;
             return ScaleTransition(
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               child: toHero.child,
             );
-          },
+          }, */
         ),
       ),
     );
