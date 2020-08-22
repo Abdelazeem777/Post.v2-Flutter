@@ -37,40 +37,32 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        body: Container(
-      alignment: Alignment.center,
-      child: Hero(
-        tag: 'logo',
-        child: AnimatedContainer(
-          height: SizeConfig.safeBlockVertical * 24,
-          width: SizeConfig.blockSizeHorizontal * 70,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0.0, 2.0), //(x,y)
-                  blurRadius: 5.0,
-                ),
-              ]),
-          duration: Duration(milliseconds: 500),
-          child: Image.asset("lib/assets/post_main_logo.png"),
-        ),
-        flightShuttleBuilder: (flightContext, animation, flightDirection,
-            fromHeroContext, toHeroContext) {
-          final Hero toHero = toHeroContext.widget;
-          return ScaleTransition(
-            scale: animation.drive(
-              Tween<double>(begin: 0.0, end: 1.0).chain(
-                CurveTween(
-                  curve: Interval(0.0, 1.0, curve: PeakQuadraticCurve()),
+      body: Center(
+        child: Hero(
+          tag: 'logo',
+          child: Material(
+            type: MaterialType.transparency,
+            child: Image.asset(
+              "lib/assets/post_main_logo.png",
+              scale: 2.5,
+            ),
+          ),
+          flightShuttleBuilder: (flightContext, animation, flightDirection,
+              fromHeroContext, toHeroContext) {
+            final Hero toHero = toHeroContext.widget;
+            return ScaleTransition(
+              scale: animation.drive(
+                Tween<double>(begin: 0.0, end: 1.0).chain(
+                  CurveTween(
+                    curve: Interval(0.0, 1.0, curve: PeakQuadraticCurve()),
+                  ),
                 ),
               ),
-            ),
-            child: toHero.child,
-          );
-        },
+              child: toHero.child,
+            );
+          },
+        ),
       ),
-    ));
+    );
   }
 }
