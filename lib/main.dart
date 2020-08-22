@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:post/views/newPost/newPostView.dart';
-import 'package:post/views/notifications/noificationsView.dart';
+import 'package:post/views/notificationsPage/noificationsPageView.dart';
 
 import 'views/home/homeView.dart';
 import 'views/login/loginView.dart';

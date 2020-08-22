@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:post/utils/logoAnimation.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/utils/preferences.dart';
 import 'package:post/views/home/homeView.dart';
@@ -72,13 +72,5 @@ class _SplashScreenState extends State<SplashScreen> {
         },
       ),
     ));
-  }
-}
-
-class PeakQuadraticCurve extends Curve {
-  @override
-  double transform(double t) {
-    assert(t >= 0.0 && t <= 1.0);
-    return -15 * pow(t, 2) + 15 * t + 1;
   }
 }
