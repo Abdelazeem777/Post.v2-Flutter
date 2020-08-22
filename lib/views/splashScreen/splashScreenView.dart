@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:post/resource/values/sizeConfig.dart';
+import 'package:post/utils/sizeConfig.dart';
 import 'package:post/utils/preferences.dart';
 import 'package:post/views/home/homeView.dart';
 import 'package:post/views/login/loginView.dart';
@@ -37,27 +37,40 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        body: Hero(
-      tag: 'logo',
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(48),
-        child: Image.asset("lib/assets/post_main_logo.png"),
-      ),
-      flightShuttleBuilder: (flightContext, animation, flightDirection,
-          fromHeroContext, toHeroContext) {
-        final Hero toHero = toHeroContext.widget;
-        return ScaleTransition(
-          scale: animation.drive(
-            Tween<double>(begin: 0.0, end: 1.0).chain(
-              CurveTween(
-                curve: Interval(0.0, 1.0, curve: PeakQuadraticCurve()),
+        body: Container(
+      alignment: Alignment.center,
+      child: Hero(
+        tag: 'logo',
+        child: AnimatedContainer(
+          height: SizeConfig.safeBlockVertical * 24,
+          width: SizeConfig.blockSizeHorizontal * 70,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  offset: Offset(0.0, 2.0), //(x,y)
+                  blurRadius: 5.0,
+                ),
+              ]),
+          duration: Duration(milliseconds: 500),
+          child: Image.asset("lib/assets/post_main_logo.png"),
+        ),
+        flightShuttleBuilder: (flightContext, animation, flightDirection,
+            fromHeroContext, toHeroContext) {
+          final Hero toHero = toHeroContext.widget;
+          return ScaleTransition(
+            scale: animation.drive(
+              Tween<double>(begin: 0.0, end: 1.0).chain(
+                CurveTween(
+                  curve: Interval(0.0, 1.0, curve: PeakQuadraticCurve()),
+                ),
               ),
             ),
-          ),
-          child: toHero.child,
-        );
-      },
+            child: toHero.child,
+          );
+        },
+      ),
     ));
   }
 }
