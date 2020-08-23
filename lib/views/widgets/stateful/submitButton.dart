@@ -32,7 +32,7 @@ class _SubmitButtonState extends State<SubmitButton> {
           16,
           SizeConfig.safeBlockVertical * 1.8,
         ),
-        width: widget.busy ? 50 : 130,
+        width: widget.busy ? 50 : 150,
         height: 50,
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class _SubmitButtonState extends State<SubmitButton> {
           children: [
             Text(
               this.widget.text,
-              style: TextStyle(color: Colors.white, fontSize: 15),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             Hero(
               tag: "submit",
@@ -78,8 +78,8 @@ class _SubmitButtonState extends State<SubmitButton> {
             ),
           ],
         ),
-        onPressed: () =>
-            setState(() => widget.busy = !widget.busy) //widget.onPressed,
+        onPressed: () => setState(() => widget.busy =
+            !widget.busy) //TODO: Don't foget it should be--> widget.onPressed,
 
         );
   }

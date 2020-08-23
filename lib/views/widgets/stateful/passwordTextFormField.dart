@@ -7,11 +7,13 @@ import 'package:post/utils/validator.dart';
 class PasswordTextFormField extends StatefulWidget {
   final FocusNode currentFocusNode, nextFocusNode;
   final TextEditingController currentController;
+  EdgeInsetsGeometry margin;
 
   PasswordTextFormField({
     @required this.currentFocusNode,
     @required this.nextFocusNode,
     @required this.currentController,
+    this.margin,
   });
 
   @override
@@ -25,12 +27,13 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
   Widget build(BuildContext context) {
     return Container(
       height: 48,
-      margin: EdgeInsets.fromLTRB(
-        16,
-        SizeConfig.safeBlockVertical * 3,
-        16,
-        SizeConfig.safeBlockVertical * 1.5,
-      ),
+      margin: this.widget.margin ??
+          EdgeInsets.fromLTRB(
+            16,
+            SizeConfig.safeBlockVertical * 3,
+            16,
+            SizeConfig.safeBlockVertical * 1.5,
+          ),
       child: TextFormField(
         focusNode: this.widget.currentFocusNode,
         controller: this.widget.currentController,

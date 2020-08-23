@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
 
   _createDoNotHaveAccount() {
     return Container(
-      margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 2.5),
+      margin: EdgeInsets.all(SizeConfig.safeBlockVertical * 3),
       alignment: Alignment.center,
       child: InkWell(
         child: Text.rich(

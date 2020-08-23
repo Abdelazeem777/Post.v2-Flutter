@@ -6,4 +6,6 @@ class Validator {
   static validatePhoneNumber() {}
 
   static validateUserName() {}
+
+  static validateBirthDate() {}
 }

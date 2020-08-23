@@ -8,6 +8,7 @@ class EmailTextFormField extends MainTextFormField {
     @required FocusNode currentFocusNode,
     @required FocusNode nextFocusNode,
     @required TextEditingController currentController,
+    EdgeInsetsGeometry margin,
   }) : super(
           currentController: currentController,
           currentFocusNode: currentFocusNode,
@@ -20,5 +21,6 @@ class EmailTextFormField extends MainTextFormField {
           ),
           hintText: "Email Address",
           keyboardType: TextInputType.emailAddress,
+          margin: margin,
         );
 }

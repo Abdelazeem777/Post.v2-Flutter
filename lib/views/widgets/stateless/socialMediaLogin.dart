@@ -11,15 +11,15 @@ class SocialMediaLogin extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         IconButton(
-            iconSize: SizeConfig.safeBlockVertical * 10,
+            iconSize: SizeConfig.safeBlockVertical * 8,
             icon: Icon(
               FontAwesomeIcons.facebook,
               color: Color(0xff4267B2),
             ),
             onPressed: FaceBookLoginHelper.login),
         Container(
-          height: SizeConfig.safeBlockVertical * 10,
-          width: SizeConfig.safeBlockVertical * 10,
+          height: SizeConfig.safeBlockVertical * 8,
+          width: SizeConfig.safeBlockVertical * 8,
           decoration: BoxDecoration(shape: BoxShape.circle),
           child: InkWell(
               child: Image.asset(

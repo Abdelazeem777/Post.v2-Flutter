@@ -9,6 +9,7 @@ abstract class MainTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final Function(String) validator;
   final Icon icon;
+  EdgeInsetsGeometry margin;
 
   MainTextFormField({
     @required this.currentController,
@@ -18,13 +19,15 @@ abstract class MainTextFormField extends StatelessWidget {
     this.keyboardType,
     @required this.validator,
     @required this.icon,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 48,
-      margin: EdgeInsets.fromLTRB(16, SizeConfig.safeBlockVertical * 3, 16, 0),
+      margin: this.margin ??
+          EdgeInsets.fromLTRB(16, SizeConfig.safeBlockVertical * 3, 16, 0),
       child: TextFormField(
           focusNode: this.currentFocusNode,
           controller: this.currentController,
