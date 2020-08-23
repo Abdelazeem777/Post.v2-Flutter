@@ -13,9 +13,15 @@ class OrLineSeparator extends StatelessWidget {
             thickness: 2,
           ),
         ),
-        Text(
-          "or",
-          style: TextStyle(fontSize: 18),
+        Container(
+          padding: EdgeInsets.only(left: 8, right: 8),
+          color: Theme.of(context).canvasColor,
+          child: Text(
+            "OR",
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
         )
       ],
     );
