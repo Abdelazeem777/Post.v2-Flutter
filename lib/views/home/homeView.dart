@@ -1,5 +1,6 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/newPostPage/newPostPageView.dart';
@@ -15,8 +16,18 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int currentPage = 1;
-  bool isVisible = true;
+  int _currentPage = 1;
+  bool _isVisible = true;
+
+  ScrollController _scrollController;
+
+  @override
+  initState() {
+    super.initState();
+    _scrollController = new ScrollController();
+    _addListenerToScrollController();
+  }
+
   Widget _createAppBar() {
     return PreferredSize(
         child: Hero(
@@ -57,7 +68,7 @@ class _HomeState extends State<Home> {
                               color: Colors.white,
                               size: 24,
                             ),
-                            onPressed: goToNotificationPage),
+                            onPressed: _goToNotificationPage),
                       )
                     ],
                   ),
@@ -78,10 +89,10 @@ class _HomeState extends State<Home> {
       ),
       child: Center(
           child: <Widget>[
-        SearchTab(),
-        HomeTab(),
-        ProfileTab(),
-      ].elementAt(currentPage)),
+        SearchTab(_scrollController),
+        HomeTab(_scrollController),
+        ProfileTab(_scrollController),
+      ].elementAt(_currentPage)),
     );
   }
 
@@ -102,27 +113,35 @@ class _HomeState extends State<Home> {
           ),
           child: Icon(Icons.add),
         ),
-        onPressed: goToNewPostPage);
+        onPressed: _goToNewPostPage);
   }
 
   Widget _createBottomNavBar() {
-    return ConvexAppBar.builder(
-        itemBuilder: _CustomBuilder(
-          [
-            TabItem(icon: Icons.search, title: "Search", isIconBlend: true),
-            TabItem(icon: Icons.home, title: "Home"),
-            TabItem(icon: Icons.person, title: "Profile")
-          ],
-          AppColors.PRIMARY_COLOR,
-        ),
-        top: -32,
-        chipBuilder: _CustomChipBuilder(),
-        height: 56,
-        count: 3,
-        initialActiveIndex: 1,
-        backgroundColor: Theme.of(context).canvasColor,
-        curveSize: 70,
-        onTap: (int position) => setState(() => currentPage = position));
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _isVisible ? 56 : 0,
+      child: ListView(
+        children: [
+          ConvexAppBar.builder(
+            itemBuilder: _CustomBuilder(
+              [
+                TabItem(icon: Icons.search, title: "Search"),
+                TabItem(icon: Icons.home, title: "Home"),
+                TabItem(icon: Icons.person, title: "Profile")
+              ],
+              AppColors.PRIMARY_COLOR,
+            ),
+            top: -32,
+            height: 56,
+            count: 3,
+            initialActiveIndex: 1,
+            backgroundColor: Theme.of(context).canvasColor,
+            curveSize: 70,
+            onTap: (int position) => setState(() => _currentPage = position),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -137,10 +156,25 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void goToNotificationPage() =>
+  void _goToNotificationPage() =>
       Navigator.of(context).pushNamed(Notifications.routeName);
 
-  void goToNewPostPage() => Navigator.of(context).pushNamed(NewPost.routeName);
+  void _goToNewPostPage() => Navigator.of(context).pushNamed(NewPost.routeName);
+
+  void _addListenerToScrollController() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+              ScrollDirection.reverse &&
+          _isVisible)
+        _changeNavBarVisibilityState();
+      else if (_scrollController.position.userScrollDirection ==
+              ScrollDirection.forward &&
+          !_isVisible) _changeNavBarVisibilityState();
+    });
+  }
+
+  void _changeNavBarVisibilityState() =>
+      setState(() => _isVisible = !_isVisible);
 }
 
 class _CustomBuilder extends DelegateBuilder {
@@ -159,41 +193,41 @@ class _CustomBuilder extends DelegateBuilder {
         : navigationItem.icon;
     return Container(
       color: Colors.transparent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          active
-              ? Container(
-                  padding: EdgeInsets.all(13),
-                  margin: EdgeInsets.only(bottom: 4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: this._tabBackgroundColor,
-                  ),
-                  child: Icon(
-                    _icon,
-                    color: _color,
-                    size: 28,
-                  ))
-              : Icon(
-                  _icon,
-                  color: _color,
-                  size: 32,
-                ),
-          active
-              ? Text(navigationItem.title,
-                  style: TextStyle(color: this._tabBackgroundColor))
-              : SizedBox()
+      alignment: Alignment.center,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              active
+                  ? Container(
+                      padding: EdgeInsets.all(13),
+                      margin: EdgeInsets.only(bottom: 4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: this._tabBackgroundColor,
+                      ),
+                      child: Icon(
+                        _icon,
+                        color: _color,
+                        size: 28,
+                      ))
+                  : Icon(
+                      _icon,
+                      color: _color,
+                      size: 32,
+                    ),
+              active
+                  ? Text(navigationItem.title,
+                      style: TextStyle(color: this._tabBackgroundColor))
+                  : SizedBox()
+            ],
+          )
         ],
       ),
     );
-  }
-}
-
-class _CustomChipBuilder extends ChipBuilder {
-  @override
-  Widget build(BuildContext context, Widget child, int index, bool active) {
-    return child;
   }
 }
 
