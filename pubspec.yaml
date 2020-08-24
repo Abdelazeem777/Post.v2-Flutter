@@ -63,6 +63,7 @@ flutter:
     - lib/assets/post_logo_without_background.png
     - lib/assets/post_main_logo.png
     - lib/assets/google_icon.png
+    - lib/assets/test_profile.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
