@@ -20,10 +20,14 @@ class _HomeState extends State<Home> {
   bool _isVisible = true;
 
   ScrollController _scrollController;
+  TextEditingController _searchTextController;
+  FocusNode _searchFocusNode;
 
   @override
   initState() {
     super.initState();
+    _searchTextController = TextEditingController();
+    _searchFocusNode = FocusNode();
     _scrollController = new ScrollController();
     _addListenerToScrollController();
   }
@@ -149,10 +153,12 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: _createAppBar(),
       body: SafeArea(
+        top: false,
         child: _createHomePage(),
       ),
       bottomNavigationBar: _createBottomNavBar(),
       floatingActionButton: _createFloatingActionButton(),
+      extendBodyBehindAppBar: true,
     );
   }
 
