@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
-import 'package:post/views/widgets/stateful/userProfileAvatar.dart';
+import 'package:post/views/widgets/stateless/userProfileAvatar.dart';
 
 class NewPost extends StatefulWidget {
   static const String routeName = '/NewPost';
@@ -22,28 +22,35 @@ class _NewPostState extends State<NewPost> {
       iconTheme: IconThemeData(color: AppColors.PRIMARY_COLOR),
       actions: [
         Container(
-            alignment: Alignment.center,
-            margin: EdgeInsets.fromLTRB(0, 12, 16, 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [AppColors.PRIMARY_COLOR, AppColors.SECONDARY_COLOR],
-              ),
+          alignment: Alignment.center,
+          margin: EdgeInsets.fromLTRB(0, 12, 16, 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [AppColors.PRIMARY_COLOR, AppColors.SECONDARY_COLOR],
             ),
-            child: RaisedButton(
-                elevation: 0,
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                child: SizedBox(
-                  height: 17,
-                  child: Image.asset(
-                    "lib/assets/post_logo_without_background.png",
+          ),
+          child: Hero(
+            tag: "newPost",
+            child: Material(
+              type: MaterialType.transparency,
+              child: RaisedButton(
+                  elevation: 0,
+                  color: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80.0)),
+                  child: SizedBox(
+                    height: 17,
+                    child: Image.asset(
+                      "lib/assets/post_logo_without_background.png",
+                    ),
                   ),
-                ),
-                onPressed: () {}))
+                  onPressed: () {}),
+            ),
+          ),
+        )
       ],
     );
   }
