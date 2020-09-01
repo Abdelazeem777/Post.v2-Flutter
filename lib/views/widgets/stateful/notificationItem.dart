@@ -7,6 +7,8 @@ import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/iconHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
 
+import 'UserProfilePicture.dart';
+
 class NotificationItem extends StatefulWidget {
   final UserNotification _notification;
   NotificationItem(this._notification);
@@ -22,7 +24,7 @@ class _NotificationItemState extends State<NotificationItem> {
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
         color: this.widget._notification.seen
             ? Theme.of(context).canvasColor
-            : Colors.green[50],
+            : Color(0x77afe782),
         child: Row(
           children: [
             _createNotificationUserProfileAndIcon(),
@@ -42,21 +44,9 @@ class _NotificationItemState extends State<NotificationItem> {
               borderRadius: BorderRadius.circular(50),
               border: Border.all(color: AppColors.SECONDARY_COLOR, width: .5),
             ),
-            child: ClipOval(
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                useOldImageOnUrlChange: true,
-                imageUrl: this.widget._notification.fromUserProfilePicURL,
-                placeholder: (context, url) => Container(
-                  color: Colors.green[100],
-                  child: Icon(
-                    Icons.person,
-                    size: SizeConfig.blockSizeVertical * 8,
-                    color: Theme.of(context).canvasColor,
-                  ),
-                ),
-              ),
-            ),
+            child: UserProfilePicture(
+                imageURL: this.widget._notification.fromUserProfilePicURL,
+                active: false),
           ),
           _createNotificationIcon(
               notificationType: this.widget._notification.notificationType,
@@ -79,27 +69,51 @@ class _NotificationItemState extends State<NotificationItem> {
 
   Widget _createNotificationText() {
     return Container(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-      child: Text.rich(
-        TextSpan(children: [
-          TextSpan(
-            text: this.widget._notification.fromUser + "\n",
+      padding: EdgeInsets.only(left: 16, right: 16, top: 0, bottom: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            this.widget._notification.fromUser,
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
-          TextSpan(
-              text: this.widget._notification.notificationType.toString() +
-                  " your post\n"),
-          TextSpan(
-              text: DateTimeFormatHandler.getTime(
-                  this.widget._notification.dateTime),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: AppColors.PRIMARY_COLOR,
-              )),
-        ]),
+          Text(
+            _notificationTextBasedOnType(
+                this.widget._notification.notificationType),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Text(
+                DateTimeFormatHandler.getTime(
+                    this.widget._notification.dateTime),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.PRIMARY_COLOR,
+                )),
+          ),
+        ],
       ),
     );
+  }
+
+  String _notificationTextBasedOnType(NotificationType notificationType) {
+    switch (notificationType) {
+      case NotificationType.React:
+        return "Reacted to your post";
+        break;
+      case NotificationType.Comment:
+        return "Commented into your post";
+        break;
+      case NotificationType.Share:
+        return "Shared your post";
+        break;
+      case NotificationType.Follow:
+        return "Started following you";
+        break;
+      default:
+        throw Exception("undefined notification type");
+    }
   }
 }
