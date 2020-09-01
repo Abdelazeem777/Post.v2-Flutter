@@ -2,8 +2,8 @@ enum NotificationType { React, Comment, Share, Follow }
 enum ReactType { Like, Love, Happy, Sad, Angry, none }
 
 class UserNotification {
-  int notificationId;
-  int fromUserId;
+  int notificationID;
+  int fromUserID;
   String fromUser;
   String fromUserProfilePicURL;
   String notificationContent;
@@ -13,8 +13,8 @@ class UserNotification {
   bool seen;
 
   UserNotification(
-      {this.notificationId,
-      this.fromUserId,
+      {this.notificationID,
+      this.fromUserID,
       this.fromUser,
       this.fromUserProfilePicURL = "defaultProfileAvatar",
       this.notificationContent,
@@ -24,8 +24,8 @@ class UserNotification {
       this.seen = false});
 
   UserNotification.fromJson(Map<String, dynamic> json) {
-    notificationId = json['notificationId'];
-    fromUserId = json['fromUserId'];
+    notificationID = json['notificationID'];
+    fromUserID = json['fromUserID'];
     fromUser = json['fromUser'];
     fromUserProfilePicURL = json['fromUserProfilePicURL'];
     notificationContent = json['notificationContent'];
@@ -37,8 +37,8 @@ class UserNotification {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['notificationId'] = this.notificationId;
-    data['fromUserId'] = this.fromUserId;
+    data['notificationID'] = this.notificationID;
+    data['fromUserID'] = this.fromUserID;
     data['fromUser'] = this.fromUser;
     data['fromUserProfilePicURL'] = this.fromUserProfilePicURL;
     data['notificationContent'] = this.notificationContent;

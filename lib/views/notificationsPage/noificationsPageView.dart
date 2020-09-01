@@ -14,43 +14,60 @@ class _NotificationsState extends State<Notifications> {
   @override
   void initState() {
     super.initState();
+    //test data
     _notificationsList = [
       UserNotification(
-          notificationId: 1,
-          fromUserId: 3,
+          notificationID: 1,
+          fromUserID: 3,
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Like,
           dateTime: DateTime.now(),
           fromUserProfilePicURL:
-              "https://homepages.cae.wisc.edu/~ece533/images/cat.png",
+              "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
           seen: true),
       UserNotification(
-          notificationId: 1,
-          fromUserId: 3,
+          notificationID: 1,
+          fromUserID: 3,
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Love,
           dateTime: DateTime.now(),
           fromUserProfilePicURL:
-              "https://homepages.cae.wisc.edu/~ece533/images/cat.png",
+              "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
           seen: false),
       UserNotification(
-          notificationId: 1,
-          fromUserId: 3,
+          notificationID: 1,
+          fromUserID: 3,
+          fromUser: "Abdelazeem Kuratem",
+          notificationContent: "react love your post",
+          notificationType: NotificationType.Follow,
+          reactType: ReactType.none,
+          dateTime: DateTime.now()),
+      UserNotification(
+          notificationID: 1,
+          fromUserID: 3,
+          fromUser: "Abdelazeem Kuratem",
+          notificationContent: "react love your post",
+          notificationType: NotificationType.Share,
+          reactType: ReactType.none,
+          dateTime: DateTime.now()),
+      UserNotification(
+          notificationID: 1,
+          fromUserID: 3,
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Angry,
           dateTime: DateTime.now(),
           fromUserProfilePicURL:
-              "https://homepages.cae.wisc.edu/~ece533/images/cat.png",
+              "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
           seen: false),
       UserNotification(
-          notificationId: 1,
-          fromUserId: 3,
+          notificationID: 1,
+          fromUserID: 3,
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
@@ -58,20 +75,20 @@ class _NotificationsState extends State<Notifications> {
           dateTime: DateTime.now(),
           seen: true),
       UserNotification(
-          notificationId: 1,
-          fromUserId: 3,
+          notificationID: 1,
+          fromUserID: 3,
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Happy,
           dateTime: DateTime.now()),
       UserNotification(
-          notificationId: 1,
-          fromUserId: 3,
+          notificationID: 1,
+          fromUserID: 3,
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
-          notificationType: NotificationType.React,
-          reactType: ReactType.Like,
+          notificationType: NotificationType.Comment,
+          reactType: ReactType.none,
           dateTime: DateTime.now()),
     ];
   }
