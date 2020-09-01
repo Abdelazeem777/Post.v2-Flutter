@@ -84,20 +84,18 @@ class _HomeState extends State<Home> {
 
   Widget _createHomePage() {
     return Container(
-      decoration: BoxDecoration(
-        color: Color(0xffffffff),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
         ),
-      ),
-      child: Center(
-          child: <Widget>[
-        SearchTab(_scrollController),
-        HomeTab(_scrollController),
-        ProfileTab(_scrollController),
-      ].elementAt(_currentPage)),
-    );
+        child: [
+          SearchTab(_scrollController, _searchTextController, _searchFocusNode),
+          HomeTab(_scrollController),
+          ProfileTab(_scrollController),
+        ].elementAt(_currentPage));
   }
 
   Widget _createFloatingActionButton() {
@@ -141,7 +139,10 @@ class _HomeState extends State<Home> {
             initialActiveIndex: 1,
             backgroundColor: Theme.of(context).canvasColor,
             curveSize: 70,
-            onTap: (int position) => setState(() => _currentPage = position),
+            onTap: (int position) {
+              if (position == 0) _searchFocusNode.requestFocus();
+              setState(() => _currentPage = position);
+            },
           )
         ],
       ),
@@ -157,8 +158,10 @@ class _HomeState extends State<Home> {
         child: _createHomePage(),
       ),
       bottomNavigationBar: _createBottomNavBar(),
-      floatingActionButton: _createFloatingActionButton(),
+      floatingActionButton:
+          _currentPage == 1 ? _createFloatingActionButton() : null,
       extendBodyBehindAppBar: true,
+      resizeToAvoidBottomPadding: false,
     );
   }
 
