@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
-import 'package:post/views/widgets/stateful/UserProfilePicture.dart';
+import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 
 import 'followButton.dart';
 

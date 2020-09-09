@@ -1,11 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:post/utils/sizeConfig.dart';
 
 class UserProfilePicture extends StatefulWidget {
   String imageURL;
   bool active;
-  UserProfilePicture({this.imageURL, this.active});
+  UserProfilePicture({this.imageURL = "Default", this.active = false});
   @override
   _UserProfilePictureState createState() => _UserProfilePictureState();
 }

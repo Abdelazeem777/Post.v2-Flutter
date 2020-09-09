@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
-import 'package:post/views/widgets/stateless/userProfileAvatar.dart';
+import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 
 class NewPost extends StatefulWidget {
   static const String routeName = '/NewPost';
@@ -62,7 +62,14 @@ class _NewPostState extends State<NewPost> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserProfileAvatar(),
+            Container(
+              width: 50,
+              height: 50,
+              margin: EdgeInsets.all(16),
+              child: UserProfilePicture(
+                active: false,
+              ),
+            ),
             _createPostTextField(),
           ],
         ),
@@ -72,7 +79,8 @@ class _NewPostState extends State<NewPost> {
   }
 
   Widget _createPostTextField() {
-    return SizedBox(
+    return Container(
+      margin: EdgeInsets.only(top: 16),
       width: SizeConfig.safeBlockHorizontal * 75,
       child: TextField(
         maxLines: null,
