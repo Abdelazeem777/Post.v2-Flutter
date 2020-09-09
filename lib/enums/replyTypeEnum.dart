@@ -1,0 +1,4 @@
+enum ReplyType {
+  Text,
+  Image,
+}

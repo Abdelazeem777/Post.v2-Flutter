@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:post/models/userNotification.dart';
+import 'package:post/enums/notificationTypeEnum.dart';
+import 'package:post/enums/reactTypeEnum.dart';
 import 'package:post/style/appColors.dart';
 
 class IconHandler {

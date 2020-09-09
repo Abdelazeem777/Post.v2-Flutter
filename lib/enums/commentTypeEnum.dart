@@ -1,0 +1,4 @@
+enum CommentType {
+  Text,
+  Image,
+}

@@ -1,5 +1,5 @@
-enum NotificationType { React, Comment, Share, Follow }
-enum ReactType { Like, Love, Happy, Sad, Angry, none }
+import 'package:post/enums/notificationTypeEnum.dart';
+import 'package:post/enums/reactTypeEnum.dart';
 
 class UserNotification {
   int notificationID;
