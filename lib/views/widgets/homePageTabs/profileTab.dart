@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:post/models/post.dart';
+import 'package:post/models/user.dart';
+import 'package:post/style/appColors.dart';
+import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/widgets/stateful/postItem.dart';
+import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 
 class ProfileTab extends StatefulWidget {
   final ScrollController _scrollController;
@@ -9,81 +16,246 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  //for testing
+  List<Post> _postsList;
+  User _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    //for testing
+    _postsList = [
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+      Post(),
+    ];
+
+    _currentUser = User(
+        userName: "Abdelazeem Kuratem",
+        bio: "Mobile developer",
+        followersList: [1, 5, 6, 7, 2, 8, 9],
+        followingList: [
+          1,
+          5,
+          3,
+          8,
+          4,
+          44,
+          33,
+          98,
+          841,
+          12152151,
+          17,
+          262,
+          65,
+          62,
+          32,
+          456,
+          26
+        ],
+        postsList: [1, 3, 5, 12, 4, 8, 9, 6, 7],
+        userProfilePicURL:
+            "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4");
+  }
+
+  List<Widget> _createListViewChildren() {
+    List<Widget> listViewChildren = [];
+    listViewChildren.add(_createUserProfileTopBar());
+    _postsList.forEach((post) => listViewChildren.add(PostItem(post)));
+    return listViewChildren;
+  }
+
+  Widget _createUserProfileTopBar() {
+    return Container(
+      width: SizeConfig.screenWidth,
+      padding: EdgeInsets.only(left: 16, bottom: 16),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: AppColors.SECONDARY_COLOR))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _createCurrentUserProfilePicture(),
+              _createFollowersAndButtons() //at the right side
+            ],
+          ),
+          _createUserNameAndBio(),
+        ],
+      ),
+    );
+  }
+
+  Widget _createCurrentUserProfilePicture() {
+    return Container(
+      margin: EdgeInsets.only(right: 16),
+      width: SizeConfig.safeBlockHorizontal * 25,
+      height: SizeConfig.safeBlockHorizontal * 25,
+      child: UserProfilePicture(
+        imageURL: _currentUser.userProfilePicURL,
+      ),
+    );
+  }
+
+  Widget _createFollowersAndButtons() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        _createFollowersText(),
+        _createEditAndLogoutButtons(),
+      ],
+    );
+  }
+
+  Widget _createUserNameAndBio() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _currentUser.userName,
+          style: TextStyle(fontSize: 16),
+        ),
+        Text(
+          _currentUser.bio,
+          style: TextStyle(color: Colors.grey, fontSize: 13),
+        )
+      ],
+    );
+  }
+
+  ///    9        7         17
+  ///  Posts  Followers  Following
+  /// it create the design for the number of post, followers and following
+  Widget _createFollowersText() {
+    return Row(
+      children: [
+        _createText(
+            number: _currentUser.postsList.length,
+            text: "Posts",
+            onPressed: () {}),
+        _createText(
+            number: _currentUser.followersList.length,
+            text: "Followers",
+            onPressed: () {}),
+        _createText(
+            number: _currentUser.followingList.length,
+            text: "Following",
+            onPressed: () {})
+      ],
+    );
+  }
+
+  Widget _createText({int number, String text, Function() onPressed}) {
+    return Container(
+      margin: EdgeInsets.only(left: 8, right: 8),
+      child: InkWell(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              number.toString(),
+              style: TextStyle(fontSize: 16),
+            ),
+            Text(
+              text,
+              style: TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+          ],
+        ),
+        onTap: onPressed,
+      ),
+    );
+  }
+
+  Widget _createEditAndLogoutButtons() {
+    return Row(
+      children: [
+        Container(
+          margin: EdgeInsets.only(right: 16, top: 16, bottom: 16),
+          child: _createEditProfileButton(),
+        ),
+        _createLogoutButton(),
+      ],
+    );
+  }
+
+  Widget _createEditProfileButton() {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+          padding: EdgeInsets.fromLTRB(10, 8, 12, 8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: AppColors.PRIMARY_COLOR)),
+          child: Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 6),
+                child: Icon(
+                  Icons.edit,
+                  size: 21,
+                  color: AppColors.PRIMARY_COLOR,
+                ),
+              ),
+              Text(
+                'Edit Profile',
+                style: TextStyle(color: AppColors.PRIMARY_COLOR),
+              ),
+            ],
+          )),
+    );
+  }
+
+  Widget _createLogoutButton() {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(color: Colors.red)),
+        child: Icon(
+          FontAwesomeIcons.signOutAlt,
+          color: Colors.red,
+          size: 20,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(controller: this.widget._scrollController, children: [
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-      Text("profile"),
-    ]);
+    return ListView(
+      controller: this.widget._scrollController,
+      children: _createListViewChildren(),
+    );
   }
 }
