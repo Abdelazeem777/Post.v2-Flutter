@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:post/enums/replyTypeEnum.dart';
 
 import 'react.dart';
@@ -22,7 +23,7 @@ class Reply {
     replyID = json['replyID'];
     userID = json['userID'];
     replyContent = json['replyContent'];
-    replyType = json['replyType'];
+    replyType = EnumToString.fromString(ReplyType.values, json['replyType']);
     timestamp = json['timestamp'];
     if (json['reactsList'] != null) {
       reactsList = new List<React>();
@@ -37,7 +38,7 @@ class Reply {
     data['replyID'] = this.replyID;
     data['userID'] = this.userID;
     data['replyContent'] = this.replyContent;
-    data['replyType'] = this.replyType;
+    data['replyType'] = EnumToString.parse(this.replyType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
       data['reactsList'] = this.reactsList.map((v) => v.toJson()).toList();

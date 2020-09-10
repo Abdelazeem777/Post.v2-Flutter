@@ -31,6 +31,7 @@ dependencies:
   cached_network_image: ^2.2.0+1
   convex_bottom_bar: ^2.4.1
   flutter_launcher_icons: ^0.7.5
+  enum_to_string: ^1.0.9
   font_awesome_flutter: ^8.8.1
   http: ^0.12.2
   image_cropper: ^1.2.3

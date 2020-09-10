@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:post/enums/commentTypeEnum.dart';
 
 import 'react.dart';
@@ -25,7 +26,8 @@ class Comment {
     commentID = json['commentID'];
     userID = json['userID'];
     commentContent = json['commentContent'];
-    commentType = json['commentType'];
+    commentType =
+        EnumToString.fromString(CommentType.values, json['commentType']);
     timestamp = json['timestamp'];
     if (json['reactsList'] != null) {
       reactsList = new List<React>();
@@ -46,7 +48,7 @@ class Comment {
     data['commentID'] = this.commentID;
     data['userID'] = this.userID;
     data['commentContent'] = this.commentContent;
-    data['commentType'] = this.commentType;
+    data['commentType'] = EnumToString.parse(this.commentType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
       data['reactsList'] = this.reactsList.map((v) => v.toJson()).toList();

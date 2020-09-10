@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:post/enums/postTypeEnum.dart';
 import 'react.dart';
 import 'comment.dart';
@@ -26,7 +27,7 @@ class Post {
     postID = json['postID'];
     userID = json['userID'];
     postContent = json['postContent'];
-    postType = json['postType'];
+    postType = EnumToString.fromString(PostType.values, json['postType']);
     timestamp = json['timestamp'];
     if (json['reactsList'] != null) {
       reactsList = new List<React>();
@@ -48,7 +49,7 @@ class Post {
     data['postID'] = this.postID;
     data['userID'] = this.userID;
     data['postContent'] = this.postContent;
-    data['postType'] = this.postType;
+    data['postType'] = EnumToString.parse(this.postType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
       data['reactsList'] = this.reactsList.map((v) => v.toJson()).toList();

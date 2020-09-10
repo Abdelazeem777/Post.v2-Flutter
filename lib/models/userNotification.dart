@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:post/enums/notificationTypeEnum.dart';
 import 'package:post/enums/reactTypeEnum.dart';
 
@@ -29,7 +30,8 @@ class UserNotification {
     fromUser = json['fromUser'];
     fromUserProfilePicURL = json['fromUserProfilePicURL'];
     notificationContent = json['notificationContent'];
-    notificationType = json['notificationType'];
+    notificationType = EnumToString.fromString(
+        NotificationType.values, json['notificationType']);
     reactType = json['reactType'];
     dateTime = json['dateTime'];
     seen = json['seen'];
@@ -42,7 +44,7 @@ class UserNotification {
     data['fromUser'] = this.fromUser;
     data['fromUserProfilePicURL'] = this.fromUserProfilePicURL;
     data['notificationContent'] = this.notificationContent;
-    data['notificationType'] = this.notificationType;
+    data['notificationType'] = EnumToString.parse(this.notificationType);
     data['reactType'] = this.reactType;
     data['dateTime'] = this.dateTime;
     data['seen'] = this.seen;
