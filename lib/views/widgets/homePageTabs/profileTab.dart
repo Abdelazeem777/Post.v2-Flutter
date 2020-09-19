@@ -4,6 +4,7 @@ import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/widgets/stateful/postFrame.dart';
 import 'package:post/views/widgets/stateful/postItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 
@@ -25,33 +26,291 @@ class _ProfileTabState extends State<ProfileTab> {
     super.initState();
     //for testing
     _postsList = [
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
-      Post(),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent": "hello there this my first post",
+        "postType": "text",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent": "hello there this my first post",
+        "postType": "text",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent":
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg",
+        "postType": "image",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent": "hello there this my first post",
+        "postType": "text",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent":
+            "https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg",
+        "postType": "image",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent":
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "postType": "video",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent":
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "postType": "video",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
+      Post.fromJson({
+        "postID": 2,
+        "userID": 5,
+        "postContent":
+            "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
+        "postType": "image",
+        "timestamp": 15232323,
+        "react": [
+          {"userID": 6, "reactType": "ReactType.love"}
+        ],
+        "numberOfShares": 13,
+        "comment": [
+          {
+            "commentID": 6,
+            "userID": 3,
+            "commentContent": "test",
+            "commentType": "text",
+            "timestamp": 154578456,
+            "react": [
+              {"userID": 6, "reactType": "ReactType.love"}
+            ],
+            "reply": [
+              {
+                "replyID": 5,
+                "userID": 5,
+                "replyContent": "test",
+                "replyType": "text",
+                "timestamp": 15325454,
+                "react": [
+                  {"userID": 6, "reactType": "ReactType.love"}
+                ]
+              }
+            ]
+          }
+        ]
+      }),
     ];
 
     _currentUser = User(
@@ -85,15 +344,24 @@ class _ProfileTabState extends State<ProfileTab> {
   List<Widget> _createListViewChildren() {
     List<Widget> listViewChildren = [];
     listViewChildren.add(_createUserProfileTopBar());
-    _postsList.forEach((post) => listViewChildren.add(PostItem(post)));
+    _postsList.forEach(
+      (post) => listViewChildren.add(
+        PostFrame(
+          postsList: [post],
+          postOwnerUser: _currentUser,
+        ),
+      ),
+    );
     return listViewChildren;
   }
 
   Widget _createUserProfileTopBar() {
     return Container(
       width: SizeConfig.screenWidth,
-      padding: EdgeInsets.only(left: 16, bottom: 16),
+      margin: EdgeInsets.only(top: 75),
+      padding: EdgeInsets.only(top: 16, left: 16, bottom: 16),
       decoration: BoxDecoration(
+          color: Colors.white,
           border: Border(bottom: BorderSide(color: AppColors.SECONDARY_COLOR))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -253,9 +521,13 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: this.widget._scrollController,
-      children: _createListViewChildren(),
+    return Container(
+      color: Colors.grey[200],
+      child: ListView(
+        controller: this.widget._scrollController,
+        padding: EdgeInsets.all(0),
+        children: _createListViewChildren(),
+      ),
     );
   }
 }
