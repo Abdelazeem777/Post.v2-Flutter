@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:post/enums/postTypeEnum.dart';
+import 'package:post/models/comment.dart';
 import 'package:post/models/post.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:post/style/appColors.dart';
@@ -84,10 +85,60 @@ class _PostItemState extends State<PostItem> {
   Widget _createVideoPost() => CustomVideoPlayer(
         videoURL: _currentPost.postContent,
       );
+  Widget _createTheNumberOfLikesCommentsReacts() {
+    String likesNumber = _currentPost.reactsList.length.toString() + ' Likes';
+    String commentsNumber = getCommentsAndRepliesNumber() + ' Comments';
+    String sharesNumber = _currentPost.numberOfShares.toString() + ' Shares';
+    return Container(
+      padding: EdgeInsets.only(top: 3, bottom: 3),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _createText(text: likesNumber),
+          _createDot(),
+          _createText(text: commentsNumber),
+          _createDot(),
+          _createText(text: sharesNumber),
+        ],
+      ),
+    );
+  }
+
+  Widget _createText({String text}) {
+    return Text(
+      text,
+      style: TextStyle(color: Colors.grey, fontSize: 14),
+    );
+  }
+
+  Widget _createDot() {
+    return Container(
+      width: 4,
+      height: 4,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     _currentPost = this.widget.post;
-    return _createPostBasedOnItsType();
+    return Column(
+      children: [
+        _createPostBasedOnItsType(),
+        _createTheNumberOfLikesCommentsReacts(),
+      ],
+    );
+  }
+
+  String getCommentsAndRepliesNumber() {
+    int count = 0;
+    for (Comment comment in _currentPost.commentsList) {
+      count++;
+      count += comment.repliesList.length;
+    }
+    return count.toString();
   }
 }

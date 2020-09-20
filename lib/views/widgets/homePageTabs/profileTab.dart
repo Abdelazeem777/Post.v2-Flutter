@@ -32,28 +32,28 @@ class _ProfileTabState extends State<ProfileTab> {
         "postContent": "hello there this my first post",
         "postType": "text",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -67,28 +67,28 @@ class _ProfileTabState extends State<ProfileTab> {
         "postContent": "hello there this my first post",
         "postType": "text",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -103,28 +103,28 @@ class _ProfileTabState extends State<ProfileTab> {
             "https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg",
         "postType": "image",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -138,28 +138,28 @@ class _ProfileTabState extends State<ProfileTab> {
         "postContent": "hello there this my first post",
         "postType": "text",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -174,28 +174,28 @@ class _ProfileTabState extends State<ProfileTab> {
             "https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg",
         "postType": "image",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -210,28 +210,28 @@ class _ProfileTabState extends State<ProfileTab> {
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
         "postType": "video",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -246,28 +246,28 @@ class _ProfileTabState extends State<ProfileTab> {
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
         "postType": "video",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }
@@ -282,28 +282,28 @@ class _ProfileTabState extends State<ProfileTab> {
             "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
         "postType": "image",
         "timestamp": 15232323,
-        "react": [
+        "reactsList": [
           {"userID": 6, "reactType": "ReactType.love"}
         ],
         "numberOfShares": 13,
-        "comment": [
+        "commentsList": [
           {
             "commentID": 6,
             "userID": 3,
             "commentContent": "test",
             "commentType": "text",
             "timestamp": 154578456,
-            "react": [
+            "reactsList": [
               {"userID": 6, "reactType": "ReactType.love"}
             ],
-            "reply": [
+            "repliesList": [
               {
                 "replyID": 5,
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "text",
                 "timestamp": 15325454,
-                "react": [
+                "reactsList": [
                   {"userID": 6, "reactType": "ReactType.love"}
                 ]
               }

@@ -46,7 +46,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
             child: IconButton(
                 icon: Icon(
                   _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: AppColors.PRIMARY_COLOR,
+                  color: AppColors.SECONDARY_COLOR,
                   size: 30,
                 ),
                 onPressed: () => setState(() {
