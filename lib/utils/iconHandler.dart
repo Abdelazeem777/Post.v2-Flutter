@@ -66,6 +66,12 @@ class IconHandler {
           color: Colors.red[900],
         );
         break;
+      case ReactType.none:
+        return Icon(
+          FontAwesomeIcons.thumbsUp,
+          color: AppColors.SECONDARY_COLOR,
+        );
+        break;
       default:
         throw Exception("this reactType is not allowed");
         break;
