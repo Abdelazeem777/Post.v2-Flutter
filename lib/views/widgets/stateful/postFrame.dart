@@ -4,6 +4,7 @@ import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/widgets/stateful/reactButton.dart';
 import 'package:post/views/widgets/stateful/postItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 
@@ -29,7 +30,6 @@ class _PostFrameState extends State<PostFrame> {
   List<Post> _postsList;
   int _numberOfNewPosts = 5;
 
-  ///TODO: add positioned widget to all children inside the stack
   Widget _createTopPart() {
     return _multiplePosts
         ? _createTopPartWithRankAndNewPostsNum()
@@ -146,8 +146,15 @@ class _PostFrameState extends State<PostFrame> {
       width: 90,
       height: 25,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)),
-          color: AppColors.SECONDARY_COLOR),
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15)),
+        color: AppColors.SECONDARY_COLOR,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 6,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Text(
         text,
         style: TextStyle(color: Colors.white, fontSize: 12),
@@ -161,30 +168,40 @@ class _PostFrameState extends State<PostFrame> {
         : PostItem(_postsList[_postItemNumber]);
   }
 
-  ///TODO: Don't forget to create a horizontal scrollable widget
-  /// in case I have multiple posts at the same frame
-  ///  like what happen inside the home page
   Widget _createMultiplePostItems() {
-    return Container();
+    return Container(
+      width: SizeConfig.screenWidth,
+      height: SizeConfig.screenWidth + 22,
+      child: PageView.builder(
+          itemCount: _postsList.length,
+          itemBuilder: (context, index) =>
+              PostItem(_postsList[_postItemNumber = index])),
+    );
   }
 
   Widget _createBottomPart() {
+    Post currentPost = _postsList[_postItemNumber];
     return Container(
+      width: SizeConfig.screenWidth,
       decoration: BoxDecoration(
           color: Colors.grey[50],
           border: Border(top: BorderSide(color: AppColors.SECONDARY_COLOR))),
       child: Stack(
+        overflow: Overflow.visible,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _createBottomButton(
-                  text: 'Like', icon: Icons.thumb_up, onPressed: () {}),
-              _createBottomButton(
-                  text: 'Comment', icon: Icons.comment, onPressed: () {}),
-              _createBottomButton(
-                  text: 'Share', icon: Icons.share, onPressed: () {}),
-            ],
+          Positioned(
+            left: 0,
+            top: -290,
+            child: ReactButton(),
+          ),
+          Center(
+            child: _createBottomButton(
+                text: 'Comment', icon: Icons.comment, onPressed: () {}),
+          ),
+          Positioned(
+            right: 0,
+            child: _createBottomButton(
+                text: 'Share', icon: Icons.share, onPressed: () {}),
           ),
         ],
       ),
@@ -218,6 +235,7 @@ class _PostFrameState extends State<PostFrame> {
     return Container(
       margin: EdgeInsets.only(top: 16, bottom: 16),
       width: SizeConfig.screenWidth,
+      height: SizeConfig.screenWidth + 142,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -232,11 +250,11 @@ class _PostFrameState extends State<PostFrame> {
           ),
         ],
       ),
-      child: Column(
+      child: Stack(
         children: [
+          Center(child: _createBodyThatContainsPostItems()),
           _createTopPart(),
-          _createBodyThatContainsPostItems(),
-          _createBottomPart()
+          Positioned(bottom: 0, child: _createBottomPart()),
         ],
       ),
     );

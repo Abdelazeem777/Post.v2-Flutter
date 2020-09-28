@@ -59,7 +59,6 @@ class _PostItemState extends State<PostItem> {
     );
   }
 
-  ///TODO: still don't know how to make it appear above the other widgets
   Widget _createImagePost() {
     return SizedBox(
       height: SizeConfig.screenWidth,
