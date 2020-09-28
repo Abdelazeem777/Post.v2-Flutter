@@ -124,7 +124,7 @@ class _SearchTabState extends State<SearchTab> {
         Flexible(
           child: ListView.builder(
             padding: EdgeInsets.all(0),
-            controller: this.widget._scrollController,
+            // controller: this.widget._scrollController,
             itemCount: _usersList.length,
             itemBuilder: (context, position) => UserItem(_usersList[position]),
           ),
