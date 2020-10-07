@@ -1,10 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+//TODO: add onPressed to move to the user profile
 class UserProfilePicture extends StatefulWidget {
   String imageURL;
   bool active;
-  UserProfilePicture({this.imageURL = "Default", this.active = false});
+  double activeIndicatorSize;
+  UserProfilePicture(
+      {this.imageURL = "Default",
+      this.active = false,
+      this.activeIndicatorSize = 15});
   @override
   _UserProfilePictureState createState() => _UserProfilePictureState();
 }
@@ -15,28 +20,21 @@ class _UserProfilePictureState extends State<UserProfilePicture> {
     return Stack(
       children: [
         ClipOval(
-          child: CachedNetworkImage(
-            fit: BoxFit.cover,
-            useOldImageOnUrlChange: true,
-            imageUrl: this.widget.imageURL,
-            placeholder: (context, url) => Container(
-              color: Colors.green[100],
-              constraints: BoxConstraints.expand(),
-              child: FittedBox(
-                child: Icon(
-                  Icons.person,
-                  color: Theme.of(context).canvasColor,
-                ),
-              ),
-            ),
-          ),
+          child: widget.imageURL != 'Default'
+              ? CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  useOldImageOnUrlChange: true,
+                  imageUrl: widget.imageURL,
+                  placeholder: (context, url) => _createPlaceHolder(context),
+                )
+              : _createPlaceHolder(context),
         ),
         Positioned(
             bottom: 0,
             right: 0,
             child: Container(
-              height: 15,
-              width: 15,
+              height: widget.activeIndicatorSize,
+              width: widget.activeIndicatorSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color:
@@ -44,6 +42,19 @@ class _UserProfilePictureState extends State<UserProfilePicture> {
               ),
             ))
       ],
+    );
+  }
+
+  Widget _createPlaceHolder(BuildContext context) {
+    return Container(
+      color: Colors.green[100],
+      constraints: BoxConstraints.expand(),
+      child: FittedBox(
+        child: Icon(
+          Icons.person,
+          color: Theme.of(context).canvasColor,
+        ),
+      ),
     );
   }
 }

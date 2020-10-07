@@ -88,7 +88,7 @@ class _NotificationItemState extends State<NotificationItem> {
           Padding(
             padding: EdgeInsets.only(top: 4),
             child: Text(
-                DateTimeFormatHandler.getTime(
+                DateTimeFormatHandler.getTimeFromDateTime(
                     this.widget._notification.dateTime),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
