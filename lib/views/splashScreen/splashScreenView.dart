@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
             type: MaterialType.transparency,
             child: Image.asset(
               "lib/assets/post_main_logo.png",
-              scale: 2.5,
+              scale: 2.8,
             ),
           ),
           flightShuttleBuilder: (flightContext, animation, flightDirection,
