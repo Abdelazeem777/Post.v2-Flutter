@@ -82,7 +82,7 @@ class _NotificationsState extends State<Notifications> {
           fromUser: "Abdelazeem Kuratem",
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
-          reactType: ReactType.Happy,
+          reactType: ReactType.Haha,
           dateTime: DateTime.now()),
       UserNotification(
           notificationID: 1,

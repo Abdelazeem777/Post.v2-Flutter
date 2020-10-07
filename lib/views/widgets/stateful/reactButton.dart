@@ -418,7 +418,7 @@ class _ReactButtonState extends State<ReactButton>
                   whichIconUserChoose == 3 && !isDragging
                       ? Container(
                           child: Transform.scale(
-                            child: IconHandler.getReactIcon(ReactType.Happy),
+                            child: IconHandler.getReactIcon(ReactType.Haha),
                             scale: this.zoomIconWhenRelease.value,
                           ),
                           margin: EdgeInsets.only(
@@ -493,7 +493,7 @@ class _ReactButtonState extends State<ReactButton>
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  IconHandler.getReactIcon(ReactType.Like)
+                  IconHandler.getReactIcon(ReactType.Like, size: 27)
                 ],
               ),
               margin: EdgeInsets.only(bottom: pushIconLikeUp.value),
@@ -533,7 +533,7 @@ class _ReactButtonState extends State<ReactButton>
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  IconHandler.getReactIcon(ReactType.Love),
+                  IconHandler.getReactIcon(ReactType.Love, size: 27),
                 ],
               ),
               margin: EdgeInsets.only(bottom: pushIconLoveUp.value),
@@ -573,7 +573,7 @@ class _ReactButtonState extends State<ReactButton>
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  IconHandler.getReactIcon(ReactType.Happy),
+                  IconHandler.getReactIcon(ReactType.Haha, size: 27),
                 ],
               ),
               margin: EdgeInsets.only(bottom: pushIconHahaUp.value),
@@ -613,7 +613,7 @@ class _ReactButtonState extends State<ReactButton>
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  IconHandler.getReactIcon(ReactType.Sad),
+                  IconHandler.getReactIcon(ReactType.Sad, size: 27),
                 ],
               ),
               margin: EdgeInsets.only(bottom: pushIconSadUp.value),
@@ -653,7 +653,7 @@ class _ReactButtonState extends State<ReactButton>
                           margin: EdgeInsets.only(bottom: 8.0),
                         )
                       : Container(),
-                  IconHandler.getReactIcon(ReactType.Angry),
+                  IconHandler.getReactIcon(ReactType.Angry, size: 27),
                 ],
               ),
               margin: EdgeInsets.only(bottom: pushIconAngryUp.value),
@@ -699,10 +699,12 @@ class _ReactButtonState extends State<ReactButton>
                 offset: Offset.lerp(Offset(0.0, 0.0), Offset(0.0, 0.5), 10.0)),
           ],
         ),
-        width: 300.0,
+        width: 320.0,
         height: isDragging
-            ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 40.0)
-            : isDraggingOutside ? this.zoomBoxWhenDragOutside.value : 50.0,
+            ? (previousIconFocus == 0 ? this.zoomBoxIcon.value : 45.0)
+            : isDraggingOutside
+                ? this.zoomBoxWhenDragOutside.value
+                : 55.0,
         margin: EdgeInsets.only(bottom: 130.0, left: 10.0),
       ),
       opacity: this.fadeInBox.value,
@@ -1044,7 +1046,7 @@ class _ReactButtonState extends State<ReactButton>
         case 2:
           return IconHandler.getReactIcon(ReactType.Love);
         case 3:
-          return IconHandler.getReactIcon(ReactType.Happy);
+          return IconHandler.getReactIcon(ReactType.Haha);
         case 4:
           return IconHandler.getReactIcon(ReactType.Sad);
         case 5:

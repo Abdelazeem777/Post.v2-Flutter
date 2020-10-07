@@ -1,7 +1,7 @@
 enum ReactType {
   Like,
   Love,
-  Happy,
+  Haha,
   Sad,
   Angry,
   none,
