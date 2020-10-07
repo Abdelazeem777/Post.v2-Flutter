@@ -3,6 +3,7 @@ import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
+import 'package:post/views/widgets/stateless/userNameAndBio.dart';
 
 import 'followButton.dart';
 
@@ -39,24 +40,9 @@ class _UserItemState extends State<UserItem> {
               active: active,
             ),
           ),
-          _createUserNameAndBio(userName: userName, bio: bio),
+          UserNameAndBio(userName: userName, bio: bio),
           Spacer(),
           FollowButton(following: following, onPressed: () {})
-        ],
-      ),
-    );
-  }
-
-  Widget _createUserNameAndBio({String userName, String bio}) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(userName),
-          Text(
-            bio,
-            style: TextStyle(fontSize: 12, color: Colors.grey[700]),
-          )
         ],
       ),
     );

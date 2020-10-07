@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:post/models/comment.dart';
 import 'package:post/models/post.dart';
+import 'package:post/models/react.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/widgets/stateful/commentsBottomSheet.dart';
+import 'package:post/views/widgets/stateful/customModalBottomSheet.dart' as bs;
 import 'package:post/views/widgets/stateful/reactButton.dart';
 import 'package:post/views/widgets/stateful/postItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
+import 'package:post/views/widgets/stateless/timeTextFromTimestamp.dart';
 
 ///if the frame has multiple posts, it will show them horizontally
 ///and if not, it will show one post inside the frame.
@@ -111,7 +116,7 @@ class _PostFrameState extends State<PostFrame> {
   Widget _createUserNameAndPostTimeText() {
     String userName = _user.userName;
     int postTimestamp = _postsList[_postItemNumber].timestamp;
-    String postTime = DateTimeFormatHandler.getTimeFromTimestamp(postTimestamp);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,10 +125,7 @@ class _PostFrameState extends State<PostFrame> {
             userName,
             style: TextStyle(color: AppColors.PRIMARY_COLOR),
           ),
-          Text(
-            postTime,
-            style: TextStyle(color: AppColors.SECONDARY_COLOR, fontSize: 12),
-          )
+          TimeTextFromTimestamp(postTimestamp)
         ],
       ),
     );
@@ -165,7 +167,10 @@ class _PostFrameState extends State<PostFrame> {
   Widget _createBodyThatContainsPostItems() {
     return _multiplePosts
         ? _createMultiplePostItems()
-        : PostItem(_postsList[_postItemNumber]);
+        : Container(
+            width: SizeConfig.screenWidth,
+            height: SizeConfig.screenWidth + 22,
+            child: PostItem(_postsList[_postItemNumber]));
   }
 
   Widget _createMultiplePostItems() {
@@ -196,7 +201,10 @@ class _PostFrameState extends State<PostFrame> {
           ),
           Center(
             child: _createBottomButton(
-                text: 'Comment', icon: Icons.comment, onPressed: () {}),
+              text: 'Comment',
+              icon: Icons.comment,
+              onPressed: showCommentsBottomSheet,
+            ),
           ),
           Positioned(
             right: 0,
@@ -258,5 +266,28 @@ class _PostFrameState extends State<PostFrame> {
         ],
       ),
     );
+  }
+
+  Null showCommentsBottomSheet() {
+    Post currentPost = _postsList[_postItemNumber];
+    List<Comment> postCommentsList = currentPost.commentsList;
+    List<React> postReactsList = currentPost.reactsList;
+    bs.showModalBottomSheet(
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+        context: context,
+        builder: (context) {
+          //we used scaffold to make the screen shrink when the keyboard popup
+          return Scaffold(
+            backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: true,
+            body: CommentsBottomSheet(
+              commentsList: postCommentsList,
+              reactsList: postReactsList,
+            ),
+          );
+        });
   }
 }
