@@ -21,6 +21,16 @@ class _LoginState extends State<Login> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AnimatedAppBarLogo(),
+      body: SafeArea(
+        child: _createLoginPage(),
+      ),
+    );
+  }
+
   Widget _createLoginPage() {
     return ListView(
       children: [
@@ -107,16 +117,6 @@ class _LoginState extends State<Login> {
               ]),
         ),
         onTap: goToSignUpPage,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AnimatedAppBarLogo(),
-      body: SafeArea(
-        child: _createLoginPage(),
       ),
     );
   }

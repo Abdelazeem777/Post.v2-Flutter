@@ -91,7 +91,7 @@ class _BirthDateTextFormFieldState extends State<BirthDateTextFormField> {
             ),
           ),
         ),
-        validator: Validator.validateBirthDate(),
+        validator: Validator.validateBirthDate,
         onFieldSubmitted: (String value) {
           FocusScope.of(context).requestFocus(this.widget.nextFocusNode);
         },

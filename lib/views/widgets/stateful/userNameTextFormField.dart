@@ -13,7 +13,7 @@ class UserNameTextFormField extends MainTextFormField {
           currentController: currentController,
           currentFocusNode: currentFocusNode,
           nextFocusNode: nextFocusNode,
-          validator: Validator.validateUserName(),
+          validator: Validator.validateUserName,
           icon: const Icon(
             Icons.person,
             color: AppColors.PRIMARY_COLOR,

@@ -13,7 +13,7 @@ class PhoneNumberTextFormField extends MainTextFormField {
           currentController: currentController,
           currentFocusNode: currentFocusNode,
           nextFocusNode: nextFocusNode,
-          validator: Validator.validatePhoneNumber(),
+          validator: Validator.validatePhoneNumber,
           icon: const Icon(
             Icons.phone,
             color: AppColors.PRIMARY_COLOR,

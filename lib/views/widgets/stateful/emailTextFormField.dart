@@ -13,7 +13,7 @@ class EmailTextFormField extends MainTextFormField {
           currentController: currentController,
           currentFocusNode: currentFocusNode,
           nextFocusNode: nextFocusNode,
-          validator: Validator.validateEmail(),
+          validator: Validator.validateEmail,
           icon: const Icon(
             Icons.email,
             color: AppColors.PRIMARY_COLOR,

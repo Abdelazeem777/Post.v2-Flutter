@@ -96,7 +96,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
             ),
           ),
         ),
-        validator: Validator.validatePassword(),
+        validator: Validator.validatePassword,
         onFieldSubmitted: (String value) {
           FocusScope.of(context).requestFocus(this.widget.nextFocusNode);
         },
