@@ -50,53 +50,52 @@ class _CommentItemState extends State<CommentItem> {
     _currentComment = widget.comment;
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              children: [
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(children: [
                 _createUserProfile(),
-                _expanded ? _createStartOfThreadLine() : Container(),
-              ],
-            ),
-            Container(
-              //51=(35+(8*2)) is the width of the user profile picture, 8 is for right margin
-              width: SizeConfig.screenWidth - (51 + 8),
-              padding: EdgeInsets.all(8),
-              margin: EdgeInsets.only(
-                top: 16,
+                ..._createStartOfThreadLine()
+              ]),
+              Container(
+                //51=(35+(8*2)) is the width of the user profile picture, 8 is for right margin
+                width: SizeConfig.screenWidth - (51 + 8),
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.only(top: 16, right: 8),
+                decoration: BoxDecoration(
+                    color: AppColors.SECONDARY_COLOR.withOpacity(.15),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    )),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        UserNameAndBio(
+                          userName: _commentOwner.userName,
+                          bio: _commentOwner.bio,
+                        ),
+                        TimeTextFromTimestamp(_currentComment.timestamp),
+                      ],
+                    ),
+                    _createCommentContent(
+                      _currentComment.commentContent,
+                      _currentComment.commentType,
+                    ),
+                    _createBottomPartOfComment(),
+                  ],
+                ),
               ),
-              decoration: BoxDecoration(
-                  color: AppColors.SECONDARY_COLOR.withOpacity(.15),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  )),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      UserNameAndBio(
-                        userName: _commentOwner.userName,
-                        bio: _commentOwner.bio,
-                      ),
-                      TimeTextFromTimestamp(_currentComment.timestamp),
-                    ],
-                  ),
-                  _createCommentContent(
-                    _currentComment.commentContent,
-                    _currentComment.commentType,
-                  ),
-                  _createBottomPartOfComment(),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         _currentComment.repliesList.isNotEmpty
             ? _createRepliesListView()
@@ -105,23 +104,23 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-//TODO: find a solution for the height issue
-  Widget _createStartOfThreadLine() {
-    return Column(
-      children: [
-        Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(
-              color: AppColors.PRIMARY_COLOR, shape: BoxShape.circle),
-        ),
-        Container(
-          width: 1,
-          height: 30,
-          color: AppColors.PRIMARY_COLOR,
-        ),
-      ],
-    );
+  _createStartOfThreadLine() {
+    return _expanded
+        ? [
+            Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                  color: AppColors.PRIMARY_COLOR, shape: BoxShape.circle),
+            ),
+            Expanded(
+              child: Container(
+                width: 1,
+                color: AppColors.PRIMARY_COLOR,
+              ),
+            ),
+          ]
+        : [Container()];
   }
 
   Widget _createUserProfile() {
@@ -199,16 +198,16 @@ class _CommentItemState extends State<CommentItem> {
 
 //TODO: convert it column wraped with animated continer for the expantion animation
   Widget _createRepliesListView() {
-    List<Reply> repliesList = _currentComment.repliesList;
-    List<Widget> children = List<Widget>();
+    final List<Reply> repliesList = _currentComment.repliesList;
+    final List<Widget> children = List<Widget>();
     repliesList.forEach((reply) {
-      children.add(Container(
-        child: ReplyItem(
-          reply: reply,
-          onReplyButtonPressed: _showReplyBar,
-        ),
+      children.add(ReplyItem(
+        reply: reply,
+        onReplyButtonPressed: _showReplyBar,
       ));
     });
+    (children.last as ReplyItem).lastReply =
+        true; //to stop the last reply thread line from expanding
     return AnimatedContainer(
         duration: Duration(milliseconds: 300),
         height: _expanded ? null : 0,

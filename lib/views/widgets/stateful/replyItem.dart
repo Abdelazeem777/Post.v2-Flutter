@@ -16,9 +16,11 @@ import 'userProfilePicture.dart';
 class ReplyItem extends StatefulWidget {
   Reply reply;
   void Function() onReplyButtonPressed;
+  bool lastReply;
   ReplyItem({
     @required this.reply,
     @required this.onReplyButtonPressed,
+    this.lastReply = false,
   });
 
   @override
@@ -40,94 +42,88 @@ class _ReplyItemState extends State<ReplyItem> {
   Widget build(BuildContext context) {
     _currentReply = widget.reply;
 
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      _createReplyThreadLine(),
-      _createUserProfile(),
-      Column(
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-            //51=(35+(8*2)) is the width of the user profile picture,
-            //4 is for right margin,
-            //multiplied by 2 because we want to leave a double space for the main comment profile picture and the reply one
-            width: SizeConfig.screenWidth - (51 + 4) * 2,
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.only(
-              top: 8,
-              bottom: 8,
-            ),
-            decoration: BoxDecoration(
-                color: AppColors.SECONDARY_COLOR.withOpacity(.15),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ..._createReplyThreadLine(),
+          _createUserProfile(),
+          Column(
+            children: [
+              Container(
+                //51=(35+(8*2)) is the width of the user profile picture,
+                //4 is for right margin,
+                //multiplied by 2 because we want to leave a double space for the main comment profile picture and the reply one
+                width: SizeConfig.screenWidth - (51 + 4) * 2,
+                padding: EdgeInsets.all(8),
+                margin: EdgeInsets.only(top: 8, bottom: 8, right: 8),
+                decoration: BoxDecoration(
+                    color: AppColors.SECONDARY_COLOR.withOpacity(.15),
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    )),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    UserNameAndBio(
-                      userName: _replyOwner.userName,
-                      bio: _replyOwner.bio,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        UserNameAndBio(
+                          userName: _replyOwner.userName,
+                          bio: _replyOwner.bio,
+                        ),
+                        TimeTextFromTimestamp(_currentReply.timestamp),
+                      ],
                     ),
-                    TimeTextFromTimestamp(_currentReply.timestamp),
+                    _createReplyContent(
+                      _currentReply.replyContent,
+                      _currentReply.replyType,
+                    ),
+                    _createBottomPartOfReply(),
                   ],
                 ),
-                _createReplyContent(
-                  _currentReply.replyContent,
-                  _currentReply.replyType,
-                ),
-                _createBottomPartOfReply(),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      )
-    ]);
-  }
-
-  Widget _createReplyThreadLine() {
-    return SizedBox(
-      width: 51,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            color: AppColors.PRIMARY_COLOR,
-            width: 1,
-            height: 123,
-          ),
-          _createHorizontalLine(),
         ],
       ),
     );
   }
 
-  Widget _createHorizontalLine() {
-    return Container(
-      margin: EdgeInsets.only(top: 30),
-      child: Row(
-        children: [
-          Container(
-            color: AppColors.PRIMARY_COLOR,
-            width: 19,
-            height: 1,
-          ),
-          Container(
-              width: 6,
-              height: 6,
-              decoration: BoxDecoration(
+  List<Widget> _createReplyThreadLine() {
+    return [
+      widget.lastReply
+          ? Container(
+              color: AppColors.PRIMARY_COLOR,
+              height: 33.5,
+              width: 1,
+            )
+          : Flexible(
+              child: Container(
                 color: AppColors.PRIMARY_COLOR,
-                shape: BoxShape.circle,
-              )),
-        ],
+                width: 1,
+              ),
+            ),
+      Container(
+        color: AppColors.PRIMARY_COLOR,
+        width: 19,
+        height: 1,
+        margin: const EdgeInsets.only(top: 32.5),
       ),
-    );
+      Container(
+          width: 6,
+          height: 6,
+          margin: const EdgeInsets.only(top: 30),
+          decoration: BoxDecoration(
+            color: AppColors.PRIMARY_COLOR,
+            shape: BoxShape.circle,
+          )),
+    ];
   }
 
   Widget _createUserProfile() {
