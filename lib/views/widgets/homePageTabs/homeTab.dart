@@ -23,7 +23,8 @@ class _HomeTabState extends State<HomeTab> {
         "userID": 5,
         "postContent": "hello there this my first post",
         "postType": "Text",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"},
           {"userID": 6, "reactType": "Like"},
@@ -40,7 +41,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "this comment is just for testing\nbla bla bla",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -50,7 +53,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "this reply is just for testing\nbla bla bla",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -60,7 +65,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "this reply is just for testing\nbla bla bla",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -70,7 +77,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "this reply is just for testing\nbla bla bla",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -82,7 +91,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "this comment is just for testing\nbla bla bla",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -92,7 +103,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "this reply is just for testing\nbla bla bla",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -102,7 +115,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "this reply is just for testing\nbla bla bla",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -112,7 +127,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "this reply is just for testing\nbla bla bla",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -126,7 +143,8 @@ class _HomeTabState extends State<HomeTab> {
         "userID": 5,
         "postContent": "hello there this my first post",
         "postType": "Text",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -137,7 +155,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -147,7 +167,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -162,7 +184,8 @@ class _HomeTabState extends State<HomeTab> {
         "postContent":
             "https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg",
         "postType": "Image",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -173,7 +196,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -183,7 +208,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -197,7 +224,8 @@ class _HomeTabState extends State<HomeTab> {
         "userID": 5,
         "postContent": "hello there this my first post",
         "postType": "Text",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -208,7 +236,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -218,7 +248,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -233,7 +265,8 @@ class _HomeTabState extends State<HomeTab> {
         "postContent":
             "https://upload.wikimedia.org/wikipedia/commons/6/6a/Mona_Lisa.jpg",
         "postType": "Image",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -244,7 +277,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -254,7 +289,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -269,7 +306,8 @@ class _HomeTabState extends State<HomeTab> {
         "postContent":
             "http://commondatastorage.googleapis.com/gtv-Videos-bucket/sample/BigBuckBunny.mp4",
         "postType": "Video",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -280,7 +318,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -290,7 +330,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -305,7 +347,8 @@ class _HomeTabState extends State<HomeTab> {
         "postContent":
             "http://commondatastorage.googleapis.com/gtv-Videos-bucket/sample/BigBuckBunny.mp4",
         "postType": "Video",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -316,7 +359,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -326,7 +371,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]
@@ -341,7 +388,8 @@ class _HomeTabState extends State<HomeTab> {
         "postContent":
             "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_eui2=AeFMHjrJL0Cx3_MEqSLa0IsM_Ybpoqq_bMz9humiqr9szE5q5si_w_5hAcW_t9VHUZ_Oe3RduQZd8z55MkYjfkTY&_nc_ohc=s5-Ed3UWf0cAX9Higb4&_nc_oc=AQnzdoJD0_ZUAdAhOorbkxZ3HQgSXev3aO5P_jassAaYFXI1QIUVo1klgnhS9bN3QHA&_nc_ht=scontent.faly3-1.fna&oh=fffea7e08751b42fdc94b8b16977f071&oe=5F9F7F64",
         "postType": "Image",
-        "timestamp": 15232323,
+        "timestamp":
+            DateTime.now().subtract(Duration(days: 45)).millisecondsSinceEpoch,
         "reactsList": [
           {"userID": 6, "reactType": "Love"}
         ],
@@ -352,7 +400,9 @@ class _HomeTabState extends State<HomeTab> {
             "userID": 3,
             "commentContent": "test",
             "commentType": "Text",
-            "timestamp": 154578456,
+            "timestamp": DateTime.now()
+                .subtract(Duration(hours: 4))
+                .millisecondsSinceEpoch,
             "reactsList": [
               {"userID": 6, "reactType": "Love"}
             ],
@@ -362,7 +412,9 @@ class _HomeTabState extends State<HomeTab> {
                 "userID": 5,
                 "replyContent": "test",
                 "replyType": "Text",
-                "timestamp": 15325454,
+                "timestamp": DateTime.now()
+                    .subtract(Duration(minutes: 15))
+                    .millisecondsSinceEpoch,
                 "reactsList": [
                   {"userID": 6, "reactType": "Love"}
                 ]

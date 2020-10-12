@@ -10,7 +10,7 @@ class UserNotification {
   String notificationContent;
   NotificationType notificationType;
   ReactType reactType;
-  DateTime dateTime;
+  int timestamp;
   bool seen;
 
   UserNotification(
@@ -21,7 +21,7 @@ class UserNotification {
       this.notificationContent,
       this.notificationType,
       this.reactType,
-      this.dateTime,
+      this.timestamp,
       this.seen = false});
 
   UserNotification.fromJson(Map<String, dynamic> json) {
@@ -33,7 +33,7 @@ class UserNotification {
     notificationType = EnumToString.fromString(
         NotificationType.values, json['notificationType']);
     reactType = json['reactType'];
-    dateTime = json['dateTime'];
+    timestamp = json['timestamp'];
     seen = json['seen'];
   }
 
@@ -46,7 +46,7 @@ class UserNotification {
     data['notificationContent'] = this.notificationContent;
     data['notificationType'] = EnumToString.parse(this.notificationType);
     data['reactType'] = this.reactType;
-    data['dateTime'] = this.dateTime;
+    data['timestamp'] = this.timestamp;
     data['seen'] = this.seen;
     return data;
   }

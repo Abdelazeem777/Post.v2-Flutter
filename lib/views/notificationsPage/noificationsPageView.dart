@@ -25,7 +25,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Like,
-          dateTime: DateTime.now(),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch,
           fromUserProfilePicURL:
               "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
           seen: true),
@@ -36,7 +38,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Love,
-          dateTime: DateTime.now(),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch,
           fromUserProfilePicURL:
               "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
           seen: false),
@@ -47,7 +51,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.Follow,
           reactType: ReactType.none,
-          dateTime: DateTime.now()),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch),
       UserNotification(
           notificationID: 1,
           fromUserID: 3,
@@ -55,7 +61,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.Share,
           reactType: ReactType.none,
-          dateTime: DateTime.now()),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch),
       UserNotification(
           notificationID: 1,
           fromUserID: 3,
@@ -63,7 +71,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Angry,
-          dateTime: DateTime.now(),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch,
           fromUserProfilePicURL:
               "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4",
           seen: false),
@@ -74,7 +84,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Sad,
-          dateTime: DateTime.now(),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch,
           seen: true),
       UserNotification(
           notificationID: 1,
@@ -83,7 +95,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.React,
           reactType: ReactType.Haha,
-          dateTime: DateTime.now()),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch),
       UserNotification(
           notificationID: 1,
           fromUserID: 3,
@@ -91,7 +105,9 @@ class _NotificationsState extends State<Notifications> {
           notificationContent: "react love your post",
           notificationType: NotificationType.Comment,
           reactType: ReactType.none,
-          dateTime: DateTime.now()),
+          timestamp: DateTime.now()
+              .subtract(Duration(seconds: 5))
+              .millisecondsSinceEpoch),
     ];
   }
 
