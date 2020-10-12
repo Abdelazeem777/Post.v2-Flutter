@@ -8,6 +8,7 @@ import 'package:post/style/appColors.dart';
 import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/iconHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/widgets/stateless/timeTextFromTimestamp.dart';
 
 import 'userProfilePicture.dart';
 
@@ -88,8 +89,8 @@ class _NotificationItemState extends State<NotificationItem> {
           Padding(
             padding: EdgeInsets.only(top: 4),
             child: Text(
-                DateTimeFormatHandler.getTimeFromDateTime(
-                    this.widget._notification.dateTime),
+                DateTimeFormatHandler.getDurationFromTimestamp(
+                    this.widget._notification.timestamp),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: AppColors.PRIMARY_COLOR,

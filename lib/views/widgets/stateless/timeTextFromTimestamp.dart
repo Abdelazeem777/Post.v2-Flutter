@@ -7,7 +7,7 @@ class TimeTextFromTimestamp extends StatelessWidget {
   TimeTextFromTimestamp(this._timestamp);
   @override
   Widget build(BuildContext context) {
-    String time = DateTimeFormatHandler.getTimeFromTimestamp(_timestamp);
+    String time = DateTimeFormatHandler.getDurationFromTimestamp(_timestamp);
     return Text(
       time,
       style: TextStyle(color: AppColors.PRIMARY_COLOR, fontSize: 11),
