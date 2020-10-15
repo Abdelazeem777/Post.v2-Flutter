@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/home/homeView.dart';
 import 'package:post/views/login/loginView.dart';
+import 'package:post/views/signUp/signUpViewModel.dart';
 import 'package:post/views/widgets/stateful/birthDateTextFormField.dart';
 import 'package:post/views/widgets/stateful/emailTextFormField.dart';
 import 'package:post/views/widgets/stateful/passwordTextFormField.dart';
@@ -11,6 +13,7 @@ import 'package:post/views/widgets/stateful/userNameTextFormField.dart';
 import 'package:post/views/widgets/stateless/animatedAppBarLogo.dart';
 import 'package:post/views/widgets/stateless/orLineSeparator.dart';
 import 'package:post/views/widgets/stateless/socialMediaLogin.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   static const String routeName = '/SignUp';
@@ -19,19 +22,32 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final FocusNode userNameFocusNode = FocusNode();
-  final FocusNode birthDateFocusNode = FocusNode();
-  final FocusNode phoneNumberFocusNode = FocusNode();
-  final FocusNode emailFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
+  SignUpViewModel _viewModel;
 
-  TextEditingController userNameController = new TextEditingController();
-  TextEditingController birthDateController = new TextEditingController();
-  TextEditingController phoneNumberController = new TextEditingController();
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
 
-  Widget _createLoginPage() {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => SignUpViewModel(),
+        child: Consumer<SignUpViewModel>(
+          builder: (BuildContext context, viewModel, Widget child) {
+            this._viewModel = viewModel;
+            return Scaffold(
+              key: _viewModel.scaffoldKey,
+              appBar: AnimatedAppBarLogo(),
+              body: SafeArea(
+                child: _createSignUpPage(),
+              ),
+            );
+          },
+        ));
+  }
+
+  Widget _createSignUpPage() {
     return ListView(
       children: [
         _createTitleText(),
@@ -64,78 +80,83 @@ class _SignUpState extends State<SignUp> {
 
   Widget _createSignUpForm() {
     return Form(
+        key: _viewModel.formKey,
+        autovalidateMode: _viewModel.autoValidate
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        UserNameTextFormField(
-            currentFocusNode: userNameFocusNode,
-            nextFocusNode: phoneNumberFocusNode,
-            currentController: userNameController,
-            margin: EdgeInsets.fromLTRB(
-                16, SizeConfig.safeBlockVertical * 1.5, 16, 0)),
-        PhoneNumberTextFormField(
-          currentFocusNode: phoneNumberFocusNode,
-          nextFocusNode: birthDateFocusNode,
-          currentController: phoneNumberController,
-        ),
-        BirthDateTextFormField(
-          currentFocusNode: birthDateFocusNode,
-          nextFocusNode: emailFocusNode,
-          currentController: birthDateController,
-        ),
-        EmailTextFormField(
-          currentFocusNode: emailFocusNode,
-          nextFocusNode: passwordFocusNode,
-          currentController: emailController,
-        ),
-        PasswordTextFormField(
-          currentFocusNode: passwordFocusNode,
-          nextFocusNode: null,
-          currentController: passwordController,
-        ),
-        //_createAgreeAllTermsCheckBox(),
-        SubmitButton(
-          text: "Sign Up",
-          onPressed: () {},
-          busy: false,
-        ),
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            UserNameTextFormField(
+                currentFocusNode: _viewModel.userNameFocusNode,
+                nextFocusNode: _viewModel.phoneNumberFocusNode,
+                currentController: _viewModel.userNameController,
+                margin: EdgeInsets.fromLTRB(
+                    16, SizeConfig.safeBlockVertical * 1.5, 16, 0)),
+            PhoneNumberTextFormField(
+              currentFocusNode: _viewModel.phoneNumberFocusNode,
+              nextFocusNode: _viewModel.birthDateFocusNode,
+              currentController: _viewModel.phoneNumberController,
+            ),
+            BirthDateTextFormField(
+              currentFocusNode: _viewModel.birthDateFocusNode,
+              nextFocusNode: _viewModel.emailFocusNode,
+              currentController: _viewModel.birthDateController,
+            ),
+            EmailTextFormField(
+              currentFocusNode: _viewModel.emailFocusNode,
+              nextFocusNode: _viewModel.passwordFocusNode,
+              currentController: _viewModel.emailController,
+            ),
+            PasswordTextFormField(
+              currentFocusNode: _viewModel.passwordFocusNode,
+              nextFocusNode: null,
+              currentController: _viewModel.passwordController,
+            ),
+            //_createAgreeAllTermsCheckBox(),
+            SubmitButton(
+              text: "Sign Up",
+              onPressed: () =>
+                  _viewModel.signUp(onSignUpSuccess: _goToHomePage),
+              busy: _viewModel.busy,
+            ),
+          ],
+        ));
   }
 
   /* Widget _createAgreeAllTermsCheckBox() {
-    return Container(
-      alignment: Alignment.centerRight,
-      margin: EdgeInsets.only(right: 26),
-      child: Row(
-        children: [
-          Checkbox(
-            value: false,
-            onChanged: (_) {},
-          ),
-          InkWell(
-            child: Text(
-              "I agree with all terms & conditions",
-              style: TextStyle(color: AppColors.PRIMARY_COLOR),
-            ),
-            onTap: () => showDialog(
-              context: context,
-              child: AlertDialog(
-                content: Text("All terms & conditions 😂"),
-                actions: [
-                  SubmitButton(
-                    busy: false,
-                    onPressed: () => Navigator.of(context).pop(null),
-                    text: "Okay",
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  } */
+                    return Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.only(right: 26),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: false,
+                            onChanged: (_) {},
+                          ),
+                          InkWell(
+                            child: Text(
+                              "I agree with all terms & conditions",
+                              style: TextStyle(color: AppColors.PRIMARY_COLOR),
+                            ),
+                            onTap: () => showDialog(
+                              context: context,
+                              child: AlertDialog(
+                                content: Text("All terms & conditions 😂"),
+                                actions: [
+                                  SubmitButton(
+                                    busy: false,
+                                    onPressed: () => Navigator.of(context).pop(null),
+                                    text: "Okay",
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  } */
 
   _createAlreadyHaveAccount() {
     return Container(
@@ -150,20 +171,12 @@ class _SignUpState extends State<SignUp> {
                 TextSpan(text: "Login", style: TextStyle(color: Colors.black))
               ]),
         ),
-        onTap: goToLoginPage,
+        onTap: _goToLoginPage,
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AnimatedAppBarLogo(),
-      body: SafeArea(
-        child: _createLoginPage(),
-      ),
-    );
-  }
+  void _goToLoginPage() => Navigator.of(context).pushNamed(Login.routeName);
 
-  goToLoginPage() => Navigator.of(context).pushNamed(Login.routeName);
+  void _goToHomePage() => Navigator.of(context).popAndPushNamed(Home.routeName);
 }

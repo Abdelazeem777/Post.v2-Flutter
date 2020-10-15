@@ -25,7 +25,6 @@ abstract class MainTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48,
       margin: this.margin ??
           EdgeInsets.fromLTRB(16, SizeConfig.safeBlockVertical * 3, 16, 0),
       child: TextFormField(
@@ -35,7 +34,7 @@ abstract class MainTextFormField extends StatelessWidget {
           maxLines: 1,
           style: TextStyle(fontSize: 14),
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
             hintText: this.hintText,
             prefixIcon: this.icon,
             border: InputBorder.none,

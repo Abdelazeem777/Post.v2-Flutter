@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:post/models/currentUser.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';

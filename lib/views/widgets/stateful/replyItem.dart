@@ -34,7 +34,7 @@ class _ReplyItemState extends State<ReplyItem> {
   User _replyOwner = User(
       active: true,
       bio: "mobile developer",
-      userID: 45,
+      userID: "45",
       userName: "Ahmed Mohamed",
       userProfilePicURL: "Default",
       following: true);

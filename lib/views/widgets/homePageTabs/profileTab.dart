@@ -4,9 +4,12 @@ import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/home/homeViewModel.dart';
+import 'package:post/views/login/loginView.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';
 import 'package:post/views/widgets/stateful/postItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
+import 'package:provider/provider.dart';
 
 class ProfileTab extends StatefulWidget {
   final ScrollController _scrollController;
@@ -20,6 +23,8 @@ class _ProfileTabState extends State<ProfileTab> {
   //for testing
   List<Post> _postsList;
   User _currentUser;
+
+  ProfileTabViewModel _viewModel;
 
   @override
   void initState() {
@@ -341,6 +346,20 @@ class _ProfileTabState extends State<ProfileTab> {
             "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4");
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => ProfileTabViewModel(),
+        child: Container(
+          color: Colors.grey[200],
+          child: ListView(
+            controller: this.widget._scrollController,
+            padding: EdgeInsets.all(0),
+            children: _createListViewChildren(),
+          ),
+        ));
+  }
+
   List<Widget> _createListViewChildren() {
     List<Widget> listViewChildren = [];
     listViewChildren.add(_createUserProfileTopBar());
@@ -501,33 +520,29 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
+//TODO:here!!
   Widget _createLogoutButton() {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(color: Colors.red)),
-        child: Icon(
-          FontAwesomeIcons.signOutAlt,
-          color: Colors.red,
-          size: 20,
+    return Selector<ProfileTabViewModel, bool>(selector: (context, viewModel) {
+      this._viewModel = viewModel;
+    }, builder: (context, logoutSuccess, child) {
+      return InkWell(
+        onTap: () => _viewModel.logout(onLogoutSuccess: _goToLoginPage),
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: Colors.red)),
+          child: Icon(
+            FontAwesomeIcons.signOutAlt,
+            color: Colors.red,
+            size: 20,
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey[200],
-      child: ListView(
-        controller: this.widget._scrollController,
-        padding: EdgeInsets.all(0),
-        children: _createListViewChildren(),
-      ),
-    );
-  }
+  void _goToLoginPage() =>
+      Navigator.of(context).popAndPushNamed(Login.routeName);
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/home/homeView.dart';
+import 'package:post/views/login/loginViewModel.dart';
 import 'package:post/views/signUp/signUpView.dart';
 import 'package:post/views/widgets/stateless/animatedAppBarLogo.dart';
 import 'package:post/views/widgets/stateful/emailTextFormField.dart';
@@ -8,6 +10,8 @@ import 'package:post/views/widgets/stateful/passwordTextFormField.dart';
 import 'package:post/views/widgets/stateless/socialMediaLogin.dart';
 import 'package:post/views/widgets/stateful/submitButton.dart';
 import 'package:post/views/widgets/stateless/orLineSeparator.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class Login extends StatefulWidget {
   static const String routeName = '/Login';
@@ -16,19 +20,21 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final FocusNode emailFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
-  TextEditingController emailController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
-
+  LoginViewModel _viewModel;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AnimatedAppBarLogo(),
-      body: SafeArea(
-        child: _createLoginPage(),
-      ),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => LoginViewModel(),
+        child: Consumer<LoginViewModel>(
+            builder: (BuildContext context, viewModel, Widget child) {
+          this._viewModel = viewModel;
+          return Scaffold(
+              key: _viewModel.scaffoldKey,
+              appBar: AnimatedAppBarLogo(),
+              body: SafeArea(
+                child: _createLoginPage(),
+              ));
+        }));
   }
 
   Widget _createLoginPage() {
@@ -70,20 +76,20 @@ class _LoginState extends State<Login> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         EmailTextFormField(
-          currentFocusNode: emailFocusNode,
-          nextFocusNode: passwordFocusNode,
-          currentController: emailController,
+          currentFocusNode: _viewModel.emailFocusNode,
+          nextFocusNode: _viewModel.passwordFocusNode,
+          currentController: _viewModel.emailController,
         ),
         PasswordTextFormField(
-          currentFocusNode: passwordFocusNode,
+          currentFocusNode: _viewModel.passwordFocusNode,
           nextFocusNode: null,
-          currentController: passwordController,
+          currentController: _viewModel.passwordController,
         ),
         _createForgetPassword(),
         SubmitButton(
           text: "Login",
-          onPressed: () {},
-          busy: false,
+          onPressed: () => _viewModel.login(onLoginSuccess: _goToHomePage),
+          busy: _viewModel.busy,
         ),
       ],
     ));
@@ -116,10 +122,12 @@ class _LoginState extends State<Login> {
                 TextSpan(text: "Sign Up", style: TextStyle(color: Colors.black))
               ]),
         ),
-        onTap: goToSignUpPage,
+        onTap: _goToSignUpPage,
       ),
     );
   }
 
-  goToSignUpPage() => Navigator.of(context).pushNamed(SignUp.routeName);
+  void _goToSignUpPage() => Navigator.of(context).pushNamed(SignUp.routeName);
+
+  void _goToHomePage() => Navigator.of(context).popAndPushNamed(Home.routeName);
 }

@@ -22,7 +22,7 @@ class _ReactItemState extends State<ReactItem> {
   User _reactOwner = User(
       active: true,
       bio: "mobile developer",
-      userID: 45,
+      userID: "45",
       userName: "Ahmed Mohamed",
       userProfilePicURL: "Default",
       following: false);

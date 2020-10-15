@@ -1,7 +1,7 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:post/models/comment.dart';
-import 'package:post/models/currentUser.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/models/react.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
@@ -45,7 +45,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
 
     _mainCommentTextFocusNode = FocusNode();
 
-    _currentUser = CurrentUserSingletone.getInstance();
+    _currentUser = CurrentUser();
   }
 
   @override

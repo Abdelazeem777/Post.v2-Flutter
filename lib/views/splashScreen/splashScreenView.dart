@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:post/models/user.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/utils/logoAnimation.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/utils/preferences.dart';
 import 'package:post/views/home/homeView.dart';
 import 'package:post/views/login/loginView.dart';
+import 'package:post/views/signUp/signUpView.dart';
+import 'package:post/views/splashScreen/splashScreenViewModel.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = '/SplashScreen';
@@ -14,9 +18,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  SplashScreenViewModel _viewModel;
   @override
   void initState() {
     super.initState();
+    _viewModel = SplashScreenViewModel();
     _splashTimeout();
   }
 
@@ -26,9 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigationPage() async {
-    String currentUser = await Preferences.getUserData();
-    if (null == currentUser || currentUser.isEmpty)
-      Navigator.of(context).pushReplacementNamed(Login.routeName);
+    //TODO: don't forget to uncomment these lines!
+    User currentUser = await CurrentUser().loadCurrentUserDataFromPreference();
+    if (null == currentUser || currentUser.userName == null)
+      Navigator.of(context).pushReplacementNamed(SignUp.routeName);
     else
       Navigator.of(context).pushReplacementNamed(Home.routeName);
   }

@@ -26,7 +26,6 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48,
       margin: this.widget.margin ??
           EdgeInsets.fromLTRB(
             16,
@@ -41,7 +40,7 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
         maxLines: 1,
         style: TextStyle(fontSize: 14),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
           hintText: "Password",
           prefixIcon: const Icon(
             Icons.lock,

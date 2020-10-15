@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:post/enums/commentTypeEnum.dart';
 import 'package:post/enums/replyTypeEnum.dart';
 import 'package:post/models/comment.dart';
-import 'package:post/models/currentUser.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/models/reply.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
@@ -24,12 +24,12 @@ class CommentItem extends StatefulWidget {
   Comment comment;
   CommentItem({this.comment});
   @override
-  _CommentItemState createState() => _CommentItemState();
+  expansion createState() => expansion();
 }
 
-class _CommentItemState extends State<CommentItem> {
+class expansion extends State<CommentItem> {
   Comment _currentComment;
-  User _currentUser = CurrentUserSingletone.getInstance();
+  User _currentUser = CurrentUser();
   bool _expanded = false;
   bool _replyBarShowed = false;
 
@@ -39,12 +39,11 @@ class _CommentItemState extends State<CommentItem> {
   User _commentOwner = User(
       active: true,
       bio: "mobile developer",
-      userID: 45,
+      userID: "45",
       userName: "Ahmed Mohamed",
       userProfilePicURL: "Default",
       following: true);
 
-  //TODO:try to add a line for replies like twitter threads, convert bottom icons to a textbotton and add expand to show replies
   @override
   Widget build(BuildContext context) {
     _currentComment = widget.comment;
@@ -196,7 +195,7 @@ class _CommentItemState extends State<CommentItem> {
     );
   }
 
-//TODO: convert it column wraped with animated continer for the expantion animation
+//TODO: convert it column wrapped with animated container for the expansion animation
   Widget _createRepliesListView() {
     final List<Reply> repliesList = _currentComment.repliesList;
     final List<Widget> children = List<Widget>();

@@ -1,24 +1,26 @@
 class User {
-  int userID;
+  String userID;
   String userName;
   String bio;
-  bool following;
+  bool following; //TODO: remove following
   String userProfilePicURL;
   bool active;
   List<int> followersList;
   List<int> followingList;
+  List<int> rankedUsersList;
   List<int> postsList;
 
   User(
       {this.userID,
       this.userName,
-      this.bio,
+      this.bio = "hey I am using Post app",
       this.following,
-      this.userProfilePicURL,
-      this.active,
-      this.followersList,
-      this.followingList,
-      this.postsList});
+      this.userProfilePicURL = "Default",
+      this.active = false,
+      this.followersList = const [],
+      this.followingList = const [],
+      this.rankedUsersList = const [],
+      this.postsList = const []});
 
   User.fromJson(Map<String, dynamic> json) {
     userID = json['userID'];
@@ -27,9 +29,10 @@ class User {
     following = json['following'];
     userProfilePicURL = json['userProfilePicURLl'];
     active = json['active'];
-    followersList = json['followersList'].cast<int>();
-    followingList = json['followingList'].cast<int>();
-    postsList = json['postsList'].cast<int>();
+    followersList = json['followersList']?.cast<int>();
+    followingList = json['followingList']?.cast<int>();
+    rankedUsersList = json['rankedUsersList']?.cast<int>();
+    postsList = json['postsList']?.cast<int>();
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +45,7 @@ class User {
     data['active'] = this.active;
     data['followersList'] = this.followersList;
     data['followingList'] = this.followingList;
+    data['rankedUserList'] = this.rankedUsersList;
     data['postsList'] = this.postsList;
     return data;
   }

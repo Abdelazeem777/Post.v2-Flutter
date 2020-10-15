@@ -6,9 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class NetworkService {
-  Future<Response> get(dynamic
-  
-   apiUrl, {dynamic headers}) {
+  Future<Response> get(dynamic apiUrl, {dynamic headers}) {
     return http.get(apiUrl, headers: headers);
   }
 
@@ -21,9 +19,9 @@ class NetworkService {
     );
   }
 
-  Map<String, dynamic> convertJsonToMap(String response) {
-    return json.decode(response);
-  }
+  Map<String, dynamic> convertJsonToMap(String response) =>
+      json.decode(response);
+  String convertMapToJson(Map data) => json.encode(data);
 
   String getErrorMessage(dynamic exception) {
     String errorMessage;

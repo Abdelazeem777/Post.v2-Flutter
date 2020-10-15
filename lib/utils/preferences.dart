@@ -3,12 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Preferences {
   static const String _USERDATA = "USER_DATA";
 
-  static Future<String> getUserData() async {
+  static Future<String> getCurrentUserData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_USERDATA);
+    String userDataString = prefs.getString(_USERDATA);
+    return userDataString;
   }
 
-  static Stream<void> setUserData(String userData) {
+  static Stream<void> setCurrentUserData(String userData) {
     return Stream.fromFuture(SharedPreferences.getInstance()).map((prefs) {
       return prefs.setString(_USERDATA, userData);
     });

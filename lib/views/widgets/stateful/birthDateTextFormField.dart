@@ -24,7 +24,6 @@ class _BirthDateTextFormFieldState extends State<BirthDateTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48,
       margin: this.widget.margin ??
           EdgeInsets.fromLTRB(
             16,
@@ -38,7 +37,7 @@ class _BirthDateTextFormFieldState extends State<BirthDateTextFormField> {
         maxLines: 1,
         style: TextStyle(fontSize: 14),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
           hintText: "BirthDate",
           prefixIcon: const Icon(
             Icons.calendar_today,
