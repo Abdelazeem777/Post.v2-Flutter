@@ -13,6 +13,7 @@ import 'package:post/views/widgets/stateless/orLineSeparator.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
+//TODO:add validation to login fields
 class Login extends StatefulWidget {
   static const String routeName = '/Login';
   @override
@@ -43,7 +44,9 @@ class _LoginState extends State<Login> {
         _createWelcomeText(),
         _createLoginForm(),
         OrLineSeparator(),
-        SocialMediaLogin(),
+        SocialMediaLogin(
+          context: context,
+        ),
         _createDoNotHaveAccount()
       ],
     );
@@ -72,27 +75,32 @@ class _LoginState extends State<Login> {
 
   Widget _createLoginForm() {
     return Form(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        EmailTextFormField(
-          currentFocusNode: _viewModel.emailFocusNode,
-          nextFocusNode: _viewModel.passwordFocusNode,
-          currentController: _viewModel.emailController,
-        ),
-        PasswordTextFormField(
-          currentFocusNode: _viewModel.passwordFocusNode,
-          nextFocusNode: null,
-          currentController: _viewModel.passwordController,
-        ),
-        _createForgetPassword(),
-        SubmitButton(
-          text: "Login",
-          onPressed: () => _viewModel.login(onLoginSuccess: _goToHomePage),
-          busy: _viewModel.busy,
-        ),
-      ],
-    ));
+      key: _viewModel.formKey,
+      autovalidateMode: _viewModel.autoValidate
+          ? AutovalidateMode.onUserInteraction
+          : AutovalidateMode.disabled,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          EmailTextFormField(
+            currentFocusNode: _viewModel.emailFocusNode,
+            nextFocusNode: _viewModel.passwordFocusNode,
+            currentController: _viewModel.emailController,
+          ),
+          PasswordTextFormField(
+            currentFocusNode: _viewModel.passwordFocusNode,
+            nextFocusNode: null,
+            currentController: _viewModel.passwordController,
+          ),
+          _createForgetPassword(),
+          SubmitButton(
+            text: "Login",
+            onPressed: () => _viewModel.login(onLoginSuccess: _goToHomePage),
+            busy: _viewModel.busy,
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _createForgetPassword() {

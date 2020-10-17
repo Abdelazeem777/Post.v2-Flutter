@@ -10,25 +10,37 @@ class LoginViewModel with ChangeNotifier {
   TextEditingController passwordController = new TextEditingController();
 
   bool busy = false;
+  bool autoValidate = false;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final formKey = GlobalKey<FormState>();
   UserRepository _userRepository;
   LoginViewModel() {
     _userRepository = Injector().usersRepository;
   }
 
-  Stream<void> login({Function onLoginSuccess}) {
+  void login({Function onLoginSuccess}) {
     _startLoading();
-    String email = emailController.text;
-    String password = passwordController.text;
-    return _userRepository.login(email, password)
-      ..listen((_) {
-        _stopLoadingOnLoginSuccess();
-        onLoginSuccess();
-      }).onError((err) {
-        _stopLoadingOnLoginSuccess();
-        _showSnackBarWithTheErrorMessage(err);
-      });
+    if (formKey.currentState.validate()) {
+      String email = emailController.text;
+      String password = passwordController.text;
+      _userRepository.login(email, password)
+        ..listen((_) {
+          _stopLoadingOnLoginSuccess();
+          onLoginSuccess();
+        }).onError((err) {
+          _stopLoadingOnLoginSuccess();
+          _showSnackBarWithTheErrorMessage(err);
+        });
+    } else {
+      _stopLoadingOnValidationFalse();
+    }
+  }
+
+  void _stopLoadingOnValidationFalse() {
+    autoValidate = true;
+    busy = false;
+    notifyListeners();
   }
 
   void _stopLoadingOnLoginSuccess() {
