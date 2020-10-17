@@ -14,6 +14,7 @@ class UserNameTextFormField extends MainTextFormField {
           currentFocusNode: currentFocusNode,
           nextFocusNode: nextFocusNode,
           validator: Validator.validateUserName,
+          textCapitalization: TextCapitalization.words,
           icon: const Icon(
             Icons.person,
             color: AppColors.PRIMARY_COLOR,

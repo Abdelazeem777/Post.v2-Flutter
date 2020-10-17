@@ -53,7 +53,9 @@ class _SignUpState extends State<SignUp> {
         _createTitleText(),
         _createSignUpForm(),
         OrLineSeparator(),
-        SocialMediaLogin(),
+        SocialMediaLogin(
+          context: context,
+        ),
         _createAlreadyHaveAccount()
       ],
     );

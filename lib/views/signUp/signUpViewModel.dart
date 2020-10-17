@@ -29,7 +29,7 @@ class SignUpViewModel with ChangeNotifier {
   void signUp({Function onSignUpSuccess}) {
     _startLoading();
     if (formKey.currentState.validate()) {
-      Map newUser = _getNewUserWithInputDate();
+      User newUser = _getNewUserWithInputDate();
       _userRepository.singup(newUser).listen((_) {
         _stopLoadingOnSignUpSuccess();
         onSignUpSuccess();
@@ -63,17 +63,10 @@ class SignUpViewModel with ChangeNotifier {
     scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
-  Map _getNewUserWithInputDate() {
-    Map<String, dynamic> userMap = User().toJson();
-    Map<String, dynamic> userInputData = {
-      "userName": userNameController.text,
-      "email": emailController.text,
-      "password": passwordController.text,
-      "birthDate": birthDateController.text,
-      "phoneNumber": phoneNumberController.text,
-    };
-    userMap.addAll(userInputData);
-    userMap.remove("userID");
-    return userMap;
-  }
+  User _getNewUserWithInputDate() => User()
+    ..userName = userNameController.text
+    ..email = emailController.text
+    ..password = passwordController.text
+    ..birthDate = birthDateController.text
+    ..phoneNumber = phoneNumberController.text;
 }

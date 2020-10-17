@@ -8,6 +8,7 @@ abstract class MainTextFormField extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
   final Function(String) validator;
+  final TextCapitalization textCapitalization;
   final Icon icon;
   EdgeInsetsGeometry margin;
 
@@ -18,6 +19,7 @@ abstract class MainTextFormField extends StatelessWidget {
     @required this.hintText,
     this.keyboardType,
     @required this.validator,
+    this.textCapitalization = TextCapitalization.none,
     @required this.icon,
     this.margin,
   });
@@ -33,6 +35,7 @@ abstract class MainTextFormField extends StatelessWidget {
           keyboardType: this.keyboardType,
           maxLines: 1,
           style: TextStyle(fontSize: 14),
+          textCapitalization: textCapitalization,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(16, 0, 16, 0),
             hintText: this.hintText,

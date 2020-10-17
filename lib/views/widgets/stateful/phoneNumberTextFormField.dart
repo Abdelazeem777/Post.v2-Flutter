@@ -19,7 +19,7 @@ class PhoneNumberTextFormField extends MainTextFormField {
             color: AppColors.PRIMARY_COLOR,
             size: 21,
           ),
-          hintText: "Phone No.",
+          hintText: "Phone Number",
           keyboardType: TextInputType.phone,
           margin: margin,
         );
