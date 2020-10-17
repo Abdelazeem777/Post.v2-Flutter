@@ -9,7 +9,8 @@ import 'package:rxdart/rxdart.dart';
 
 abstract class UserRepository {
   Stream<void> login(String email, String password);
-  Stream<void> singup(Map userData);
+  Stream<void> singup(User user);
+  Stream<void> alternateLogin(User user);
   Stream<void> logout();
 }
 
@@ -32,8 +33,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Stream<void> singup(Map userData) {
-    String userJson = _networkService.convertMapToJson(userData);
+  Stream<void> singup(User user) {
+    String userJson = _networkService.convertMapToJson(user.toJson());
     return Stream.fromFuture(
             _networkService.post(ApiEndPoint.SIGN_UP, userJson))
         .flatMap((response) {
@@ -41,7 +42,27 @@ class UserRepositoryImpl implements UserRepository {
       if (response.statusCode != 200 || null == response.statusCode) {
         throw new RequestException(responseMap["message"]);
       } else {
-        return login(userData["email"], userData["password"]);
+        return login(user.email, user.password);
+      }
+    });
+  }
+
+  @override
+  Stream<void> alternateLogin(User user) {
+    Map userMap = user.toJson()
+      ..remove("userID") //to change userID key to _id
+      ..addAll({"_id": user.userID});
+
+    String userJson = _networkService.convertMapToJson(userMap);
+    return Stream.fromFuture(
+            _networkService.post(ApiEndPoint.ALTERNATE_LOGIN, userJson))
+        .flatMap((response) {
+      Map responseMap = _networkService.convertJsonToMap(response.body);
+      if (response.statusCode != 200 || null == response.statusCode) {
+        throw new RequestException(responseMap["message"]);
+      } else {
+        User user = User.fromJson(responseMap);
+        return CurrentUser().saveUserToPreference(user);
       }
     });
   }
