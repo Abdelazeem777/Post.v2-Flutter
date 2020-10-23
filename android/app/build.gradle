@@ -43,9 +43,22 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        multiDexEnabled true
+    }
+    signingConfigs {
+        debug {
+            storeFile file('/home/abdelazeem/key.jks')
+            storePassword '01118563106'
+            keyAlias 'androiddebugkey'
+            keyPassword '01118563106'
+        }
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
@@ -60,4 +73,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.facebook.android:facebook-login:[5,6)'
+    implementation 'androidx.multidex:multidex: 2.0.1'
 }
