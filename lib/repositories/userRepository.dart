@@ -11,6 +11,7 @@ abstract class UserRepository {
   Stream<void> login(String email, String password);
   Stream<void> singup(User user);
   Stream<void> alternateLogin(User user);
+  Stream<String> deleteAccount(String email);
   Stream<void> logout();
 }
 
@@ -49,11 +50,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Stream<void> alternateLogin(User user) {
-    Map userMap = user.toJson()
-      ..remove("userID") //to change userID key to _id
-      ..addAll({"_id": user.userID});
-
-    String userJson = _networkService.convertMapToJson(userMap);
+    String userJson = changeUserIDKeyTo_id(user);
     return Stream.fromFuture(
             _networkService.post(ApiEndPoint.ALTERNATE_LOGIN, userJson))
         .flatMap((response) {
@@ -63,6 +60,31 @@ class UserRepositoryImpl implements UserRepository {
       } else {
         User user = User.fromJson(responseMap);
         return CurrentUser().saveUserToPreference(user);
+      }
+    });
+  }
+
+  String changeUserIDKeyTo_id(User user) {
+    Map userMap = user.toJson()
+      ..remove("userID") //to change userID key to _id
+      ..addAll({"_id": user.userID});
+
+    String userJson = _networkService.convertMapToJson(userMap);
+    return userJson;
+  }
+
+  @override
+  Stream<String> deleteAccount(String email) {
+    String emailParam = '/$email';
+    return Stream.fromFuture(
+            _networkService.delete(ApiEndPoint.DELETE_ACCOUNT + emailParam))
+        .map((response) {
+      if (response.statusCode != 200 || null == response.statusCode) {
+        Map responseMap = _networkService.convertJsonToMap(response.body);
+        throw new RequestException(responseMap["message"]);
+      } else {
+        logout().listen((_) {});
+        return response.body.toString();
       }
     });
   }

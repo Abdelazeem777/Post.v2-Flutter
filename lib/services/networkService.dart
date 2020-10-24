@@ -19,6 +19,14 @@ class NetworkService {
     );
   }
 
+  Future<Response> delete(String _apiBaseUrl,
+      {dynamic headers = const {"Content-Type": "application/json"}}) {
+    return http.delete(
+      _apiBaseUrl,
+      headers: headers,
+    );
+  }
+
   Map<String, dynamic> convertJsonToMap(String response) =>
       json.decode(response);
   String convertMapToJson(Map data) => json.encode(data);
