@@ -5,7 +5,7 @@ import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
-import 'package:post/views/editPofilePage/editProfilePageViewModel.dart';
+import 'package:post/views/editPofilePage/editProfilePageView.dart';
 import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/login/loginView.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';

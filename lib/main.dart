@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:post/views/editPofilePage/editProfilePageViewModel.dart';
+import 'package:post/views/editPofilePage/editProfilePageView.dart';
 import 'package:post/views/newPostPage/newPostPageView.dart';
 import 'package:post/views/notificationsPage/noificationsPageView.dart';
 
