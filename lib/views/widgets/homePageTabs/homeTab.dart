@@ -437,7 +437,7 @@ class _HomeTabState extends State<HomeTab> {
                   userName: "Abdelazeem Kuratem",
                   bio: "Mobile developer",
                   followersList: [1, 5, 6, 7, 2, 8, 9],
-                  followingList: [
+                  followingRankedList: [
                     1,
                     5,
                     3,

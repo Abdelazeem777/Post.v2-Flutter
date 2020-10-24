@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/home/homeViewModel.dart';
@@ -318,32 +319,7 @@ class _ProfileTabState extends State<ProfileTab> {
       }),
     ];
 
-    _currentUser = User(
-        userName: "Abdelazeem Kuratem",
-        bio: "Mobile developer",
-        followersList: [1, 5, 6, 7, 2, 8, 9],
-        followingList: [
-          1,
-          5,
-          3,
-          8,
-          4,
-          44,
-          33,
-          98,
-          841,
-          12152151,
-          17,
-          262,
-          65,
-          62,
-          32,
-          456,
-          26
-        ],
-        postsList: [1, 3, 5, 12, 4, 8, 9, 6, 7],
-        userProfilePicURL:
-            "https://scontent.faly3-1.fna.fbcdn.net/v/t1.0-9/110315437_3755160424510365_6402932283883372240_n.jpg?_nc_cat=101&_nc_sid=09cbfe&_nc_ohc=IcR2YHTf8hAAX-WZLXa&_nc_oc=AQn5Ppu-T8UZf0D9Ne-2uxQq3DPhRTa5AY739QhLYyKwYvJaANUY2VMPmUwybfLPbPY&_nc_ht=scontent.faly3-1.fna&oh=8d5a1ac72b74646168943f9c1ad7e17d&oe=5F6C14E4");
+    _currentUser = CurrentUser();
   }
 
   @override
@@ -451,7 +427,7 @@ class _ProfileTabState extends State<ProfileTab> {
             text: "Followers",
             onPressed: () {}),
         _createText(
-            number: _currentUser.followingList.length,
+            number: _currentUser.followingRankedList.length,
             text: "Following",
             onPressed: () {})
       ],
@@ -520,7 +496,6 @@ class _ProfileTabState extends State<ProfileTab> {
     );
   }
 
-//TODO:here!!
   Widget _createLogoutButton() {
     return Selector<ProfileTabViewModel, bool>(selector: (context, viewModel) {
       this._viewModel = viewModel;

@@ -58,30 +58,28 @@ class _SubmitButtonState extends State<SubmitButton> {
 
   Widget createFlatButton() {
     return FlatButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        padding: EdgeInsets.fromLTRB(34, 13, 34, 13),
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              this.widget.text,
-              style: TextStyle(color: Colors.white, fontSize: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      padding: EdgeInsets.fromLTRB(34, 13, 34, 13),
+      child: Wrap(
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          Text(
+            this.widget.text,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+          ),
+          Hero(
+            tag: "submit",
+            child: Icon(
+              Icons.chevron_right,
+              color: Colors.white,
             ),
-            Hero(
-              tag: "submit",
-              child: Icon(
-                Icons.chevron_right,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-        onPressed: widget
-            .onPressed //TODO: Don't foget it should be--> widget.onPressed,
-
-        );
+          ),
+        ],
+      ),
+      onPressed: widget.onPressed,
+    );
   }
 
   Widget createLoadingAnimation() {

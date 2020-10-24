@@ -32,7 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigationPage() async {
-    //TODO: don't forget to uncomment these lines!
     User currentUser = await CurrentUser().loadCurrentUserDataFromPreference();
     if (null == currentUser || currentUser.userName == null)
       Navigator.of(context).pushReplacementNamed(SignUp.routeName);

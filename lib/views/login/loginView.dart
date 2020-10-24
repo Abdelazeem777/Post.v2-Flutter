@@ -11,9 +11,7 @@ import 'package:post/views/widgets/stateless/socialMediaLogin.dart';
 import 'package:post/views/widgets/stateful/submitButton.dart';
 import 'package:post/views/widgets/stateless/orLineSeparator.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
-//TODO:add validation to login fields
 class Login extends StatefulWidget {
   static const String routeName = '/Login';
   @override

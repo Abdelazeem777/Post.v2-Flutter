@@ -49,7 +49,6 @@ class FaceBookLoginHandler extends AlternateLoginHandler {
     Map<String, dynamic> userMap =
         _networkService.convertJsonToMap(facebookUserStringJSON);
     userMap.addAll({"accessToken": token});
-    print(userMap);
     User user = UserAdapter.adapt(userMap);
     return user;
   }
