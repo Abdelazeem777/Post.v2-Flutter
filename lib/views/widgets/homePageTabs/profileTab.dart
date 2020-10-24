@@ -5,6 +5,7 @@ import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/editPofilePage/editProfilePageViewModel.dart';
 import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/login/loginView.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';
@@ -471,7 +472,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   Widget _createEditProfileButton() {
     return InkWell(
-      onTap: () {},
+      onTap: _goToEditProfilePage,
       child: Container(
           padding: EdgeInsets.fromLTRB(10, 8, 12, 8),
           decoration: BoxDecoration(
@@ -520,4 +521,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   void _goToLoginPage() =>
       Navigator.of(context).popAndPushNamed(Login.routeName);
+
+  void _goToEditProfilePage() =>
+      Navigator.of(context).pushNamed(EditProfilePage.routeName);
 }
