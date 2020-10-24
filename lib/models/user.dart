@@ -13,8 +13,7 @@ class User {
   String password;
   String accessToken;
   List<int> followersList;
-  List<int> followingList;
-  List<int> rankedUsersList;
+  List<int> followingRankedList;
   List<int> postsList;
 
   User({
@@ -30,8 +29,7 @@ class User {
     this.password,
     this.accessToken,
     this.followersList = const [],
-    this.followingList = const [],
-    this.rankedUsersList = const [],
+    this.followingRankedList = const [],
     this.postsList = const [],
   });
 
@@ -48,8 +46,7 @@ class User {
     password = json['password'];
     accessToken = json['accessToken'];
     followersList = json['followersList']?.cast<int>();
-    followingList = json['followingList']?.cast<int>();
-    rankedUsersList = json['rankedUsersList']?.cast<int>();
+    followingRankedList = json['followingRankedList']?.cast<int>();
     postsList = json['postsList']?.cast<int>();
   }
 
@@ -67,8 +64,7 @@ class User {
     data['password'] = this.password;
     data['accessToken'] = this.accessToken;
     data['followersList'] = this.followersList;
-    data['followingList'] = this.followingList;
-    data['rankedUserList'] = this.rankedUsersList;
+    data['followingRankedList'] = this.followingRankedList;
     data['postsList'] = this.postsList;
     return data..removeWhere((key, value) => key == null || value == null);
   }
@@ -90,8 +86,7 @@ class User {
         o.password == password &&
         o.accessToken == accessToken &&
         listEquals(o.followersList, followersList) &&
-        listEquals(o.followingList, followingList) &&
-        listEquals(o.rankedUsersList, rankedUsersList) &&
+        listEquals(o.followingRankedList, followingRankedList) &&
         listEquals(o.postsList, postsList);
   }
 
@@ -109,14 +104,13 @@ class User {
         password.hashCode ^
         accessToken.hashCode ^
         followersList.hashCode ^
-        followingList.hashCode ^
-        rankedUsersList.hashCode ^
+        followingRankedList.hashCode ^
         postsList.hashCode;
   }
 
   @override
   String toString() {
-    return 'User(userID: $userID, userName: $userName, phoneNumber: $phoneNumber, birthDate: $birthDate, bio: $bio, following: $following, userProfilePicURL: $userProfilePicURL, active: $active, email: $email, password: $password, accessToken: $accessToken, followersList: $followersList, followingList: $followingList, rankedUsersList: $rankedUsersList, postsList: $postsList)';
+    return 'User(userID: $userID, userName: $userName, phoneNumber: $phoneNumber, birthDate: $birthDate, bio: $bio, following: $following, userProfilePicURL: $userProfilePicURL, active: $active, email: $email, password: $password, accessToken: $accessToken, followersList: $followersList, followingRankedList: $followingRankedList, postsList: $postsList)';
   }
 
   User copyWith({
@@ -132,8 +126,7 @@ class User {
     String password,
     String accessToken,
     List<int> followersList,
-    List<int> followingList,
-    List<int> rankedUsersList,
+    List<int> followingRankedList,
     List<int> postsList,
   }) {
     return User(
@@ -149,8 +142,7 @@ class User {
       password: password ?? this.password,
       accessToken: accessToken ?? this.accessToken,
       followersList: followersList ?? this.followersList,
-      followingList: followingList ?? this.followingList,
-      rankedUsersList: rankedUsersList ?? this.rankedUsersList,
+      followingRankedList: followingRankedList ?? this.followingRankedList,
       postsList: postsList ?? this.postsList,
     );
   }

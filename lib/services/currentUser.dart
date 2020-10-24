@@ -31,9 +31,8 @@ class CurrentUser extends User {
     _currentUserSingletone.active = user.active;
     _currentUserSingletone.bio = user.bio;
     _currentUserSingletone.followersList = user.followersList;
-    _currentUserSingletone.followingList = user.followingList;
+    _currentUserSingletone.followingRankedList = user.followingRankedList;
     _currentUserSingletone.postsList = user.postsList;
-    _currentUserSingletone.rankedUsersList = user.rankedUsersList;
     _currentUserSingletone.userID = user.userID;
     _currentUserSingletone.userName = user.userName;
     _currentUserSingletone.userProfilePicURL = user.userProfilePicURL;
