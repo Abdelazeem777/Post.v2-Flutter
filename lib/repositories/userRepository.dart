@@ -13,6 +13,8 @@ abstract class UserRepository {
   Stream<void> alternateLogin(User user);
   Stream<String> deleteAccount(String email);
   Stream<void> logout();
+  Stream<void> uploadProfilePic(Map<String, String> imageMap);
+  Stream<String> updateProfileData(String newUserName, String newBio);
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -78,13 +80,14 @@ class UserRepositoryImpl implements UserRepository {
     String emailParam = '/$email';
     return Stream.fromFuture(
             _networkService.delete(ApiEndPoint.DELETE_ACCOUNT + emailParam))
-        .map((response) {
+        .flatMap((response) {
       if (response.statusCode != 200 || null == response.statusCode) {
         Map responseMap = _networkService.convertJsonToMap(response.body);
         throw new RequestException(responseMap["message"]);
       } else {
-        logout().listen((_) {});
-        return response.body.toString();
+        return logout().map((_) {
+          return response.body.toString();
+        });
       }
     });
   }
@@ -92,5 +95,48 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Stream<void> logout() {
     return CurrentUser().logout();
+  }
+
+  @override
+  Stream<void> uploadProfilePic(Map<String, String> imageMap) {
+    imageMap.addAll({'userID': CurrentUser().userID});
+    String imageJson = _networkService.convertMapToJson(imageMap);
+    return Stream.fromFuture(
+            _networkService.post(ApiEndPoint.UPLOAD_PROFILE_PIC, imageJson))
+        .flatMap((response) {
+      Map responseMap = _networkService.convertJsonToMap(response.body);
+      if (response.statusCode != 200 || null == response.statusCode) {
+        throw new RequestException(responseMap["message"]);
+      } else {
+        CurrentUser().userProfilePicURL = User()
+            .fixUserProfilePicURLIfNeeded(responseMap['userProfilePicURL']);
+        return CurrentUser().saveUserToPreference();
+      }
+    });
+  }
+
+  @override
+  Stream<String> updateProfileData(String newUserName, String newBio) {
+    var newProfileDataMap = {
+      'userID': CurrentUser().userID,
+      'userName': newUserName,
+      'bio': newBio
+    };
+    var newProfileData = _networkService.convertMapToJson(newProfileDataMap);
+    return Stream.fromFuture(_networkService.patch(
+            ApiEndPoint.UPDATE_PROFILE_DATA, newProfileData))
+        .flatMap((response) {
+      if (response.statusCode != 200 || null == response.statusCode) {
+        Map responseMap = _networkService.convertJsonToMap(response.body);
+        throw new RequestException(responseMap["message"]);
+      } else {
+        CurrentUser()
+          ..userName = newUserName
+          ..bio = newBio;
+        return CurrentUser().saveUserToPreference().map((_) {
+          return response.body.toString();
+        });
+      }
+    });
   }
 }

@@ -40,9 +40,8 @@ class _HomeState extends State<Home> {
               type: MaterialType.transparency,
               child: ClipPath(
                 clipper: _AppBarCustomClipPath(),
-                child: AnimatedContainer(
-                  height: _isVisible ? 106 : 0,
-                  duration: Duration(milliseconds: 300),
+                child: Container(
+                  height: 106,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topRight,

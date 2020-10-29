@@ -9,7 +9,6 @@ import 'package:rxdart/rxdart.dart';
 
 main() {
   group('Normal user: ', () {
-    @visibleForTesting
     User _testingUser = User(
       userName: "testing user",
       phoneNumber: '0111863106',
@@ -87,27 +86,26 @@ main() {
     UserRepository _userRepository = Injector().usersRepository;
     User _googleUser = User(
       userName: "Google Account",
-      userProfilePicURL: "Google_profile_picture.jpg",
+      userProfilePicURL: "http://Google_profile_picture.jpg",
       userID: "1111111111111",
       email: "googleAccount@gmail.com",
     );
     test('login with valid account', () {
       _userRepository.alternateLogin(_googleUser).listen(expectAsync1((_) {
         User actualUser = CurrentUser();
-        User matcherUser = _googleUser.copyWith()..email = null;
+        User matcherUser = _googleUser.copyWith();
         expect(actualUser, matcherUser);
       }));
     });
 
     test('login with valid account but with new profile picture', () {
       User _googleUserWithNewProfilePic = _googleUser.copyWith(
-          userProfilePicURL: "New_Google_profile_picture.jpg");
+          userProfilePicURL: "http://New_Google_profile_picture.jpg");
       _userRepository
           .alternateLogin(_googleUserWithNewProfilePic)
           .listen(expectAsync1((_) {
         User actualUser = CurrentUser();
-        User matcherUser = _googleUserWithNewProfilePic.copyWith()
-          ..email = null;
+        User matcherUser = _googleUserWithNewProfilePic.copyWith();
         expect(actualUser, matcherUser);
       }));
     });
@@ -124,33 +122,142 @@ main() {
     UserRepository _userRepository = Injector().usersRepository;
     User _facebookUser = User(
       userName: "Facebook Account",
-      userProfilePicURL: "Facebook_profile_picture.jpg",
+      userProfilePicURL: "http://Facebook_profile_picture.jpg",
       userID: "1111111111111",
       email: "facebookAccount@gmail.com",
     );
     test('login with valid account', () {
       _userRepository.alternateLogin(_facebookUser).listen(expectAsync1((_) {
         User actualUser = CurrentUser();
-        User matcherUser = _facebookUser.copyWith()..email = null;
+        User matcherUser = _facebookUser.copyWith();
         expect(actualUser, matcherUser);
       }));
     });
 
     test('login with valid account but with new profile picture', () {
       User _facebookUserWithNewProfilePic = _facebookUser.copyWith(
-          userProfilePicURL: "New_Facebook_profile_picture.jpg");
+          userProfilePicURL: "http://New_Facebook_profile_picture.jpg");
       _userRepository
           .alternateLogin(_facebookUserWithNewProfilePic)
           .listen(expectAsync1((_) {
         User actualUser = CurrentUser();
-        User matcherUser = _facebookUserWithNewProfilePic.copyWith()
-          ..email = null;
+        User matcherUser = _facebookUserWithNewProfilePic.copyWith();
         expect(actualUser, matcherUser);
       }));
     });
     test('Delete existing account', () {
       _userRepository
           .deleteAccount(_facebookUser.email)
+          .listen(expectAsync1((res) {
+        expect(res, 'Deleted successfully');
+      }));
+    });
+  });
+
+  group("update userProfilePic", () {
+    String _imageBase64 =
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=';
+    String _ext = 'png';
+    User _testingUser = User(
+      userName: "testing user",
+      phoneNumber: '0111863106',
+      email: 'testing_user@test.com',
+      password: 'TestingUser123',
+      birthDate: DateTime.now()
+          .subtract(Duration(days: 365 * 25)) //date before 25 years from now
+          .toLocal()
+          .toString()
+          .split(' ')[0],
+    );
+    UserRepository _userRepository = Injector().usersRepository;
+
+    WidgetsFlutterBinding.ensureInitialized();
+
+    test('Signup with valid inputs', () {
+      expect(
+          () =>
+              _userRepository.singup(_testingUser).listen(expectAsync1((_) {})),
+          returnsNormally);
+    });
+    group('login and change the userProfilePic', () {
+      test('Login with valid inputs', () {
+        expect(
+            () => _userRepository
+                .login(_testingUser.email, _testingUser.password)
+                .listen(expectAsync1((_) {})),
+            returnsNormally);
+      });
+      test('test update userProfilePic', () {
+        expect(
+            () => _userRepository
+                .uploadProfilePic({'base64': _imageBase64, 'ext': _ext}).listen(
+                    expectAsync1((_) {})),
+            returnsNormally);
+      });
+
+      test('check the new value of userProfilePic exists in prefs', () {
+        String matcher = CurrentUser().userProfilePicURL;
+        CurrentUser()
+            .loadCurrentUserDataFromPreference()
+            .then((user) => expect(user.userProfilePicURL, matcher));
+      });
+    });
+
+    test('Delete existing account', () {
+      _userRepository
+          .deleteAccount(_testingUser.email)
+          .listen(expectAsync1((res) {
+        expect(res, 'Deleted successfully');
+      }));
+    });
+  });
+  group('Update profile data: ', () {
+    User _testingUser = User(
+      userName: "testing user",
+      phoneNumber: '0111863106',
+      email: 'testing_user@test.com',
+      password: 'TestingUser123',
+      birthDate: DateTime.now()
+          .subtract(Duration(days: 365 * 25)) //date before 25 years from now
+          .toLocal()
+          .toString()
+          .split(' ')[0],
+    );
+    var newUserName = 'New User Name';
+    var newBio = 'hey there I am still using post app';
+    UserRepository _userRepository = Injector().usersRepository;
+
+    WidgetsFlutterBinding.ensureInitialized();
+
+    test('Signup with valid inputs', () {
+      expect(
+          () =>
+              _userRepository.singup(_testingUser).listen(expectAsync1((_) {})),
+          returnsNormally);
+    });
+
+    test('update userName and Bio', () {
+      _userRepository
+          .updateProfileData(newUserName, newBio)
+          .listen(expectAsync1((response) {
+        expect(CurrentUser().userName, newUserName);
+        expect(CurrentUser().bio, newBio);
+        expect(response, 'Updated successfully');
+      }));
+    });
+
+    test('Login with valid inputs', () {
+      _userRepository
+          .login(_testingUser.email, _testingUser.password)
+          .listen(expectAsync1((_) {
+        expect(CurrentUser().userName, newUserName);
+        expect(CurrentUser().bio, newBio);
+      }));
+    });
+
+    test('Delete existing account', () {
+      _userRepository
+          .deleteAccount(_testingUser.email)
           .listen(expectAsync1((res) {
         expect(res, 'Deleted successfully');
       }));

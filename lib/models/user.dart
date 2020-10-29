@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:post/apiEndpoint.dart';
 
 class User {
   String userID;
@@ -40,7 +41,7 @@ class User {
     birthDate = json['birthDate'];
     bio = json['bio'];
     following = json['following'];
-    userProfilePicURL = json['userProfilePicURL'];
+    userProfilePicURL = fixUserProfilePicURLIfNeeded(json['userProfilePicURL']);
     active = json['active'];
     email = json['email'];
     password = json['password'];
@@ -145,5 +146,39 @@ class User {
       followingRankedList: followingRankedList ?? this.followingRankedList,
       postsList: postsList ?? this.postsList,
     );
+  }
+
+  void clone(User user) {
+    this.userID = user.userID ?? this.userID;
+    this.userName = user.userName ?? this.userName;
+    this.phoneNumber = user.phoneNumber ?? this.phoneNumber;
+    this.birthDate = user.birthDate ?? this.birthDate;
+    this.bio = user.bio ?? this.bio;
+    this.following = user.following ?? this.following;
+    this.userProfilePicURL = user.userProfilePicURL ?? this.userProfilePicURL;
+    this.active = user.active ?? this.active;
+    this.email = user.email ?? this.email;
+    this.password = user.password ?? this.password;
+    this.accessToken = user.accessToken ?? this.accessToken;
+    this.followersList = user.followersList ?? this.followersList;
+    this.followingRankedList =
+        user.followingRankedList ?? this.followingRankedList;
+    this.postsList = user.postsList ?? this.postsList;
+  }
+
+  ///before adding userProfilePic you need to pass it
+  /// to this method to convert it to the correct format
+  ///
+  /// if it contains 'Default' or a facebook or google profile picture
+  /// it will return it without changes but
+  ///
+  /// if not
+  ///
+  /// it will add 'http://' at the first of it
+  String fixUserProfilePicURLIfNeeded(String profilePicURL) {
+    return profilePicURL.toString().contains('Default') ||
+            profilePicURL.toString().contains('http')
+        ? profilePicURL
+        : ApiEndPoint.REQUEST_URL + profilePicURL;
   }
 }

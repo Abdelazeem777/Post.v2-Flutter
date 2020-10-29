@@ -4,4 +4,8 @@ class ApiEndPoint {
   static const String LOGIN = REQUEST_URL + "/account/login";
   static const String ALTERNATE_LOGIN = REQUEST_URL + "/account/alternateLogin";
   static const String DELETE_ACCOUNT = REQUEST_URL + '/account/deleteAccount';
+  static const String UPLOAD_PROFILE_PIC =
+      REQUEST_URL + '/account/uploadProfilePic';
+  static const String UPDATE_PROFILE_DATA =
+      REQUEST_URL + '/account/updateProfileData';
 }

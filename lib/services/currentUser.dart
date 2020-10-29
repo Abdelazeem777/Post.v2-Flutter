@@ -10,9 +10,15 @@ class CurrentUser extends User {
 
   factory CurrentUser() => _currentUserSingletone;
 
-  Stream<void> saveUserToPreference(User user) {
-    _cloneToCurrentUserSingletone(user);
-    return Preferences.setCurrentUserData(json.encode(user.toJson()));
+  ///save currentUser data to preference,
+  ///
+  ///User parameter is optional, if exist then clone its data to currentUser and then save it
+  Stream<void> saveUserToPreference([User user]) {
+    if (user != null) _currentUserSingletone.clone(user);
+
+    Map userMap = _currentUserSingletone.toJson();
+    String userString = json.encode(userMap);
+    return Preferences.setCurrentUserData(userString);
   }
 
   Future<User> loadCurrentUserDataFromPreference() async {
@@ -20,21 +26,10 @@ class CurrentUser extends User {
       if (userDataString == null) return;
       Map userMap = json.decode(userDataString);
       User user = User.fromJson(userMap);
-      _cloneToCurrentUserSingletone(user);
+      _currentUserSingletone.clone(user);
     });
     return _currentUserSingletone;
   }
 
   Stream<void> logout() => Preferences.clear();
-
-  void _cloneToCurrentUserSingletone(User user) {
-    _currentUserSingletone.active = user.active;
-    _currentUserSingletone.bio = user.bio;
-    _currentUserSingletone.followersList = user.followersList;
-    _currentUserSingletone.followingRankedList = user.followingRankedList;
-    _currentUserSingletone.postsList = user.postsList;
-    _currentUserSingletone.userID = user.userID;
-    _currentUserSingletone.userName = user.userName;
-    _currentUserSingletone.userProfilePicURL = user.userProfilePicURL;
-  }
 }

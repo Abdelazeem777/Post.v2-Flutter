@@ -19,6 +19,15 @@ class NetworkService {
     );
   }
 
+  Future<Response> patch(String _apiBaseUrl, dynamic data,
+      {dynamic headers = const {"Content-Type": "application/json"}}) {
+    return http.patch(
+      _apiBaseUrl,
+      body: data,
+      headers: headers,
+    );
+  }
+
   Future<Response> delete(String _apiBaseUrl,
       {dynamic headers = const {"Content-Type": "application/json"}}) {
     return http.delete(

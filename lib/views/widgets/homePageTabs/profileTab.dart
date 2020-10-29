@@ -377,13 +377,18 @@ class _ProfileTabState extends State<ProfileTab> {
 
   Widget _createCurrentUserProfilePicture() {
     return Container(
-      margin: EdgeInsets.only(right: 16),
-      width: SizeConfig.safeBlockHorizontal * 25,
-      height: SizeConfig.safeBlockHorizontal * 25,
-      child: UserProfilePicture(
-        imageURL: _currentUser.userProfilePicURL,
-      ),
-    );
+        margin: EdgeInsets.only(right: 16),
+        width: SizeConfig.safeBlockHorizontal * 25,
+        height: SizeConfig.safeBlockHorizontal * 25,
+        child: Hero(
+          tag: "CurrentUserProfilePic",
+          child: Material(
+            type: MaterialType.transparency,
+            child: UserProfilePicture(
+              imageURL: _currentUser.userProfilePicURL,
+            ),
+          ),
+        ));
   }
 
   Widget _createFollowersAndButtons() {
