@@ -13,9 +13,9 @@ class User {
   String email;
   String password;
   String accessToken;
-  List<int> followersList;
-  List<int> followingRankedList;
-  List<int> postsList;
+  List<String> followersList;
+  List<String> followingRankedList;
+  List<String> postsList;
 
   User({
     this.userID,
@@ -46,9 +46,9 @@ class User {
     email = json['email'];
     password = json['password'];
     accessToken = json['accessToken'];
-    followersList = json['followersList']?.cast<int>();
-    followingRankedList = json['followingRankedList']?.cast<int>();
-    postsList = json['postsList']?.cast<int>();
+    followersList = json['followersList']?.cast<String>();
+    followingRankedList = json['followingRankedList']?.cast<String>();
+    postsList = json['postsList']?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -126,9 +126,9 @@ class User {
     String email,
     String password,
     String accessToken,
-    List<int> followersList,
-    List<int> followingRankedList,
-    List<int> postsList,
+    List<String> followersList,
+    List<String> followingRankedList,
+    List<String> postsList,
   }) {
     return User(
       userID: userID ?? this.userID,

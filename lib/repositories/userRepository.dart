@@ -1,4 +1,3 @@
-import 'package:http/http.dart';
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';

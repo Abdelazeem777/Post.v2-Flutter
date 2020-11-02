@@ -4,8 +4,8 @@ import 'react.dart';
 import 'comment.dart';
 
 class Post {
-  int postID;
-  int userID;
+  String postID;
+  String userID;
   String postContent;
   PostType postType;
   int timestamp;
@@ -13,15 +13,16 @@ class Post {
   int numberOfShares;
   List<Comment> commentsList;
 
-  Post(
-      {this.postID,
-      this.userID,
-      this.postContent,
-      this.postType,
-      this.timestamp,
-      this.reactsList,
-      this.numberOfShares,
-      this.commentsList});
+  Post({
+    this.postID,
+    this.userID,
+    this.postContent,
+    this.postType = PostType.Text,
+    this.timestamp,
+    this.reactsList = const [],
+    this.numberOfShares = 0,
+    this.commentsList = const [],
+  });
 
   Post.fromJson(Map<String, dynamic> json) {
     postID = json['postID'];
