@@ -178,7 +178,8 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  void _goToLoginPage() => Navigator.of(context).pushNamed(Login.routeName);
+  void _goToLoginPage() =>
+      Navigator.of(context).popAndPushNamed(Login.routeName);
 
   void _goToHomePage() => Navigator.of(context).popAndPushNamed(Home.routeName);
 }
