@@ -5,8 +5,8 @@ import 'react.dart';
 import 'reply.dart';
 
 class Comment {
-  int commentID;
-  int userID;
+  String commentID;
+  String userID;
   String commentContent;
   CommentType commentType;
   int timestamp;

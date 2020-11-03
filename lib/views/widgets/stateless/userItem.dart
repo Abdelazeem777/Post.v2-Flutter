@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
+
 import 'package:post/models/user.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 import 'package:post/views/widgets/stateless/userNameAndBio.dart';
+import 'package:provider/provider.dart';
 
-import 'followButton.dart';
+import '../stateful/followButton.dart';
 
-class UserItem extends StatefulWidget {
+class UserItem extends StatelessWidget {
   final User user;
-  UserItem(this.user);
+  const UserItem({
+    Key key,
+    this.user,
+  }) : super(key: key);
 
-  @override
-  _UserItemState createState() => _UserItemState();
-}
-
-class _UserItemState extends State<UserItem> {
   @override
   Widget build(BuildContext context) {
-    String userName = this.widget.user.userName;
-    String profileURL = this.widget.user.userProfilePicURL;
-    String bio = this.widget.user.bio;
-    bool active = this.widget.user.active;
-    bool following = this.widget.user.following;
+    final _viewModel = Provider.of<SearchTabViewModel>(context);
+    final userID = user.userID;
+    final userName = user.userName;
+    final profileURL = user.userProfilePicURL;
+    final bio = user.bio;
+    final active = user.active;
+
+    bool following = CurrentUser().isFollowing(userID);
     return Container(
       width: SizeConfig.screenWidth,
       padding: EdgeInsets.only(top: 16, bottom: 16),
@@ -42,9 +47,17 @@ class _UserItemState extends State<UserItem> {
           ),
           UserNameAndBio(userName: userName, bio: bio),
           Spacer(),
-          FollowButton(following: following, onPressed: () {})
+          (_isTheCurrentUser(userID))
+              ? Container()
+              : FollowButton(
+                  following: following,
+                  onPressed: () => (following)
+                      ? _viewModel.unFollow(userID)
+                      : _viewModel.follow(userID))
         ],
       ),
     );
   }
+
+  bool _isTheCurrentUser(String userID) => userID == CurrentUser().userID;
 }

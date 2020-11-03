@@ -4,8 +4,8 @@ import 'package:post/enums/replyTypeEnum.dart';
 import 'react.dart';
 
 class Reply {
-  int replyID;
-  int userID;
+  String replyID;
+  String userID;
   String replyContent;
   ReplyType replyType;
   int timestamp;

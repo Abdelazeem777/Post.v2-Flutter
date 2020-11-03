@@ -2,7 +2,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:post/enums/reactTypeEnum.dart';
 
 class React {
-  int userID;
+  String userID;
   ReactType reactType;
 
   React({this.userID, this.reactType});

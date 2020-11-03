@@ -20,16 +20,30 @@ class _HomeState extends State<Home> {
   bool _isVisible = true;
 
   ScrollController _scrollController;
-  TextEditingController _searchTextController;
   FocusNode _searchFocusNode;
 
   @override
   initState() {
     super.initState();
-    _searchTextController = TextEditingController();
     _searchFocusNode = FocusNode();
-    _scrollController = new ScrollController();
+    _scrollController = ScrollController();
     _addListenerToScrollController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _createAppBar(),
+      body: SafeArea(
+        top: false,
+        child: _createHomePage(),
+      ),
+      bottomNavigationBar: _createBottomNavBar(),
+      floatingActionButton:
+          _currentPage == 1 ? _createFloatingActionButton() : null,
+      extendBodyBehindAppBar: true,
+      resizeToAvoidBottomPadding: false,
+    );
   }
 
   Widget _createAppBar() {
@@ -93,7 +107,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         child: [
-          SearchTab(_scrollController, _searchTextController, _searchFocusNode),
+          SearchTab(_scrollController, _searchFocusNode),
           HomeTab(_scrollController),
           ProfileTab(_scrollController),
         ].elementAt(_currentPage));
@@ -147,22 +161,6 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _createAppBar(),
-      body: SafeArea(
-        top: false,
-        child: _createHomePage(),
-      ),
-      bottomNavigationBar: _createBottomNavBar(),
-      floatingActionButton:
-          _currentPage == 1 ? _createFloatingActionButton() : null,
-      extendBodyBehindAppBar: true,
-      resizeToAvoidBottomPadding: false,
     );
   }
 
