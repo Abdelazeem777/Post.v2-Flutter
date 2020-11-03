@@ -37,7 +37,6 @@ main() {
       _otherUsersRepository
           .searchForUsers(searchText)
           .listen(expectAsync1((usersList) {
-        print(usersList);
         for (var i = 0; i < 10; i++) {
           _testingUsersList[i].userID = usersList[i].userID;
         }
@@ -46,13 +45,23 @@ main() {
     });
     test('follow a user', () {
       var targetUser = _testingUsersList[5];
-      print(targetUser.userID);
       _otherUsersRepository
           .follow(CurrentUser().userID, targetUser.userID)
           .listen(expectAsync1((response) {
         expect(response, 'Ok');
         expect(CurrentUser().followingRankedList.contains(targetUser.userID),
             true);
+      }));
+    });
+
+    test('unfollow a user', () {
+      var targetUser = _testingUsersList[5];
+      _otherUsersRepository
+          .unFollow(CurrentUser().userID, targetUser.userID)
+          .listen(expectAsync1((response) {
+        expect(response, 'Ok');
+        expect(CurrentUser().followingRankedList.contains(targetUser.userID),
+            false);
       }));
     });
 
