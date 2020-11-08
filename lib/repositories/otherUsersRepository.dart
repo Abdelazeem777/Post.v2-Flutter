@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
@@ -10,6 +11,8 @@ abstract class OtherUsersRepository {
   Stream<List<User>> searchForUsers(String userName);
   Stream<String> follow(String currentUserID, String targetUserID);
   Stream<String> unFollow(String currentUserID, String targetUserID);
+  Stream<List<User>> loadFollowingList(String userID);
+  Stream<List<User>> loadFollowersList(String userID);
 }
 
 class OtherUsersRepositoryImpl extends OtherUsersRepository {
@@ -72,6 +75,40 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
         return CurrentUser()
             .saveUserToPreference()
             .map((_) => response.body.toString());
+      }
+    });
+  }
+
+  @override
+  Stream<List<User>> loadFollowingList(String userID) {
+    String userIDParam = '/$userID';
+    return Stream.fromFuture(
+            _networkService.get(ApiEndPoint.LOAD_FOLLOWING_LIST + userIDParam))
+        .map((response) {
+      Map responseMap = _networkService.convertJsonToMap(response.body);
+      if (response.statusCode != 200 || null == response.statusCode) {
+        throw new RequestException(responseMap["message"]);
+      } else {
+        var usersListOfJson = responseMap['usersList'] as List;
+        List<User> usersList = _getUsersFromJsonList(usersListOfJson);
+        return usersList;
+      }
+    });
+  }
+
+  @override
+  Stream<List<User>> loadFollowersList(String userID) {
+    String userIDParam = '/$userID';
+    return Stream.fromFuture(
+            _networkService.get(ApiEndPoint.LOAD_FOLLOWERS_LIST + userIDParam))
+        .map((response) {
+      Map responseMap = _networkService.convertJsonToMap(response.body);
+      if (response.statusCode != 200 || null == response.statusCode) {
+        throw new RequestException(responseMap["message"]);
+      } else {
+        var usersListOfJson = responseMap['usersList'] as List;
+        List<User> usersList = _getUsersFromJsonList(usersListOfJson);
+        return usersList;
       }
     });
   }

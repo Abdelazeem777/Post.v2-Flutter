@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/src/response.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
@@ -11,7 +11,7 @@ import 'package:post/services/networkService.dart';
 import 'userAdapter.dart';
 
 class FaceBookLoginHandler extends AlternateLoginHandler {
-  final UserRepository _userRepository = Injector().usersRepository;
+  final _currentUserRepository = Injector().currentUsersRepository;
   final facebookLogin = FacebookLogin();
   final _networkService = Injector().networkService;
   @override
@@ -39,7 +39,7 @@ class FaceBookLoginHandler extends AlternateLoginHandler {
 
     User user = getUserFromFacebookResponseBody(graphResponse, token);
 
-    _userRepository.alternateLogin(user).listen((_) {
+    _currentUserRepository.alternateLogin(user).listen((_) {
       onLoginSuccess();
     }).onError((err) => print(err));
   }

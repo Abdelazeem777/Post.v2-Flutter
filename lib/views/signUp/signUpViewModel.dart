@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 
 class SignUpViewModel with ChangeNotifier {
   final FocusNode userNameFocusNode = FocusNode();
@@ -22,15 +22,15 @@ class SignUpViewModel with ChangeNotifier {
   bool autoValidate = false;
   bool busy = false;
 
-  UserRepository _userRepository;
+  CurrentUserRepository _currentUserRepository;
   SignUpViewModel() {
-    _userRepository = Injector().usersRepository;
+    _currentUserRepository = Injector().currentUsersRepository;
   }
   void signUp({Function onSignUpSuccess}) {
     _startLoading();
     if (formKey.currentState.validate()) {
       User newUser = _getNewUserWithInputDate();
-      _userRepository.singup(newUser).listen((_) {
+      _currentUserRepository.singup(newUser).listen((_) {
         _stopLoadingOnSignUpSuccess();
         onSignUpSuccess();
       }).onError((err) {

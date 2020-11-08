@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 
 class LoginViewModel with ChangeNotifier {
   final FocusNode emailFocusNode = FocusNode();
@@ -14,9 +14,9 @@ class LoginViewModel with ChangeNotifier {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
-  UserRepository _userRepository;
+  CurrentUserRepository _currentUserRepository;
   LoginViewModel() {
-    _userRepository = Injector().usersRepository;
+    _currentUserRepository = Injector().currentUsersRepository;
   }
 
   void login({Function onLoginSuccess}) {
@@ -24,7 +24,7 @@ class LoginViewModel with ChangeNotifier {
     if (formKey.currentState.validate()) {
       String email = emailController.text;
       String password = passwordController.text;
-      _userRepository.login(email, password)
+      _currentUserRepository.login(email, password)
         ..listen((_) {
           _stopLoadingOnLoginSuccess();
           onLoginSuccess();

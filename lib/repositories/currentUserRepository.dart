@@ -6,7 +6,7 @@ import 'package:post/services/networkService.dart';
 import 'package:post/utils/requestException.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class UserRepository {
+abstract class CurrentUserRepository {
   Stream<void> login(String email, String password);
   Stream<void> singup(User user);
   Stream<void> alternateLogin(User user);
@@ -16,7 +16,7 @@ abstract class UserRepository {
   Stream<String> updateProfileData(String newUserName, String newBio);
 }
 
-class UserRepositoryImpl implements UserRepository {
+class CurrentUserRepositoryImpl implements CurrentUserRepository {
   final NetworkService _networkService = Injector().networkService;
   @override
   Stream<void> login(String email, String password) {

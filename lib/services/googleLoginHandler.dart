@@ -2,13 +2,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:post/di/injection.dart';
 
 import 'package:post/models/user.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 
 import 'userAdapter.dart';
 
 class GoogleLoginHandler extends AlternateLoginHandler {
-  final UserRepository _userRepository = Injector().usersRepository;
+  final _currentUserRepository = Injector().currentUsersRepository;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
@@ -16,7 +16,7 @@ class GoogleLoginHandler extends AlternateLoginHandler {
     _googleSignIn.signIn().then((googleUser) {
       User user = UserAdapter.adapt(googleUser);
 
-      _userRepository.alternateLogin(user).listen((_) {
+      _currentUserRepository.alternateLogin(user).listen((_) {
         onLoginSuccess();
       }).onError((err) => print(err));
     });

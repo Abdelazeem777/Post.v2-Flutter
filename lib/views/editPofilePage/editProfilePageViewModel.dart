@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/utils/GalleryPicker.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -17,11 +17,11 @@ class EditProfilePageViewModel with ChangeNotifier {
 
   bool autoValidate = false;
 
-  UserRepository _userRepository;
+  CurrentUserRepository _userRepository;
   GalleryPicker _imagePicker;
 
   EditProfilePageViewModel() {
-    _userRepository = Injector().usersRepository;
+    _userRepository = Injector().currentUsersRepository;
     _imagePicker = Injector().galleryImagePicker;
     userNameController.text = CurrentUser().userName;
     bioController.text = CurrentUser().bio;

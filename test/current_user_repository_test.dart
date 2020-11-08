@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -21,17 +21,19 @@ main() {
           .split(' ')[0],
     );
     @visibleForTesting
-    UserRepository _userRepository = Injector().usersRepository;
+    CurrentUserRepository _currentUserRepository =
+        Injector().currentUsersRepository;
     WidgetsFlutterBinding.ensureInitialized();
     //-------------------------|Singup|---------------------------
     test('Signup with valid inputs', () {
       expect(
-          () =>
-              _userRepository.singup(_testingUser).listen(expectAsync1((_) {})),
+          () => _currentUserRepository
+              .singup(_testingUser)
+              .listen(expectAsync1((_) {})),
           returnsNormally);
     });
     test('Signup with existing email', () {
-      _userRepository
+      _currentUserRepository
           .singup(_testingUser)
           .listen((_) {})
           .onError(expectAsync1((e) {
@@ -41,7 +43,7 @@ main() {
 
     //-------------------------|Login|----------------------------
     test('Login with wrong email', () {
-      _userRepository
+      _currentUserRepository
           .login('wrongEmail@test.com', _testingUser.password)
           .listen((_) {})
           .onError(expectAsync1((e) {
@@ -49,7 +51,7 @@ main() {
       }));
     });
     test('Login with wrong password', () async* {
-      _userRepository
+      _currentUserRepository
           .login(_testingUser.email, 'wrongPassword')
           .listen((_) {})
           .onError(expectAsync1((e) {
@@ -58,7 +60,7 @@ main() {
     });
     test('Login with valid inputs', () {
       expect(
-          () => _userRepository
+          () => _currentUserRepository
               .login(_testingUser.email, _testingUser.password)
               .listen(expectAsync1((_) {})),
           returnsNormally);
@@ -66,7 +68,7 @@ main() {
 
     //---------------------|Delete Account|-----------------------
     test('Delete nonexisting account', () {
-      _userRepository
+      _currentUserRepository
           .deleteAccount('dummy_email@email.com')
           .listen((_) {})
           .onError(expectAsync1((e) {
@@ -74,7 +76,7 @@ main() {
       }));
     });
     test('Delete existing account', () {
-      _userRepository
+      _currentUserRepository
           .deleteAccount(_testingUser.email)
           .listen(expectAsync1((res) {
         expect(res, 'Deleted successfully');
@@ -83,7 +85,8 @@ main() {
   });
 
   group('Google login: ', () {
-    UserRepository _userRepository = Injector().usersRepository;
+    CurrentUserRepository _currentUserRepository =
+        Injector().currentUsersRepository;
     User _googleUser = User(
       userName: "Google Account",
       userProfilePicURL: "http://Google_profile_picture.jpg",
@@ -91,7 +94,9 @@ main() {
       email: "googleAccount@gmail.com",
     );
     test('login with valid account', () {
-      _userRepository.alternateLogin(_googleUser).listen(expectAsync1((_) {
+      _currentUserRepository
+          .alternateLogin(_googleUser)
+          .listen(expectAsync1((_) {
         User actualUser = CurrentUser();
         User matcherUser = _googleUser.copyWith();
         expect(actualUser, matcherUser);
@@ -101,7 +106,7 @@ main() {
     test('login with valid account but with new profile picture', () {
       User _googleUserWithNewProfilePic = _googleUser.copyWith(
           userProfilePicURL: "http://New_Google_profile_picture.jpg");
-      _userRepository
+      _currentUserRepository
           .alternateLogin(_googleUserWithNewProfilePic)
           .listen(expectAsync1((_) {
         User actualUser = CurrentUser();
@@ -110,7 +115,7 @@ main() {
       }));
     });
     test('Delete existing account', () {
-      _userRepository
+      _currentUserRepository
           .deleteAccount(_googleUser.email)
           .listen(expectAsync1((res) {
         expect(res, 'Deleted successfully');
@@ -119,7 +124,8 @@ main() {
   });
 
   group('Facebook login: ', () {
-    UserRepository _userRepository = Injector().usersRepository;
+    CurrentUserRepository _currentUserRepository =
+        Injector().currentUsersRepository;
     User _facebookUser = User(
       userName: "Facebook Account",
       userProfilePicURL: "http://Facebook_profile_picture.jpg",
@@ -127,7 +133,9 @@ main() {
       email: "facebookAccount@gmail.com",
     );
     test('login with valid account', () {
-      _userRepository.alternateLogin(_facebookUser).listen(expectAsync1((_) {
+      _currentUserRepository
+          .alternateLogin(_facebookUser)
+          .listen(expectAsync1((_) {
         User actualUser = CurrentUser();
         User matcherUser = _facebookUser.copyWith();
         expect(actualUser, matcherUser);
@@ -137,7 +145,7 @@ main() {
     test('login with valid account but with new profile picture', () {
       User _facebookUserWithNewProfilePic = _facebookUser.copyWith(
           userProfilePicURL: "http://New_Facebook_profile_picture.jpg");
-      _userRepository
+      _currentUserRepository
           .alternateLogin(_facebookUserWithNewProfilePic)
           .listen(expectAsync1((_) {
         User actualUser = CurrentUser();
@@ -146,7 +154,7 @@ main() {
       }));
     });
     test('Delete existing account', () {
-      _userRepository
+      _currentUserRepository
           .deleteAccount(_facebookUser.email)
           .listen(expectAsync1((res) {
         expect(res, 'Deleted successfully');
@@ -169,27 +177,29 @@ main() {
           .toString()
           .split(' ')[0],
     );
-    UserRepository _userRepository = Injector().usersRepository;
+    CurrentUserRepository _currentUserRepository =
+        Injector().currentUsersRepository;
 
     WidgetsFlutterBinding.ensureInitialized();
 
     test('Signup with valid inputs', () {
       expect(
-          () =>
-              _userRepository.singup(_testingUser).listen(expectAsync1((_) {})),
+          () => _currentUserRepository
+              .singup(_testingUser)
+              .listen(expectAsync1((_) {})),
           returnsNormally);
     });
     group('login and change the userProfilePic', () {
       test('Login with valid inputs', () {
         expect(
-            () => _userRepository
+            () => _currentUserRepository
                 .login(_testingUser.email, _testingUser.password)
                 .listen(expectAsync1((_) {})),
             returnsNormally);
       });
       test('test update userProfilePic', () {
         expect(
-            () => _userRepository
+            () => _currentUserRepository
                 .uploadProfilePic({'base64': _imageBase64, 'ext': _ext}).listen(
                     expectAsync1((_) {})),
             returnsNormally);
@@ -204,7 +214,7 @@ main() {
     });
 
     test('Delete existing account', () {
-      _userRepository
+      _currentUserRepository
           .deleteAccount(_testingUser.email)
           .listen(expectAsync1((res) {
         expect(res, 'Deleted successfully');
@@ -225,19 +235,21 @@ main() {
     );
     var newUserName = 'New User Name';
     var newBio = 'hey there I am still using post app';
-    UserRepository _userRepository = Injector().usersRepository;
+    CurrentUserRepository _currentUserRepository =
+        Injector().currentUsersRepository;
 
     WidgetsFlutterBinding.ensureInitialized();
 
     test('Signup with valid inputs', () {
       expect(
-          () =>
-              _userRepository.singup(_testingUser).listen(expectAsync1((_) {})),
+          () => _currentUserRepository
+              .singup(_testingUser)
+              .listen(expectAsync1((_) {})),
           returnsNormally);
     });
 
     test('update userName and Bio', () {
-      _userRepository
+      _currentUserRepository
           .updateProfileData(newUserName, newBio)
           .listen(expectAsync1((response) {
         expect(CurrentUser().userName, newUserName);
@@ -247,7 +259,7 @@ main() {
     });
 
     test('Login with valid inputs', () {
-      _userRepository
+      _currentUserRepository
           .login(_testingUser.email, _testingUser.password)
           .listen(expectAsync1((_) {
         expect(CurrentUser().userName, newUserName);
@@ -256,7 +268,7 @@ main() {
     });
 
     test('Delete existing account', () {
-      _userRepository
+      _currentUserRepository
           .deleteAccount(_testingUser.email)
           .listen(expectAsync1((res) {
         expect(res, 'Deleted successfully');

@@ -1,5 +1,5 @@
 import 'package:post/repositories/otherUsersRepository.dart';
-import 'package:post/repositories/userRepository.dart';
+import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:post/services/facebookLoginHelper.dart';
 import 'package:post/services/googleLoginHandler.dart';
@@ -16,7 +16,8 @@ class Injector {
 
   Injector._internal();
 
-  UserRepository get usersRepository => UserRepositoryImpl();
+  CurrentUserRepository get currentUsersRepository =>
+      CurrentUserRepositoryImpl();
 
   OtherUsersRepository get otherUsersRepository => OtherUsersRepositoryImpl();
 
