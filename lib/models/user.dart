@@ -7,7 +7,6 @@ class User {
   String phoneNumber;
   String birthDate;
   String bio;
-  bool following; //TODO: remove following
   String userProfilePicURL;
   bool active;
   String email;
@@ -23,7 +22,6 @@ class User {
     this.phoneNumber,
     this.birthDate,
     this.bio = "hey I am using Post app",
-    this.following,
     this.userProfilePicURL = "Default",
     this.active = false,
     this.email,
@@ -40,7 +38,6 @@ class User {
     phoneNumber = json['phoneNumber'];
     birthDate = json['birthDate'];
     bio = json['bio'];
-    following = json['following'];
     userProfilePicURL = fixUserProfilePicURLIfNeeded(json['userProfilePicURL']);
     active = json['active'];
     email = json['email'];
@@ -58,7 +55,6 @@ class User {
     data['phoneNumber'] = this.phoneNumber;
     data['birthDate'] = this.birthDate;
     data['bio'] = this.bio;
-    data['following'] = this.following;
     data['userProfilePicURL'] = this.userProfilePicURL;
     data['active'] = this.active;
     data['email'] = this.email;
@@ -80,7 +76,6 @@ class User {
         o.phoneNumber == phoneNumber &&
         o.birthDate == birthDate &&
         o.bio == bio &&
-        o.following == following &&
         o.userProfilePicURL == userProfilePicURL &&
         o.active == active &&
         o.email == email &&
@@ -98,7 +93,6 @@ class User {
         phoneNumber.hashCode ^
         birthDate.hashCode ^
         bio.hashCode ^
-        following.hashCode ^
         userProfilePicURL.hashCode ^
         active.hashCode ^
         email.hashCode ^
@@ -111,7 +105,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(userID: $userID, userName: $userName, phoneNumber: $phoneNumber, birthDate: $birthDate, bio: $bio, following: $following, userProfilePicURL: $userProfilePicURL, active: $active, email: $email, password: $password, accessToken: $accessToken, followersList: $followersList, followingRankedList: $followingRankedList, postsList: $postsList)';
+    return 'User(userID: $userID, userName: $userName, phoneNumber: $phoneNumber, birthDate: $birthDate, bio: $bio, userProfilePicURL: $userProfilePicURL, active: $active, email: $email, password: $password, accessToken: $accessToken, followersList: $followersList, followingRankedList: $followingRankedList, postsList: $postsList)';
   }
 
   User copyWith({
@@ -136,7 +130,6 @@ class User {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       birthDate: birthDate ?? this.birthDate,
       bio: bio ?? this.bio,
-      following: following ?? this.following,
       userProfilePicURL: userProfilePicURL ?? this.userProfilePicURL,
       active: active ?? this.active,
       email: email ?? this.email,
@@ -154,7 +147,6 @@ class User {
     this.phoneNumber = user.phoneNumber ?? this.phoneNumber;
     this.birthDate = user.birthDate ?? this.birthDate;
     this.bio = user.bio ?? this.bio;
-    this.following = user.following ?? this.following;
     this.userProfilePicURL = user.userProfilePicURL ?? this.userProfilePicURL;
     this.active = user.active ?? this.active;
     this.email = user.email ?? this.email;

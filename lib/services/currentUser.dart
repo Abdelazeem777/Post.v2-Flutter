@@ -32,4 +32,6 @@ class CurrentUser extends User {
   }
 
   Stream<void> logout() => Preferences.clear();
+
+  bool isFollowing(String userID) => followingRankedList.contains(userID);
 }

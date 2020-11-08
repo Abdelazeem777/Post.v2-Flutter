@@ -32,12 +32,12 @@ class _ReplyItemState extends State<ReplyItem> {
 
   //just for testing
   User _replyOwner = User(
-      active: true,
-      bio: "mobile developer",
-      userID: "45",
-      userName: "Ahmed Mohamed",
-      userProfilePicURL: "Default",
-      following: true);
+    active: true,
+    bio: "mobile developer",
+    userID: "45",
+    userName: "Ahmed Mohamed",
+    userProfilePicURL: "Default",
+  );
   @override
   Widget build(BuildContext context) {
     _currentReply = widget.reply;

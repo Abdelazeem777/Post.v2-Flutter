@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:post/enums/commentTypeEnum.dart';
@@ -37,12 +34,12 @@ class expansion extends State<CommentItem> {
   FocusNode _replyTextFocusNode = FocusNode();
   //just for testing
   User _commentOwner = User(
-      active: true,
-      bio: "mobile developer",
-      userID: "45",
-      userName: "Ahmed Mohamed",
-      userProfilePicURL: "Default",
-      following: true);
+    active: true,
+    bio: "mobile developer",
+    userID: "45",
+    userName: "Ahmed Mohamed",
+    userProfilePicURL: "Default",
+  );
 
   @override
   Widget build(BuildContext context) {

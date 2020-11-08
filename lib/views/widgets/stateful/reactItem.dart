@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:post/enums/reactTypeEnum.dart';
 import 'package:post/models/react.dart';
 import 'package:post/models/user.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/iconHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
@@ -20,12 +21,12 @@ class ReactItem extends StatefulWidget {
 class _ReactItemState extends State<ReactItem> {
   React _currentReact;
   User _reactOwner = User(
-      active: true,
-      bio: "mobile developer",
-      userID: "45",
-      userName: "Ahmed Mohamed",
-      userProfilePicURL: "Default",
-      following: false);
+    active: true,
+    bio: "mobile developer",
+    userID: "45",
+    userName: "Ahmed Mohamed",
+    userProfilePicURL: "Default",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,9 @@ class _ReactItemState extends State<ReactItem> {
           _createUserProfileAndIcon(),
           UserNameAndBio(userName: _reactOwner.userName, bio: _reactOwner.bio),
           Spacer(),
-          FollowButton(following: _reactOwner.following, onPressed: () {})
+          FollowButton(
+              following: CurrentUser().isFollowing(_currentReact.userID),
+              onPressed: () {})
         ],
       ),
     );
