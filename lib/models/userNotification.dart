@@ -24,7 +24,7 @@ class UserNotification {
       this.timestamp,
       this.seen = false});
 
-  UserNotification.fromJson(Map<String, dynamic> json) {
+  UserNotification.fromMap(Map<String, dynamic> json) {
     notificationID = json['notificationID'];
     fromUserID = json['fromUserID'];
     fromUser = json['fromUser'];
@@ -37,7 +37,7 @@ class UserNotification {
     seen = json['seen'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['notificationID'] = this.notificationID;
     data['fromUserID'] = this.fromUserID;

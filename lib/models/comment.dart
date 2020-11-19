@@ -22,7 +22,7 @@ class Comment {
       this.reactsList,
       this.repliesList});
 
-  Comment.fromJson(Map<String, dynamic> json) {
+  Comment.fromMap(Map<String, dynamic> json) {
     commentID = json['commentID'];
     userID = json['userID'];
     commentContent = json['commentContent'];
@@ -32,18 +32,18 @@ class Comment {
     if (json['reactsList'] != null) {
       reactsList = new List<React>();
       json['reactsList'].forEach((v) {
-        reactsList.add(new React.fromJson(v));
+        reactsList.add(new React.fromMap(v));
       });
     }
     if (json['repliesList'] != null) {
       repliesList = new List<Reply>();
       json['repliesList'].forEach((v) {
-        repliesList.add(new Reply.fromJson(v));
+        repliesList.add(new Reply.fromMap(v));
       });
     }
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['commentID'] = this.commentID;
     data['userID'] = this.userID;
@@ -51,10 +51,10 @@ class Comment {
     data['commentType'] = EnumToString.parse(this.commentType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
-      data['reactsList'] = this.reactsList.map((v) => v.toJson()).toList();
+      data['reactsList'] = this.reactsList.map((v) => v.toMap()).toList();
     }
     if (this.repliesList != null) {
-      data['repliesList'] = this.repliesList.map((v) => v.toJson()).toList();
+      data['repliesList'] = this.repliesList.map((v) => v.toMap()).toList();
     }
     return data;
   }

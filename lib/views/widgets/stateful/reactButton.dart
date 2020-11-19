@@ -9,7 +9,6 @@ import 'package:post/utils/sizeConfig.dart';
 
 class ReactButton extends StatefulWidget {
   ReactType initialReactType;
-  //TODO: add initialReactType parameter inside constractor
   ReactButton({
     this.initialReactType,
   });

@@ -20,14 +20,15 @@ class UserItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _currentUser = Provider.of<CurrentUser>(context);
     final _viewModel = Provider.of<SearchTabViewModel>(context);
     final userID = user.userID;
     final userName = user.userName;
     final profileURL = user.userProfilePicURL;
     final bio = user.bio;
     final active = user.active;
-
-    bool following = CurrentUser().isFollowing(userID);
+    final rank = _currentUser.getRank(userID);
+    final following = _currentUser.isFollowing(userID);
     return Container(
       width: SizeConfig.screenWidth,
       padding: EdgeInsets.only(top: 16, bottom: 16),
@@ -52,7 +53,7 @@ class UserItem extends StatelessWidget {
               : FollowButton(
                   following: following,
                   onPressed: () => (following)
-                      ? _viewModel.unFollow(userID)
+                      ? _viewModel.unFollow(userID, rank)
                       : _viewModel.follow(userID))
         ],
       ),

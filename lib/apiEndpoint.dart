@@ -11,4 +11,7 @@ class ApiEndPoint {
   static const SEARCH_FOR_USERS = REQUEST_URL + '/users/search';
   static const FOLLOW = REQUEST_URL + '/users/follow';
   static const UNFOLLOW = REQUEST_URL + '/users/unFollow';
+
+  static const LOAD_FOLLOWING_LIST = REQUEST_URL + '/users/loadFollowingList';
+  static const LOAD_FOLLOWERS_LIST = REQUEST_URL + '/users/loadFollowersList';
 }

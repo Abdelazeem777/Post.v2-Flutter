@@ -1,22 +1,17 @@
-import 'package:http/http.dart';
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
-import 'package:post/services/networkService.dart';
 import 'package:post/utils/requestException.dart';
-import 'package:rxdart/rxdart.dart';
 
 abstract class OtherUsersRepository {
   Stream<List<User>> searchForUsers(String userName);
-  Stream<String> follow(String currentUserID, String targetUserID);
-  Stream<String> unFollow(String currentUserID, String targetUserID);
-  Stream<List<User>> loadFollowingList(String userID);
+  Stream<Map<int, User>> loadFollowingList(String userID);
   Stream<List<User>> loadFollowersList(String userID);
 }
 
 class OtherUsersRepositoryImpl extends OtherUsersRepository {
-  final NetworkService _networkService = Injector().networkService;
+  final _networkService = Injector().networkService;
   @override
   Stream<List<User>> searchForUsers(String userName) {
     String userNameParam = '/$userName';
@@ -35,65 +30,10 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
   }
 
   List<User> _getUsersFromJsonList(List usersListOfJson) {
-    List<User> usersList = usersListOfJson.map((userJson) {
-      return User.fromJson(userJson);
+    List<User> usersList = usersListOfJson.map((userMap) {
+      return User.fromMap(userMap);
     }).toList();
     return usersList;
-  }
-
-  @override
-  Stream<String> follow(String currentUserID, String targetUserID) {
-    final data = {'currentUserID': currentUserID, 'targetUserID': targetUserID};
-    final dataJson = _networkService.convertMapToJson(data);
-    return Stream.fromFuture(
-            _networkService.patch(ApiEndPoint.FOLLOW, dataJson))
-        .flatMap((response) {
-      if (response.statusCode != 200 || null == response.statusCode) {
-        Map responseMap = _networkService.convertJsonToMap(response.body);
-        throw new RequestException(responseMap["message"]);
-      } else {
-        CurrentUser().followingRankedList.add(targetUserID);
-        return CurrentUser()
-            .saveUserToPreference()
-            .map((_) => response.body.toString());
-      }
-    });
-  }
-
-  @override
-  Stream<String> unFollow(String currentUserID, String targetUserID) {
-    final data = {'currentUserID': currentUserID, 'targetUserID': targetUserID};
-    final dataJson = _networkService.convertMapToJson(data);
-    return Stream.fromFuture(
-            _networkService.patch(ApiEndPoint.UNFOLLOW, dataJson))
-        .flatMap((response) {
-      if (response.statusCode != 200 || null == response.statusCode) {
-        Map responseMap = _networkService.convertJsonToMap(response.body);
-        throw new RequestException(responseMap["message"]);
-      } else {
-        CurrentUser().followingRankedList.remove(targetUserID);
-        return CurrentUser()
-            .saveUserToPreference()
-            .map((_) => response.body.toString());
-      }
-    });
-  }
-
-  @override
-  Stream<List<User>> loadFollowingList(String userID) {
-    String userIDParam = '/$userID';
-    return Stream.fromFuture(
-            _networkService.get(ApiEndPoint.LOAD_FOLLOWING_LIST + userIDParam))
-        .map((response) {
-      Map responseMap = _networkService.convertJsonToMap(response.body);
-      if (response.statusCode != 200 || null == response.statusCode) {
-        throw new RequestException(responseMap["message"]);
-      } else {
-        var usersListOfJson = responseMap['usersList'] as List;
-        List<User> usersList = _getUsersFromJsonList(usersListOfJson);
-        return usersList;
-      }
-    });
   }
 
   @override
@@ -108,8 +48,52 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
       } else {
         var usersListOfJson = responseMap['usersList'] as List;
         List<User> usersList = _getUsersFromJsonList(usersListOfJson);
+        _updateCurrentUserFollowersList(usersList);
         return usersList;
       }
     });
+  }
+
+  void _updateCurrentUserFollowersList(List<User> usersList) {
+    CurrentUser()
+      ..followersList = usersList.map<String>((user) => user.userID).toList()
+      ..saveUserToPreference()
+      ..notify();
+  }
+
+  @override
+  Stream<Map<int, User>> loadFollowingList(String userID) {
+    String userIDParam = '/$userID';
+    return Stream.fromFuture(
+            _networkService.get(ApiEndPoint.LOAD_FOLLOWING_LIST + userIDParam))
+        .map((response) {
+      Map responseMap = _networkService.convertJsonToMap(response.body);
+      if (response.statusCode != 200 || null == response.statusCode) {
+        throw new RequestException(responseMap["message"]);
+      } else {
+        var usersMapOfJson =
+            _networkService.convertJsonToMap(responseMap['usersMap']);
+        Map<int, User> usersMap = _getUsersMapFromJson(usersMapOfJson);
+        _updateCurrentUserFollowingMap(usersMap);
+        print(response.body);
+        return usersMap;
+      }
+    });
+  }
+
+  Map<int, User> _getUsersMapFromJson(Map usersMapOfJson) {
+    return usersMapOfJson.map<int, User>((key, value) {
+      final newKey = int.parse(key);
+      final newValue = User.fromMap(value);
+      return MapEntry(newKey, newValue);
+    });
+  }
+
+  void _updateCurrentUserFollowingMap(Map<int, User> usersList) {
+    CurrentUser()
+      ..followingRankedMap = usersList
+          .map<int, String>((key, value) => MapEntry(key, value.userID))
+      ..saveUserToPreference()
+      ..notify();
   }
 }

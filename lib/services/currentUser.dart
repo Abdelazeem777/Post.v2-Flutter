@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:post/models/user.dart';
 import 'package:post/utils/preferences.dart';
 
-class CurrentUser extends User {
+class CurrentUser extends User with ChangeNotifier {
   static final CurrentUser _currentUserSingletone = CurrentUser._internal();
 
   CurrentUser._internal();
@@ -16,8 +17,9 @@ class CurrentUser extends User {
   Stream<void> saveUserToPreference([User user]) {
     if (user != null) _currentUserSingletone.clone(user);
 
-    Map userMap = _currentUserSingletone.toJson();
+    Map userMap = _currentUserSingletone.toMap();
     String userString = json.encode(userMap);
+
     return Preferences.setCurrentUserData(userString);
   }
 
@@ -25,7 +27,7 @@ class CurrentUser extends User {
     await Preferences.getCurrentUserData().then((userDataString) {
       if (userDataString == null) return;
       Map userMap = json.decode(userDataString);
-      User user = User.fromJson(userMap);
+      User user = User.fromMap(userMap);
       _currentUserSingletone.clone(user);
     });
     return _currentUserSingletone;
@@ -33,5 +35,14 @@ class CurrentUser extends User {
 
   Stream<void> logout() => Preferences.clear();
 
-  bool isFollowing(String userID) => followingRankedList.contains(userID);
+  bool isFollowing(String userID) => followingRankedMap.containsValue(userID);
+
+  void notify() => notifyListeners();
+
+  ///if this userID is not exist in followingRankedMap then it will return a rank at the end of the map
+  int getRank([String userID = 'not following']) => followingRankedMap.keys
+      .firstWhere((key) => followingRankedMap[key] == userID,
+          orElse: _setRankAtTheEndOfFollowingList);
+
+  int _setRankAtTheEndOfFollowingList() => followingRankedMap.length;
 }

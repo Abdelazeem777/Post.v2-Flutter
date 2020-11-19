@@ -7,12 +7,12 @@ class React {
 
   React({this.userID, this.reactType});
 
-  React.fromJson(Map<String, dynamic> json) {
+  React.fromMap(Map<String, dynamic> json) {
     userID = json['userID'];
     reactType = EnumToString.fromString(ReactType.values, json['reactType']);
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userID'] = this.userID;
     data['reactType'] = EnumToString.parse(this.reactType);

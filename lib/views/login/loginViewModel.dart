@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/repositories/currentUserRepository.dart';
+import 'package:post/services/currentUser.dart';
 
 class LoginViewModel with ChangeNotifier {
   final FocusNode emailFocusNode = FocusNode();
@@ -28,6 +29,7 @@ class LoginViewModel with ChangeNotifier {
         ..listen((_) {
           _stopLoadingOnLoginSuccess();
           onLoginSuccess();
+          print("userData: " + CurrentUser().toString());
         }).onError((err) {
           _stopLoadingOnLoginSuccess();
           _showSnackBarWithTheErrorMessage(err);

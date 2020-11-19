@@ -24,7 +24,7 @@ class Post {
     this.commentsList = const [],
   });
 
-  Post.fromJson(Map<String, dynamic> json) {
+  Post.fromMap(Map<String, dynamic> json) {
     postID = json['postID'];
     userID = json['userID'];
     postContent = json['postContent'];
@@ -33,19 +33,19 @@ class Post {
     if (json['reactsList'] != null) {
       reactsList = new List<React>();
       json['reactsList'].forEach((v) {
-        reactsList.add(new React.fromJson(v));
+        reactsList.add(new React.fromMap(v));
       });
     }
     numberOfShares = json['numberOfShares'];
     if (json['commentsList'] != null) {
       commentsList = new List<Comment>();
       json['commentsList'].forEach((v) {
-        commentsList.add(new Comment.fromJson(v));
+        commentsList.add(new Comment.fromMap(v));
       });
     }
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['postID'] = this.postID;
     data['userID'] = this.userID;
@@ -53,11 +53,11 @@ class Post {
     data['postType'] = EnumToString.parse(this.postType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
-      data['reactsList'] = this.reactsList.map((v) => v.toJson()).toList();
+      data['reactsList'] = this.reactsList.map((v) => v.toMap()).toList();
     }
     data['numberOfShares'] = this.numberOfShares;
     if (this.commentsList != null) {
-      data['commentsList'] = this.commentsList.map((v) => v.toJson()).toList();
+      data['commentsList'] = this.commentsList.map((v) => v.toMap()).toList();
     }
     return data;
   }

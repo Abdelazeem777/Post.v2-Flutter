@@ -4,7 +4,6 @@ import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:post/services/facebookLoginHelper.dart';
 import 'package:post/services/googleLoginHandler.dart';
 import 'package:post/services/networkService.dart';
-import 'package:post/services/socketService.dart';
 import 'package:post/utils/GalleryPicker.dart';
 
 class Injector {
@@ -28,6 +27,4 @@ class Injector {
   AlternateLoginHandler get googleLoginHandler => GoogleLoginHandler();
 
   GalleryPicker get galleryImagePicker => GalleryImagePickerImpl();
-
-  SocketService get socketService => SocketService();
 }

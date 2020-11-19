@@ -19,7 +19,7 @@ class Reply {
       this.timestamp,
       this.reactsList});
 
-  Reply.fromJson(Map<String, dynamic> json) {
+  Reply.fromMap(Map<String, dynamic> json) {
     replyID = json['replyID'];
     userID = json['userID'];
     replyContent = json['replyContent'];
@@ -28,12 +28,12 @@ class Reply {
     if (json['reactsList'] != null) {
       reactsList = new List<React>();
       json['reactsList'].forEach((v) {
-        reactsList.add(new React.fromJson(v));
+        reactsList.add(new React.fromMap(v));
       });
     }
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['replyID'] = this.replyID;
     data['userID'] = this.userID;
@@ -41,7 +41,7 @@ class Reply {
     data['replyType'] = EnumToString.parse(this.replyType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
-      data['reactsList'] = this.reactsList.map((v) => v.toJson()).toList();
+      data['reactsList'] = this.reactsList.map((v) => v.toMap()).toList();
     }
     return data;
   }

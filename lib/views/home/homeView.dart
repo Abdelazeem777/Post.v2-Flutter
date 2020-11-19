@@ -1,13 +1,16 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/newPostPage/newPostPageView.dart';
 import 'package:post/views/notificationsPage/noificationsPageView.dart';
 import 'package:post/views/widgets/homePageTabs/homeTab.dart';
 import 'package:post/views/widgets/homePageTabs/profileTab.dart';
 import 'package:post/views/widgets/homePageTabs/searchTab.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   static const String routeName = '/Home';
@@ -22,6 +25,8 @@ class _HomeState extends State<Home> {
   ScrollController _scrollController;
   FocusNode _searchFocusNode;
 
+  final _viewModel = HomePageViewModel();
+
   @override
   initState() {
     super.initState();
@@ -31,18 +36,34 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _createAppBar(),
-      body: SafeArea(
-        top: false,
-        child: _createHomePage(),
+    return MultiProvider(
+      providers: [
+        ListenableProvider<CurrentUser>(
+          create: (context) => CurrentUser(),
+        ),
+        ListenableProvider<HomePageViewModel>(
+          create: (context) => _viewModel,
+        )
+      ],
+      builder: (context, child) => Scaffold(
+        appBar: _createAppBar(),
+        body: SafeArea(
+          top: false,
+          child: _createHomePage(),
+        ),
+        bottomNavigationBar: _createBottomNavBar(),
+        floatingActionButton:
+            _currentPage == 1 ? _createFloatingActionButton() : null,
+        extendBodyBehindAppBar: true,
+        resizeToAvoidBottomPadding: false,
       ),
-      bottomNavigationBar: _createBottomNavBar(),
-      floatingActionButton:
-          _currentPage == 1 ? _createFloatingActionButton() : null,
-      extendBodyBehindAppBar: true,
-      resizeToAvoidBottomPadding: false,
     );
   }
 

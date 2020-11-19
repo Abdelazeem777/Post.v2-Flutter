@@ -6,12 +6,15 @@ import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/editPofilePage/editProfilePageView.dart';
+import 'package:post/views/followersListPage/followersListPageView.dart';
+import 'package:post/views/followingRankedListPage/followingRankedListPageView.dart';
 import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/login/loginView.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';
 import 'package:post/views/widgets/stateful/postItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class ProfileTab extends StatefulWidget {
   final ScrollController _scrollController;
@@ -33,7 +36,7 @@ class _ProfileTabState extends State<ProfileTab> {
     super.initState();
     //for testing
     _postsList = [
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent": "hello there this my first post",
@@ -68,7 +71,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent": "hello there this my first post",
@@ -103,7 +106,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent":
@@ -139,7 +142,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent": "hello there this my first post",
@@ -174,7 +177,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent":
@@ -210,7 +213,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent":
@@ -246,7 +249,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent":
@@ -282,7 +285,7 @@ class _ProfileTabState extends State<ProfileTab> {
           }
         ]
       }),
-      Post.fromJson({
+      Post.fromMap({
         "postID": '2',
         "userID": '5',
         "postContent":
@@ -363,13 +366,21 @@ class _ProfileTabState extends State<ProfileTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _createCurrentUserProfilePicture(),
-              _createFollowersAndButtons() //at the right side
+              _createFollowersText()
             ],
           ),
-          _createUserNameAndBio(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _createUserNameAndBio(),
+              _createEditAndLogoutButtons(),
+            ],
+          ),
         ],
       ),
     );
@@ -384,37 +395,33 @@ class _ProfileTabState extends State<ProfileTab> {
           tag: "CurrentUserProfilePic",
           child: Material(
             type: MaterialType.transparency,
-            child: UserProfilePicture(
-              imageURL: _currentUser.userProfilePicURL,
+            child: Selector<CurrentUser, String>(
+              selector: (_, currentUser) => CurrentUser().userProfilePicURL,
+              builder: (_, userProfilePicURL, __) => UserProfilePicture(
+                imageURL: userProfilePicURL,
+              ),
             ),
           ),
         ));
   }
 
-  Widget _createFollowersAndButtons() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _createFollowersText(),
-        _createEditAndLogoutButtons(),
-      ],
-    );
-  }
-
   Widget _createUserNameAndBio() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          _currentUser.userName,
-          style: TextStyle(fontSize: 16),
-        ),
-        Text(
-          _currentUser.bio,
-          style: TextStyle(color: Colors.grey, fontSize: 13),
-        )
-      ],
+    return Selector<CurrentUser, Tuple2<String, String>>(
+      selector: (_, currentUser) =>
+          Tuple2(currentUser.userName, currentUser.bio),
+      builder: (_, data, __) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            data.item1,
+            style: TextStyle(fontSize: 16),
+          ),
+          Text(
+            data.item2,
+            style: TextStyle(color: Colors.grey, fontSize: 13),
+          )
+        ],
+      ),
     );
   }
 
@@ -422,43 +429,22 @@ class _ProfileTabState extends State<ProfileTab> {
   ///  Posts  Followers  Following
   /// it create the design for the number of post, followers and following
   Widget _createFollowersText() {
-    return Row(
-      children: [
-        _createText(
-            number: _currentUser.postsList.length,
-            text: "Posts",
-            onPressed: () {}),
-        _createText(
-            number: _currentUser.followersList.length,
-            text: "Followers",
-            onPressed: () {}),
-        _createText(
-            number: _currentUser.followingRankedList.length,
-            text: "Following",
-            onPressed: () {})
-      ],
-    );
-  }
-
-  Widget _createText({int number, String text, Function() onPressed}) {
-    return Container(
-      margin: EdgeInsets.only(left: 8, right: 8),
-      child: InkWell(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              number.toString(),
-              style: TextStyle(fontSize: 16),
-            ),
-            Text(
-              text,
-              style: TextStyle(fontSize: 14, color: Colors.black54),
-            ),
-          ],
-        ),
-        onTap: onPressed,
+    return Consumer<CurrentUser>(
+      builder: (context, _, __) => Row(
+        children: [
+          UserProfileText(
+              number: _currentUser.postsList.length,
+              text: "Posts",
+              onPressed: () {}),
+          UserProfileText(
+              number: _currentUser.followersList.length,
+              text: "Followers",
+              onPressed: _goToFollowersListPage),
+          UserProfileText(
+              number: _currentUser.followingRankedMap.length,
+              text: "Following",
+              onPressed: _goToFollowingListPage)
+        ],
       ),
     );
   }
@@ -506,18 +492,21 @@ class _ProfileTabState extends State<ProfileTab> {
     return Selector<ProfileTabViewModel, bool>(selector: (context, viewModel) {
       this._viewModel = viewModel;
     }, builder: (context, logoutSuccess, child) {
-      return InkWell(
-        onTap: () => _viewModel.logout(onLogoutSuccess: _goToLoginPage),
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(color: Colors.red)),
-          child: Icon(
-            FontAwesomeIcons.signOutAlt,
-            color: Colors.red,
-            size: 20,
+      return Container(
+        margin: EdgeInsets.only(right: 16),
+        child: InkWell(
+          onTap: () => _viewModel.logout(onLogoutSuccess: _goToLoginPage),
+          child: Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border: Border.all(color: Colors.red)),
+            child: Icon(
+              FontAwesomeIcons.signOutAlt,
+              color: Colors.red,
+              size: 20,
+            ),
           ),
         ),
       );
@@ -529,4 +518,46 @@ class _ProfileTabState extends State<ProfileTab> {
 
   void _goToEditProfilePage() =>
       Navigator.of(context).pushNamed(EditProfilePage.routeName);
+
+  void _goToFollowingListPage() =>
+      Navigator.of(context).pushNamed(FollowingRankedListPage.routeName);
+  void _goToFollowersListPage() =>
+      Navigator.of(context).pushNamed(FollowersListPage.routeName);
+}
+
+class UserProfileText extends StatelessWidget {
+  const UserProfileText({
+    Key key,
+    @required this.number,
+    @required this.text,
+    @required this.onPressed,
+  }) : super(key: key);
+
+  final int number;
+  final String text;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(left: 8, right: 8),
+      child: InkWell(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              number.toString(),
+              style: TextStyle(fontSize: 16),
+            ),
+            Text(
+              text,
+              style: TextStyle(fontSize: 16, color: Colors.black54),
+            ),
+          ],
+        ),
+        onTap: onPressed,
+      ),
+    );
+  }
 }

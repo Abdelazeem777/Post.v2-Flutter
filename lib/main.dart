@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:post/views/editPofilePage/editProfilePageView.dart';
+import 'package:post/views/followingRankedListPage/followingRankedListPageView.dart';
 import 'package:post/views/newPostPage/newPostPageView.dart';
 import 'package:post/views/notificationsPage/noificationsPageView.dart';
 
+import 'views/followersListPage/followersListPageView.dart';
 import 'views/home/homeView.dart';
 import 'views/login/loginView.dart';
 import 'views/signUp/signUpView.dart';
@@ -26,27 +28,16 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: "Post",
       routes: <String, WidgetBuilder>{
-        EditProfilePage.routeName: (BuildContext context) {
-          return EditProfilePage();
-        },
-        Notifications.routeName: (BuildContext context) {
-          return Notifications();
-        },
-        NewPost.routeName: (BuildContext context) {
-          return NewPost();
-        },
-        Home.routeName: (BuildContext context) {
-          return Home();
-        },
-        Login.routeName: (BuildContext context) {
-          return Login();
-        },
-        SignUp.routeName: (BuildContext context) {
-          return SignUp();
-        },
-        SplashScreen.routeName: (BuildContext context) {
-          return SplashScreen();
-        }
+        FollowersListPage.routeName: (context) => FollowersListPage(),
+        FollowingRankedListPage.routeName: (context) =>
+            FollowingRankedListPage(),
+        EditProfilePage.routeName: (context) => EditProfilePage(),
+        Notifications.routeName: (context) => Notifications(),
+        NewPost.routeName: (context) => NewPost(),
+        Home.routeName: (context) => Home(),
+        Login.routeName: (context) => Login(),
+        SignUp.routeName: (context) => SignUp(),
+        SplashScreen.routeName: (context) => SplashScreen()
       },
       home: SplashScreen(),
     );

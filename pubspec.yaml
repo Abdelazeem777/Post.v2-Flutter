@@ -40,6 +40,7 @@ dependencies:
   rxdart: ^0.24.1
   shared_preferences: ^0.5.12+2
   socket_io_client: ^0.9.11
+  tuple: ^1.0.3
   video_player: ^0.10.12+3
 
 dev_dependencies:

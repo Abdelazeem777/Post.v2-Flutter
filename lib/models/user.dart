@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import 'package:post/apiEndpoint.dart';
 
 class User {
@@ -13,7 +14,7 @@ class User {
   String password;
   String accessToken;
   List<String> followersList;
-  List<String> followingRankedList;
+  Map<int, String> followingRankedMap;
   List<String> postsList;
 
   User({
@@ -28,11 +29,11 @@ class User {
     this.password,
     this.accessToken,
     this.followersList = const [],
-    this.followingRankedList = const [],
+    this.followingRankedMap = const {},
     this.postsList = const [],
   });
 
-  User.fromJson(Map<String, dynamic> json) {
+  User.fromMap(Map<String, dynamic> json) {
     userID = json['userID'];
     userName = json['userName'];
     phoneNumber = json['phoneNumber'];
@@ -44,11 +45,14 @@ class User {
     password = json['password'];
     accessToken = json['accessToken'];
     followersList = json['followersList']?.cast<String>();
-    followingRankedList = json['followingRankedList']?.cast<String>();
+    followingRankedMap =
+        (json['followingRankedMap'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(int.parse(k), e as String),
+    );
     postsList = json['postsList']?.cast<String>();
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userID'] = this.userID ?? null;
     data['userName'] = this.userName;
@@ -61,7 +65,10 @@ class User {
     data['password'] = this.password;
     data['accessToken'] = this.accessToken;
     data['followersList'] = this.followersList;
-    data['followingRankedList'] = this.followingRankedList;
+
+    data['followingRankedMap'] =
+        this.followingRankedMap?.map((k, e) => MapEntry(k.toString(), e));
+
     data['postsList'] = this.postsList;
     return data..removeWhere((key, value) => key == null || value == null);
   }
@@ -82,7 +89,6 @@ class User {
         o.password == password &&
         o.accessToken == accessToken &&
         listEquals(o.followersList, followersList) &&
-        listEquals(o.followingRankedList, followingRankedList) &&
         listEquals(o.postsList, postsList);
   }
 
@@ -99,13 +105,12 @@ class User {
         password.hashCode ^
         accessToken.hashCode ^
         followersList.hashCode ^
-        followingRankedList.hashCode ^
         postsList.hashCode;
   }
 
   @override
   String toString() {
-    return 'User(userID: $userID, userName: $userName, phoneNumber: $phoneNumber, birthDate: $birthDate, bio: $bio, userProfilePicURL: $userProfilePicURL, active: $active, email: $email, password: $password, accessToken: $accessToken, followersList: $followersList, followingRankedList: $followingRankedList, postsList: $postsList)';
+    return 'User(userID: $userID, userName: $userName, phoneNumber: $phoneNumber, birthDate: $birthDate, bio: $bio, userProfilePicURL: $userProfilePicURL, active: $active, email: $email, password: $password, accessToken: $accessToken, followersList: $followersList, postsList: $postsList)';
   }
 
   User copyWith({
@@ -114,14 +119,12 @@ class User {
     String phoneNumber,
     String birthDate,
     String bio,
-    bool following,
     String userProfilePicURL,
     bool active,
     String email,
     String password,
     String accessToken,
     List<String> followersList,
-    List<String> followingRankedList,
     List<String> postsList,
   }) {
     return User(
@@ -136,7 +139,6 @@ class User {
       password: password ?? this.password,
       accessToken: accessToken ?? this.accessToken,
       followersList: followersList ?? this.followersList,
-      followingRankedList: followingRankedList ?? this.followingRankedList,
       postsList: postsList ?? this.postsList,
     );
   }
@@ -153,8 +155,8 @@ class User {
     this.password = user.password ?? this.password;
     this.accessToken = user.accessToken ?? this.accessToken;
     this.followersList = user.followersList ?? this.followersList;
-    this.followingRankedList =
-        user.followingRankedList ?? this.followingRankedList;
+    this.followingRankedMap =
+        user.followingRankedMap ?? this.followingRankedMap;
     this.postsList = user.postsList ?? this.postsList;
   }
 

@@ -2,7 +2,7 @@ import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
-import 'package:post/services/networkService.dart';
+import 'package:post/services/socketService.dart';
 import 'package:post/utils/requestException.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,10 +14,25 @@ abstract class CurrentUserRepository {
   Stream<void> logout();
   Stream<void> uploadProfilePic(Map<String, String> imageMap);
   Stream<String> updateProfileData(String newUserName, String newBio);
+  Stream<void> follow(String currentUserID, String targetUserID, int rank);
+  Stream<void> unFollow(String currentUserID, String targetUserID, int rank);
+
+  void onFollow(userID);
+  void onUnFollow(userID);
+  void onNewUserConnect(data);
+  void onDisconnect(data);
 }
 
 class CurrentUserRepositoryImpl implements CurrentUserRepository {
-  final NetworkService _networkService = Injector().networkService;
+  final _networkService = Injector().networkService;
+  SocketService _socketService;
+  CurrentUserRepositoryImpl() {
+    _socketService = SocketService()
+      ..onNewUserConnect = this.onNewUserConnect
+      ..onDisconnect = this.onDisconnect
+      ..onFollow = this.onFollow
+      ..onUnFollow = this.onUnFollow;
+  }
   @override
   Stream<void> login(String email, String password) {
     Map data = {'email': email, 'password': password};
@@ -28,7 +43,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
       if (response.statusCode != 200 || null == response.statusCode) {
         throw new RequestException(responseMap["message"]);
       } else {
-        User user = User.fromJson(responseMap);
+        User user = User.fromMap(responseMap);
         return CurrentUser().saveUserToPreference(user);
       }
     });
@@ -36,7 +51,8 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
 
   @override
   Stream<void> singup(User user) {
-    String userJson = _networkService.convertMapToJson(user.toJson());
+    String userJson = _networkService.convertMapToJson(user.toMap());
+    print(userJson);
     return Stream.fromFuture(
             _networkService.post(ApiEndPoint.SIGN_UP, userJson))
         .flatMap((response) {
@@ -59,14 +75,14 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
       if (response.statusCode != 200 || null == response.statusCode) {
         throw new RequestException(responseMap["message"]);
       } else {
-        User user = User.fromJson(responseMap);
+        User user = User.fromMap(responseMap);
         return CurrentUser().saveUserToPreference(user);
       }
     });
   }
 
   String changeUserIDKeyTo_id(User user) {
-    Map userMap = user.toJson()
+    Map userMap = user.toMap()
       ..remove("userID") //to change userID key to _id
       ..addAll({"_id": user.userID});
 
@@ -107,8 +123,10 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
       if (response.statusCode != 200 || null == response.statusCode) {
         throw new RequestException(responseMap["message"]);
       } else {
-        CurrentUser().userProfilePicURL = User()
-            .fixUserProfilePicURLIfNeeded(responseMap['userProfilePicURL']);
+        CurrentUser()
+          ..userProfilePicURL = User()
+              .fixUserProfilePicURLIfNeeded(responseMap['userProfilePicURL'])
+          ..notify();
         return CurrentUser().saveUserToPreference();
       }
     });
@@ -131,11 +149,77 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
       } else {
         CurrentUser()
           ..userName = newUserName
-          ..bio = newBio;
+          ..bio = newBio
+          ..notify();
         return CurrentUser().saveUserToPreference().map((_) {
           return response.body.toString();
         });
       }
     });
+  }
+
+  @override
+  Stream<void> follow(String currentUserID, String targetUserID, int rank) {
+    return Stream.fromFuture(
+        _socketService.follow(currentUserID, targetUserID, rank));
+  }
+
+  @override
+  Stream<void> unFollow(String currentUserID, String targetUserID, int rank) {
+    return Stream.fromFuture(
+        _socketService.unFollow(currentUserID, targetUserID, rank));
+  }
+
+  @override
+  void onFollow(data) {
+    String fromUserID = data['from'];
+    String toUserID = data['to'];
+    int rank = data['rank'];
+    print('onFollowEvent' + data.toString());
+    if (_isTheCurrentUser(fromUserID))
+      CurrentUser()
+        ..followingRankedMap.addAll({rank: toUserID})
+        ..saveUserToPreference().listen((_) {})
+        ..notify();
+    else
+      CurrentUser()
+        ..followersList.add(toUserID)
+        ..saveUserToPreference()
+        ..notify();
+  }
+
+  bool _isTheCurrentUser(String fromUserID) =>
+      fromUserID == CurrentUser().userID;
+
+  @override
+  void onUnFollow(data) {
+    String fromUserID = data['from'];
+    String toUserID = data['to'];
+    int rank = data['rank'];
+    print('onUnFollowEvent' + data.toString());
+    if (fromUserID == CurrentUser().userID)
+      CurrentUser()
+        ..followingRankedMap.remove(rank)
+        ..saveUserToPreference().listen((_) {})
+        ..notify();
+    else
+      CurrentUser()
+        ..followersList.remove(toUserID)
+        ..saveUserToPreference()
+        ..notify();
+  }
+
+  @override
+  void onNewUserConnect(userID) {
+    if (CurrentUser().userID == userID)
+      CurrentUser()
+        ..active = true
+        ..notify();
+    print("Connected user: " + userID.toString());
+  }
+
+  @override
+  void onDisconnect(data) {
+    print('Disconnected user: ' + data.toString());
   }
 }
