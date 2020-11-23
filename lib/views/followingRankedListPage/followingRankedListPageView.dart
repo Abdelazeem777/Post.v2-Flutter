@@ -59,18 +59,20 @@ class _FollowingRankedListPageState extends State<FollowingRankedListPage> {
 
   List<Widget> _getListItems() {
     List<Widget> children = List<Widget>();
-    for (int i = 0; i < _viewModel.usersMap.length; i++) {
+    _viewModel.usersMap.forEach((rank, user) {
       children.add(UserItemCard(
-          key: ValueKey(_viewModel.usersMap[i]),
-          user: _viewModel.usersMap[i],
-          viewModel: _viewModel,
-          rank: i));
+        key: ValueKey(user),
+        user: user,
+        viewModel: _viewModel,
+        rank: rank,
+        withRank: true,
+      ));
       children.add(Divider(
-        key: ValueKey(i),
+        key: ValueKey(rank),
         height: 1,
         color: AppColors.SECONDARY_COLOR,
       ));
-    }
+    });
     return children;
   }
 }
