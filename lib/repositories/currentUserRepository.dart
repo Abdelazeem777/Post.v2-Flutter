@@ -109,6 +109,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
 
   @override
   Stream<void> logout() {
+    SocketService().disconnect();
     return CurrentUser().logout();
   }
 
@@ -184,7 +185,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
     else
       CurrentUser()
         ..followersList.add(toUserID)
-        ..saveUserToPreference()
+        ..saveUserToPreference().listen((_) {})
         ..notify();
   }
 
@@ -205,7 +206,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
     else
       CurrentUser()
         ..followersList.remove(toUserID)
-        ..saveUserToPreference()
+        ..saveUserToPreference().listen((_) {})
         ..notify();
   }
 
