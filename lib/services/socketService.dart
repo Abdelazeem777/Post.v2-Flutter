@@ -42,15 +42,14 @@ class SocketService {
     }
   }
   connect() {
-    if (socket == null) {
+    if (isConnected()) {
       socket = IO.io(ApiEndPoint.REQUEST_URL, <String, dynamic>{
         'transports': ['websocket'],
         'query': {'userID': CurrentUser().userID},
       });
       socket.connect();
-    } else {
-      _reconnect();
-    }
+    } else
+      reconnect();
     this.socket.on(New_USER_CONNECT_EVENT, _onNewUserConnect);
     this.socket.on(USER_DISCONNECTING_EVENT, _onDisconnect);
 
@@ -58,10 +57,11 @@ class SocketService {
     this.socket.on(UNFOLLOW_EVENT, _onUnFollow);
   }
 
-  _reconnect() {
-    socket
-      ..dispose()
-      ..connect();
+  bool isConnected() => socket == null || !socket?.connected;
+
+  reconnect() {
+    disconnect();
+    connect();
   }
 
   Future<void> follow(
@@ -95,6 +95,7 @@ class SocketService {
     socket
       ..emit(USER_DISCONNECTING_EVENT, CurrentUser().userID)
       ..dispose();
+    socket = null;
 
     CurrentUser()
       ..active = false

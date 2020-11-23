@@ -19,10 +19,9 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.detached:
-        _socketService.disconnect();
         break;
       case AppLifecycleState.resumed:
-        _socketService.connect();
+        _socketService.reconnect();
         break;
       case AppLifecycleState.inactive:
         break;
@@ -33,8 +32,8 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
 
   @override
   void dispose() {
-    _socketService.disconnect();
     WidgetsBinding.instance.removeObserver(this);
+    _socketService.disconnect();
     super.dispose();
   }
 }
