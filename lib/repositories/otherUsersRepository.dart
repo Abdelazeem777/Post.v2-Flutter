@@ -57,7 +57,7 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
   void _updateCurrentUserFollowersList(List<User> usersList) {
     CurrentUser()
       ..followersList = usersList.map<String>((user) => user.userID).toList()
-      ..saveUserToPreference()
+      ..saveUserToPreference().listen((_) {})
       ..notify();
   }
 
@@ -93,7 +93,7 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
     CurrentUser()
       ..followingRankedMap = usersList
           .map<int, String>((key, value) => MapEntry(key, value.userID))
-      ..saveUserToPreference()
+      ..saveUserToPreference().listen((_) {})
       ..notify();
   }
 }
