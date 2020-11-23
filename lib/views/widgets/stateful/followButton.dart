@@ -13,7 +13,7 @@ class _FollowButtonState extends State<FollowButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: this.widget.following ? 80 : 72,
+      width: this.widget.following ? 78 : 70,
       height: 30,
       child: RaisedButton(
         color: this.widget.following ? AppColors.PRIMARY_COLOR : Colors.white,
@@ -24,11 +24,11 @@ class _FollowButtonState extends State<FollowButton> {
         child: this.widget.following
             ? Text(
                 'Following',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(fontSize: 13, color: Colors.white),
               )
             : Text(
                 '+ Follow',
-                style: TextStyle(color: AppColors.PRIMARY_COLOR),
+                style: TextStyle(fontSize: 13, color: AppColors.PRIMARY_COLOR),
               ),
         onPressed: this.widget.onPressed,
       ),

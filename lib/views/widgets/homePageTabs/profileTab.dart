@@ -331,7 +331,7 @@ class _ProfileTabState extends State<ProfileTab> {
     return ChangeNotifierProvider(
         create: (context) => ProfileTabViewModel(),
         child: Container(
-          color: Colors.grey[200],
+          color: Colors.white,
           child: ListView(
             controller: this.widget._scrollController,
             padding: EdgeInsets.all(0),
@@ -357,11 +357,19 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget _createUserProfileTopBar() {
     return Container(
       width: SizeConfig.screenWidth,
-      margin: EdgeInsets.only(top: 75),
-      padding: EdgeInsets.only(top: 16, left: 16, bottom: 16),
+      margin: EdgeInsets.only(top: 75, bottom: 16),
+      padding: EdgeInsets.only(left: 16, bottom: 16, top: 16),
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(bottom: BorderSide(color: AppColors.SECONDARY_COLOR))),
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: AppColors.SECONDARY_COLOR)),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 3,
+            color: Colors.black12,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -373,9 +381,10 @@ class _ProfileTabState extends State<ProfileTab> {
               _createFollowersText()
             ],
           ),
+          Container(height: 16),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _createUserNameAndBio(),
               _createEditAndLogoutButtons(),
@@ -409,18 +418,22 @@ class _ProfileTabState extends State<ProfileTab> {
     return Selector<CurrentUser, Tuple2<String, String>>(
       selector: (_, currentUser) =>
           Tuple2(currentUser.userName, currentUser.bio),
-      builder: (_, data, __) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            data.item1,
-            style: TextStyle(fontSize: 16),
-          ),
-          Text(
-            data.item2,
-            style: TextStyle(color: Colors.grey, fontSize: 13),
-          )
-        ],
+      builder: (_, data, __) => SizedBox(
+        width: SizeConfig.screenWidth / 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data.item1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16),
+            ),
+            Text(
+              data.item2,
+              style: TextStyle(color: Colors.grey, fontSize: 13),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -453,7 +466,7 @@ class _ProfileTabState extends State<ProfileTab> {
     return Row(
       children: [
         Container(
-          margin: EdgeInsets.only(right: 16, top: 16, bottom: 16),
+          margin: EdgeInsets.only(right: 8),
           child: _createEditProfileButton(),
         ),
         _createLogoutButton(),
@@ -465,14 +478,14 @@ class _ProfileTabState extends State<ProfileTab> {
     return InkWell(
       onTap: _goToEditProfilePage,
       child: Container(
-          padding: EdgeInsets.fromLTRB(10, 8, 12, 8),
+          padding: EdgeInsets.fromLTRB(6, 7, 8, 7),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               border: Border.all(color: AppColors.PRIMARY_COLOR)),
           child: Row(
             children: [
               Container(
-                margin: EdgeInsets.only(right: 6),
+                margin: EdgeInsets.only(right: 4),
                 child: Icon(
                   Icons.edit,
                   size: 21,
@@ -481,7 +494,7 @@ class _ProfileTabState extends State<ProfileTab> {
               ),
               Text(
                 'Edit Profile',
-                style: TextStyle(color: AppColors.PRIMARY_COLOR),
+                style: TextStyle(fontSize: 13, color: AppColors.PRIMARY_COLOR),
               ),
             ],
           )),
@@ -505,7 +518,7 @@ class _ProfileTabState extends State<ProfileTab> {
             child: Icon(
               FontAwesomeIcons.signOutAlt,
               color: Colors.red,
-              size: 20,
+              size: 18,
             ),
           ),
         ),

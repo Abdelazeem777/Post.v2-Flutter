@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
               child: ClipPath(
                 clipper: _AppBarCustomClipPath(),
                 child: Container(
-                  height: 106,
+                  height: 106 + (MediaQuery.of(context).padding.top / 2),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topRight,
@@ -89,9 +89,10 @@ class _HomeState extends State<Home> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Align(
+                      Container(
+                        margin: EdgeInsets.only(bottom: 40),
                         child: Image.asset(
                           "lib/assets/post_logo_without_background.png",
                           scale: 8,
@@ -101,6 +102,7 @@ class _HomeState extends State<Home> {
                         margin: EdgeInsets.only(
                           left: SizeConfig.safeBlockHorizontal * 25,
                           right: SizeConfig.safeBlockHorizontal,
+                          bottom: 30,
                         ),
                         child: IconButton(
                             icon: Icon(
@@ -115,11 +117,13 @@ class _HomeState extends State<Home> {
                 ),
               ),
             )),
-        preferredSize: Size(SizeConfig.screenWidth, 81));
+        preferredSize:
+            Size.fromHeight(56 + MediaQuery.of(context).padding.top));
   }
 
   Widget _createHomePage() {
     return Container(
+        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top / 2),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -172,7 +176,7 @@ class _HomeState extends State<Home> {
             top: -32,
             height: 56,
             count: 3,
-            initialActiveIndex: 1,
+            initialActiveIndex: _currentPage,
             backgroundColor: Theme.of(context).canvasColor,
             curveSize: 70,
             onTap: (int position) {

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
+import 'package:post/style/appColors.dart';
 import 'package:post/views/widgets/stateful/followButton.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 import 'package:provider/provider.dart';
 
-///TODO: use this class for all different places like searchpage and followers list
-///it will help when adding view profiles feature.
 class UserItemCard extends StatelessWidget {
   final User user;
   final rank;
   final viewModel;
+  final withRank;
 
   const UserItemCard({
     Key key,
     @required this.user,
     this.rank = -1,
     @required this.viewModel,
+    this.withRank = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -31,33 +32,62 @@ class UserItemCard extends StatelessWidget {
     return ListTile(
         key: key,
         contentPadding: EdgeInsets.zero,
-        leading: Container(
-          height: 56,
-          width: 56,
-          child: UserProfilePicture(
-            imageURL: profileURL,
-            active: active,
-          ),
-        ),
+        leading: _createLeadingPartOfTile(rank, profileURL, active),
         title: Text(
           userName,
           softWrap: false,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          overflow: TextOverflow.fade,
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
           bio,
           softWrap: false,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 11.5, color: Colors.grey[700]),
+          overflow: TextOverflow.fade,
+          style: TextStyle(fontSize: 10.5, color: Colors.grey[700]),
         ),
         trailing: _isTheCurrentUser(userID)
             ? Container()
             : FollowButton(
                 following: following,
-                onPressed: () => (following)
-                    ? viewModel.unFollow(userID, rank)
-                    : viewModel.follow(userID)));
+                onPressed: () {
+                  print(
+                      'bido:{userID: $userID, userName: $userName, rank: $rank}');
+                  print(CurrentUser().followingRankedMap);
+                  return (following)
+                      ? viewModel.unFollow(userID, rank)
+                      : viewModel.follow(userID);
+                }));
+  }
+
+  Widget _createLeadingPartOfTile(int rank, String profileURL, bool active) {
+    return Container(
+      height: 48,
+      width: withRank ? 74 : 48,
+      child: withRank
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '#${rank + 1}',
+                  style:
+                      TextStyle(fontSize: 18, color: AppColors.PRIMARY_COLOR),
+                ),
+                _createProfilePicture(profileURL, active),
+              ],
+            )
+          : _createProfilePicture(profileURL, active),
+    );
+  }
+
+  Widget _createProfilePicture(String profileURL, bool active) {
+    return SizedBox(
+      width: 48,
+      height: 48,
+      child: UserProfilePicture(
+        imageURL: profileURL,
+        active: active,
+      ),
+    );
   }
 
   bool _isTheCurrentUser(String userID) => userID == CurrentUser().userID;

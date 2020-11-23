@@ -35,6 +35,39 @@ class _PostFrameState extends State<PostFrame> {
   List<Post> _postsList;
   int _numberOfNewPosts = 5;
 
+  @override
+  Widget build(BuildContext context) {
+    _user = this.widget.postOwnerUser;
+    _multiplePosts = this.widget.multiplePosts;
+    _postsList = this.widget.postsList;
+    return Container(
+      margin: EdgeInsets.only(bottom: 32),
+      width: SizeConfig.screenWidth,
+      height: SizeConfig.screenWidth + 142,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0.0, 2.0), //(x,y)
+            blurRadius: 5.0,
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Center(child: _createBodyThatContainsPostItems()),
+          _createTopPart(),
+          Positioned(bottom: 0, child: _createBottomPart()),
+        ],
+      ),
+    );
+  }
+
   Widget _createTopPart() {
     return _multiplePosts
         ? _createTopPartWithRankAndNewPostsNum()
@@ -231,39 +264,6 @@ class _PostFrameState extends State<PostFrame> {
       label: Text(
         text,
         style: TextStyle(color: AppColors.SECONDARY_COLOR, fontSize: 14),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _user = this.widget.postOwnerUser;
-    _multiplePosts = this.widget.multiplePosts;
-    _postsList = this.widget.postsList;
-    return Container(
-      margin: EdgeInsets.only(top: 16, bottom: 16),
-      width: SizeConfig.screenWidth,
-      height: SizeConfig.screenWidth + 142,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 2.0), //(x,y)
-            blurRadius: 5.0,
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Center(child: _createBodyThatContainsPostItems()),
-          _createTopPart(),
-          Positioned(bottom: 0, child: _createBottomPart()),
-        ],
       ),
     );
   }
