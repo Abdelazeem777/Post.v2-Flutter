@@ -92,9 +92,10 @@ class SocketService {
   }
 
   disconnect() {
-    socket
-      ..emit(USER_DISCONNECTING_EVENT, CurrentUser().userID)
-      ..dispose();
+    if (socket != null)
+      socket
+        ..emit(USER_DISCONNECTING_EVENT, CurrentUser().userID)
+        ..dispose();
     socket = null;
 
     CurrentUser()

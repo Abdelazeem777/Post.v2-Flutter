@@ -400,13 +400,13 @@ class _ProfileTabState extends State<ProfileTab> {
         margin: EdgeInsets.only(right: 16),
         width: SizeConfig.safeBlockHorizontal * 25,
         height: SizeConfig.safeBlockHorizontal * 25,
-        child: Hero(
-          tag: "CurrentUserProfilePic",
-          child: Material(
-            type: MaterialType.transparency,
-            child: Selector<CurrentUser, String>(
-              selector: (_, currentUser) => CurrentUser().userProfilePicURL,
-              builder: (_, userProfilePicURL, __) => UserProfilePicture(
+        child: Selector<CurrentUser, String>(
+          selector: (_, currentUser) => CurrentUser().userProfilePicURL,
+          builder: (_, userProfilePicURL, __) => Hero(
+            tag: "CurrentUserProfilePic",
+            child: Material(
+              type: MaterialType.transparency,
+              child: UserProfilePicture(
                 imageURL: userProfilePicURL,
               ),
             ),
@@ -454,7 +454,7 @@ class _ProfileTabState extends State<ProfileTab> {
               text: "Followers",
               onPressed: _goToFollowersListPage),
           UserProfileText(
-              number: _currentUser.followingRankedMap.length,
+              number: _currentUser.followingRankedList.length,
               text: "Following",
               onPressed: _goToFollowingListPage)
         ],

@@ -63,8 +63,7 @@ main() {
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
-          expect(
-              CurrentUser().followingRankedMap.containsValue(targetUser.userID),
+          expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
       }));
@@ -77,9 +76,8 @@ main() {
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((value) {
           //change it to future
-          print(CurrentUser().followingRankedMap);
-          expect(
-              CurrentUser().followingRankedMap.containsValue(targetUser.userID),
+          print(CurrentUser().followingRankedList);
+          expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               false);
         }));
       }));
@@ -94,8 +92,7 @@ main() {
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
-          expect(
-              CurrentUser().followingRankedMap.containsValue(targetUser.userID),
+          expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
       }));
@@ -107,8 +104,7 @@ main() {
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
-          expect(
-              CurrentUser().followingRankedMap.containsValue(targetUser.userID),
+          expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
       }));
@@ -120,8 +116,7 @@ main() {
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
-          expect(
-              CurrentUser().followingRankedMap.containsValue(targetUser.userID),
+          expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
       }));
@@ -133,8 +128,7 @@ main() {
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
-          expect(
-              CurrentUser().followingRankedMap.containsValue(targetUser.userID),
+          expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
       }));
@@ -145,8 +139,8 @@ main() {
           .listen(expectAsync1((result) {
         for (int i = 0; i < result.length; i++) {
           var resultUserID = result[i].userID;
-          var expectedUserID = CurrentUser().followingRankedMap[i];
-          print(CurrentUser().followingRankedMap);
+          var expectedUserID = CurrentUser().followingRankedList[i];
+          print(CurrentUser().followingRankedList);
           expect(resultUserID, expectedUserID);
         }
       }));

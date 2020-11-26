@@ -35,14 +35,15 @@ class CurrentUser extends User with ChangeNotifier {
 
   Stream<void> logout() => Preferences.clear();
 
-  bool isFollowing(String userID) => followingRankedMap.containsValue(userID);
+  bool isFollowing(String userID) => followingRankedList.contains(userID);
 
   void notify() => notifyListeners();
 
-  ///if this userID is not exist in followingRankedMap then it will return a rank at the end of the map
-  int getRank([String userID = 'not following']) => followingRankedMap.keys
-      .firstWhere((key) => followingRankedMap[key] == userID,
-          orElse: _setRankAtTheEndOfFollowingList);
+  ///if this userID is not exist in followingRankedList then it will return a rank at the end of the map
+  int getRank([String userID = 'return the last index +1']) {
+    int rank = followingRankedList.indexOf(userID);
+    return rank != -1 ? rank : _setRankAtTheEndOfFollowingList();
+  }
 
-  int _setRankAtTheEndOfFollowingList() => followingRankedMap.length;
+  int _setRankAtTheEndOfFollowingList() => followingRankedList.length;
 }

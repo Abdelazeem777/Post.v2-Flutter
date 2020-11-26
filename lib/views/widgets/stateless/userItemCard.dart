@@ -6,6 +6,7 @@ import 'package:post/views/widgets/stateful/followButton.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 import 'package:provider/provider.dart';
 
+//TODO: try to add a bottom border
 class UserItemCard extends StatelessWidget {
   final User user;
   final rank;
@@ -52,7 +53,7 @@ class UserItemCard extends StatelessWidget {
                 onPressed: () {
                   print(
                       'bido:{userID: $userID, userName: $userName, rank: $rank}');
-                  print(CurrentUser().followingRankedMap);
+                  print(CurrentUser().followingRankedList);
                   return (following)
                       ? viewModel.unFollow(userID, rank)
                       : viewModel.follow(userID);

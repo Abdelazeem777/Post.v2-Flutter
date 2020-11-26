@@ -179,7 +179,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
     print('onFollowEvent' + data.toString());
     if (_isTheCurrentUser(fromUserID))
       CurrentUser()
-        ..followingRankedMap.addAll({rank: toUserID})
+        ..followingRankedList.insert(rank, toUserID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
     else
@@ -187,6 +187,8 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         ..followersList.add(toUserID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
+
+    print(CurrentUser().followingRankedList);
   }
 
   bool _isTheCurrentUser(String fromUserID) =>
@@ -196,11 +198,11 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   void onUnFollow(data) {
     String fromUserID = data['from'];
     String toUserID = data['to'];
-    int rank = data['rank'];
+    //int rank = data['rank'];
     print('onUnFollowEvent' + data.toString());
-    if (fromUserID == CurrentUser().userID)
+    if (_isTheCurrentUser(fromUserID))
       CurrentUser()
-        ..followingRankedMap.remove(rank)
+        ..followingRankedList.remove(toUserID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
     else
@@ -208,6 +210,8 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         ..followersList.remove(toUserID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
+
+    print(CurrentUser().followingRankedList);
   }
 
   @override

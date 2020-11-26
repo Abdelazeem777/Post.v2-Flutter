@@ -4,7 +4,7 @@ import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 
 class FollowingRankedListViewModel with ChangeNotifier {
-  var usersMap = Map<int, User>();
+  var usersList = List<User>();
   final _otherUsersRepository = Injector().otherUsersRepository;
   final _currentUsersRepository = Injector().currentUsersRepository;
 
@@ -12,7 +12,7 @@ class FollowingRankedListViewModel with ChangeNotifier {
     _otherUsersRepository
         .loadFollowingList(CurrentUser().userID)
         .listen((result) {
-      usersMap = result;
+      usersList = result;
       notifyListeners();
     });
   }
