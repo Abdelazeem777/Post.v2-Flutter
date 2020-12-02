@@ -8,7 +8,7 @@ import 'package:post/services/alternativeLoginHandler.dart';
 import 'userAdapter.dart';
 
 class GoogleLoginHandler extends AlternateLoginHandler {
-  final _currentUserRepository = Injector().currentUsersRepository;
+  final _currentUserRepository = Injector().currentUserRepository;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:post/di/injection.dart';
+import 'package:post/enums/postTypeEnum.dart';
+import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
@@ -21,8 +23,9 @@ main() {
                 .toString()
                 .split(' ')[0],
           ));
-  final _currentUserRepository = Injector().currentUsersRepository;
+  final _currentUserRepository = Injector().currentUserRepository;
   final _otherUsersRepository = Injector().otherUsersRepository;
+  final _postsRepository = Injector().postsRepository;
   WidgetsFlutterBinding.ensureInitialized();
   SocketService _socket = SocketService();
 
@@ -72,24 +75,40 @@ main() {
               CurrentUser().getRank(targetUser.userID))
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((value) {
-          //change it to future
-          print(CurrentUser().followingRankedList);
           expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               false);
         }));
       }));
     });
   });
-  /* group('upload post: ', () {
+  group('upload post: ', () {
+    Post newPost = Post(
+      postType: PostType.Text,
+      postContent: 'hello this my first post on "Post"',
+      timestamp: DateTime.now().millisecondsSinceEpoch,
+      userID: null, //still need to initialized
+    );
+
     test('send new post', () {
-      Post newPost = Post(
-        userID: CurrentUser().userID,
-        postContent: 'hello this my first post on "Post"',
-        timestamp: DateTime.now().millisecondsSinceEpoch,
-      );
-      socket.sendPost(newPost);
+      newPost.userID = CurrentUser().userID;
+      _postsRepository.uploadNewPost(newPost).listen(expectAsync1((_) {
+        _postsRepository.getCurrentUserPosts().listen((comingPost) {
+          expect(comingPost.postContent, newPost.postContent);
+          expect(comingPost.userID, newPost.userID);
+          newPost.postID = comingPost.postID;
+        });
+      }));
     });
-  }); */
+
+    test('delete post', () {
+      final postID = newPost.postID;
+      final userID = newPost.userID;
+      final userPassword = 'TestingUser123';
+      _postsRepository.deletePost(postID, userID, userPassword).listen(
+          expectAsync1(
+              (result) => expect(result, 'Post is deleted successfully')));
+    });
+  });
 
   test('delete testing users', () {
     _testingUsersList.forEach((user) {

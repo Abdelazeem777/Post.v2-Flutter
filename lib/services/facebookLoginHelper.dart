@@ -11,7 +11,7 @@ import 'package:post/services/networkService.dart';
 import 'userAdapter.dart';
 
 class FaceBookLoginHandler extends AlternateLoginHandler {
-  final _currentUserRepository = Injector().currentUsersRepository;
+  final _currentUserRepository = Injector().currentUserRepository;
   final facebookLogin = FacebookLogin();
   final _networkService = Injector().networkService;
   @override

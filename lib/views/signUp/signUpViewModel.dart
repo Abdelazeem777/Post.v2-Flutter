@@ -24,7 +24,7 @@ class SignUpViewModel with ChangeNotifier {
 
   CurrentUserRepository _currentUserRepository;
   SignUpViewModel() {
-    _currentUserRepository = Injector().currentUsersRepository;
+    _currentUserRepository = Injector().currentUserRepository;
   }
   void signUp({Function onSignUpSuccess}) {
     _startLoading();

@@ -21,7 +21,7 @@ class EditProfilePageViewModel with ChangeNotifier {
   GalleryPicker _imagePicker;
 
   EditProfilePageViewModel() {
-    _userRepository = Injector().currentUsersRepository;
+    _userRepository = Injector().currentUserRepository;
     _imagePicker = Injector().galleryImagePicker;
     userNameController.text = CurrentUser().userName;
     bioController.text = CurrentUser().bio;

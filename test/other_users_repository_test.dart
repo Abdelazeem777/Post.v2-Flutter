@@ -22,7 +22,7 @@ main() {
                 .toString()
                 .split(' ')[0],
           ));
-  final _currentUserRepository = Injector().currentUsersRepository;
+  final _currentUserRepository = Injector().currentUserRepository;
   final _otherUsersRepository = Injector().otherUsersRepository;
   SocketService _socket = SocketService();
 
@@ -76,7 +76,6 @@ main() {
           .listen(expectAsync1((_) {
         Future.delayed(Duration(seconds: 3)).then(expectAsync1((value) {
           //change it to future
-          print(CurrentUser().followingRankedList);
           expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               false);
         }));
@@ -140,7 +139,6 @@ main() {
         for (int i = 0; i < result.length; i++) {
           var resultUserID = result[i].userID;
           var expectedUserID = CurrentUser().followingRankedList[i];
-          print(CurrentUser().followingRankedList);
           expect(resultUserID, expectedUserID);
         }
       }));

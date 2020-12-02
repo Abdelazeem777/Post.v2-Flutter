@@ -22,7 +22,7 @@ main() {
     );
     @visibleForTesting
     CurrentUserRepository _currentUserRepository =
-        Injector().currentUsersRepository;
+        Injector().currentUserRepository;
     WidgetsFlutterBinding.ensureInitialized();
     //-------------------------|Singup|---------------------------
     test('Signup with valid inputs', () {
@@ -86,7 +86,7 @@ main() {
 
   group('Google login: ', () {
     CurrentUserRepository _currentUserRepository =
-        Injector().currentUsersRepository;
+        Injector().currentUserRepository;
     User _googleUser = User(
       userName: "Google Account",
       userProfilePicURL: "http://Google_profile_picture.jpg",
@@ -125,7 +125,7 @@ main() {
 
   group('Facebook login: ', () {
     CurrentUserRepository _currentUserRepository =
-        Injector().currentUsersRepository;
+        Injector().currentUserRepository;
     User _facebookUser = User(
       userName: "Facebook Account",
       userProfilePicURL: "http://Facebook_profile_picture.jpg",
@@ -178,7 +178,7 @@ main() {
           .split(' ')[0],
     );
     CurrentUserRepository _currentUserRepository =
-        Injector().currentUsersRepository;
+        Injector().currentUserRepository;
 
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -236,7 +236,7 @@ main() {
     var newUserName = 'New User Name';
     var newBio = 'hey there I am still using post app';
     CurrentUserRepository _currentUserRepository =
-        Injector().currentUsersRepository;
+        Injector().currentUserRepository;
 
     WidgetsFlutterBinding.ensureInitialized();
 

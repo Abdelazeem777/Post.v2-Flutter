@@ -17,7 +17,7 @@ class LoginViewModel with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   CurrentUserRepository _currentUserRepository;
   LoginViewModel() {
-    _currentUserRepository = Injector().currentUsersRepository;
+    _currentUserRepository = Injector().currentUserRepository;
   }
 
   void login({Function onLoginSuccess}) {

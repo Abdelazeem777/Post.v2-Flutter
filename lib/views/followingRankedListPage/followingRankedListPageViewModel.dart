@@ -6,7 +6,7 @@ import 'package:post/services/currentUser.dart';
 class FollowingRankedListViewModel with ChangeNotifier {
   var usersList = List<User>();
   final _otherUsersRepository = Injector().otherUsersRepository;
-  final _currentUsersRepository = Injector().currentUsersRepository;
+  final _currentUsersRepository = Injector().currentUserRepository;
 
   FollowingRankedListViewModel() {
     _otherUsersRepository
