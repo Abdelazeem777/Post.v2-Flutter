@@ -74,7 +74,6 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
         var usersListJson = responseMap['usersList'] as List;
         List<User> usersList = _getUsersFromJsonList(usersListJson);
         _updateCurrentUserFollowingList(usersList);
-        print(response.body);
         return usersList;
       }
     });

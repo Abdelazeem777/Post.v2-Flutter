@@ -16,11 +16,6 @@ abstract class CurrentUserRepository {
   Stream<String> updateProfileData(String newUserName, String newBio);
   Stream<void> follow(String currentUserID, String targetUserID, int rank);
   Stream<void> unFollow(String currentUserID, String targetUserID, int rank);
-
-  void onFollow(userID);
-  void onUnFollow(userID);
-  void onNewUserConnect(data);
-  void onDisconnect(data);
 }
 
 class CurrentUserRepositoryImpl implements CurrentUserRepository {
@@ -28,10 +23,10 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   SocketService _socketService;
   CurrentUserRepositoryImpl() {
     _socketService = SocketService()
-      ..onNewUserConnect = this.onNewUserConnect
-      ..onDisconnect = this.onDisconnect
-      ..onFollow = this.onFollow
-      ..onUnFollow = this.onUnFollow;
+      ..onNewUserConnect = this._onNewUserConnect
+      ..onDisconnect = this._onDisconnect
+      ..onFollow = this._onFollow
+      ..onUnFollow = this._onUnFollow;
   }
   @override
   Stream<void> login(String email, String password) {
@@ -52,7 +47,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   @override
   Stream<void> singup(User user) {
     String userJson = _networkService.convertMapToJson(user.toMap());
-    print(userJson);
+
     return Stream.fromFuture(
             _networkService.post(ApiEndPoint.SIGN_UP, userJson))
         .flatMap((response) {
@@ -90,6 +85,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
     return userJson;
   }
 
+//TODO: make the password required with the email to delete the account, like we did with delete post
   @override
   Stream<String> deleteAccount(String email) {
     String emailParam = '/$email';
@@ -171,12 +167,11 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         _socketService.unFollow(currentUserID, targetUserID, rank));
   }
 
-  @override
-  void onFollow(data) {
+  void _onFollow(data) {
     String fromUserID = data['from'];
     String toUserID = data['to'];
     int rank = data['rank'];
-    print('onFollowEvent' + data.toString());
+
     if (_isTheCurrentUser(fromUserID))
       CurrentUser()
         ..followingRankedList.insert(rank, toUserID)
@@ -187,19 +182,16 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         ..followersList.add(toUserID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
-
-    print(CurrentUser().followingRankedList);
   }
 
   bool _isTheCurrentUser(String fromUserID) =>
       fromUserID == CurrentUser().userID;
 
-  @override
-  void onUnFollow(data) {
+  void _onUnFollow(data) {
     String fromUserID = data['from'];
     String toUserID = data['to'];
     //int rank = data['rank'];
-    print('onUnFollowEvent' + data.toString());
+
     if (_isTheCurrentUser(fromUserID))
       CurrentUser()
         ..followingRankedList.remove(toUserID)
@@ -210,21 +202,14 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         ..followersList.remove(toUserID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
-
-    print(CurrentUser().followingRankedList);
   }
 
-  @override
-  void onNewUserConnect(userID) {
+  void _onNewUserConnect(userID) {
     if (CurrentUser().userID == userID)
       CurrentUser()
         ..active = true
         ..notify();
-    print("Connected user: " + userID.toString());
   }
 
-  @override
-  void onDisconnect(data) {
-    print('Disconnected user: ' + data.toString());
-  }
+  void _onDisconnect(data) {}
 }

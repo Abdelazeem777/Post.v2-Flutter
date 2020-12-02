@@ -5,7 +5,7 @@ import 'package:post/models/user.dart';
 import 'package:post/utils/preferences.dart';
 
 class CurrentUser extends User with ChangeNotifier {
-  static final CurrentUser _currentUserSingletone = CurrentUser._internal();
+  static final _currentUserSingletone = CurrentUser._internal();
 
   CurrentUser._internal();
 

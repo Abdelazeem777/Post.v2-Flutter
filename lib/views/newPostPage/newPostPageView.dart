@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
+import 'package:post/views/newPostPage/newPostPageViewModel.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
+import 'package:provider/provider.dart';
 
 class NewPost extends StatefulWidget {
   static const String routeName = '/NewPost';
@@ -11,6 +14,22 @@ class NewPost extends StatefulWidget {
 }
 
 class _NewPostState extends State<NewPost> {
+  final _viewModel = NewPostViewModel();
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => _viewModel,
+      builder: (context, child) => Scaffold(
+        key: _viewModel.scaffoldKey,
+        resizeToAvoidBottomInset: false,
+        appBar: _createAppBar(),
+        body: SafeArea(
+          child: _createNewPost(),
+        ),
+      ),
+    );
+  }
+
   Widget _createAppBar() {
     return AppBar(
       shadowColor: AppColors.SECONDARY_COLOR,
@@ -47,7 +66,8 @@ class _NewPostState extends State<NewPost> {
                       "lib/assets/post_logo_without_background.png",
                     ),
                   ),
-                  onPressed: () {}),
+                  onPressed: () =>
+                      _viewModel.uploadNewPost(onSuccess: _goBack)),
             ),
           ),
         )
@@ -67,7 +87,8 @@ class _NewPostState extends State<NewPost> {
               height: 50,
               margin: EdgeInsets.all(16),
               child: UserProfilePicture(
-                active: false,
+                imageURL: CurrentUser().userProfilePicURL,
+                active: CurrentUser().active,
               ),
             ),
             _createPostTextField(),
@@ -83,6 +104,7 @@ class _NewPostState extends State<NewPost> {
       margin: EdgeInsets.only(top: 16),
       width: SizeConfig.safeBlockHorizontal * 75,
       child: TextField(
+        controller: _viewModel.newPostTextController,
         maxLines: null,
         keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
@@ -101,30 +123,44 @@ class _NewPostState extends State<NewPost> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _createAddButton(
-            text: "Add Photo",
-            icon: Icon(
-              FontAwesomeIcons.image,
-              color: AppColors.SECONDARY_COLOR,
-              size: 48,
-            ),
-            onPressed: () {},
-          ),
-          _createAddButton(
-            text: "Add Video",
-            icon: Icon(
-              FontAwesomeIcons.video,
-              color: AppColors.SECONDARY_COLOR,
-              size: 46,
-            ),
-            onPressed: () {},
-          ),
+          PickFromGalleryButton(
+              text: "Add Photo",
+              icon: Icon(
+                FontAwesomeIcons.image,
+                color: AppColors.SECONDARY_COLOR,
+                size: 48,
+              ),
+              onPressed: _viewModel.pickPhotoFromGallery),
+          PickFromGalleryButton(
+              text: "Add Video",
+              icon: Icon(
+                FontAwesomeIcons.video,
+                color: AppColors.SECONDARY_COLOR,
+                size: 46,
+              ),
+              onPressed: _viewModel.pickVideoFromGallery),
         ],
       ),
     );
   }
 
-  Widget _createAddButton({String text, Icon icon, Null Function() onPressed}) {
+  _goBack() => Navigator.of(context).pop();
+}
+
+class PickFromGalleryButton extends StatelessWidget {
+  const PickFromGalleryButton({
+    Key key,
+    @required this.text,
+    @required this.icon,
+    @required this.onPressed,
+  }) : super(key: key);
+
+  final String text;
+  final Icon icon;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: 110,
       width: 110,
@@ -141,17 +177,6 @@ class _NewPostState extends State<NewPost> {
             style: TextStyle(fontSize: 16, color: AppColors.SECONDARY_COLOR),
           )
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: _createAppBar(),
-      body: SafeArea(
-        child: _createNewPost(),
       ),
     );
   }

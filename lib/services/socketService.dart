@@ -17,12 +17,14 @@ class SocketService {
   Function _onDisconnect;
   Function _onFollow;
   Function _onUnFollow;
+  Function _onNewPost;
 
   set onNewUserConnect(Function onNewUserConnect) =>
       _onNewUserConnect = onNewUserConnect;
   set onDisconnect(Function onDisconnect) => _onDisconnect = onDisconnect;
   set onFollow(Function onFollow) => _onFollow = onFollow;
   set onUnFollow(Function onUnFollow) => _onUnFollow = onUnFollow;
+  set onNewPost(Function onNewPost) => _onNewPost = onNewPost;
 
   IO.Socket socket;
 
@@ -55,6 +57,8 @@ class SocketService {
 
     this.socket.on(FOLLOW_EVENT, _onFollow);
     this.socket.on(UNFOLLOW_EVENT, _onUnFollow);
+
+    this.socket.on(NEW_POST_EVENT, _onNewPost);
   }
 
   bool isConnected() => socket == null || !socket?.connected;
@@ -85,12 +89,6 @@ class SocketService {
     socket.emit(UNFOLLOW_EVENT, data);
   }
 
-  Future<void> sendPost(Post newPost) async {
-    var newPostMap = newPost.toMap();
-    var newPostJson = _networkService.convertMapToJson(newPostMap);
-    socket.emit(NEW_POST_EVENT, newPostJson);
-  }
-
   disconnect() {
     if (socket != null)
       socket
@@ -101,5 +99,10 @@ class SocketService {
     CurrentUser()
       ..active = false
       ..notify();
+  }
+
+  Future<void> uploadNewPost(Post newPost) async {
+    var newPostMap = newPost.toMap();
+    socket.emit(NEW_POST_EVENT, newPostMap);
   }
 }

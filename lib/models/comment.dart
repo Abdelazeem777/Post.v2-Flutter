@@ -13,14 +13,15 @@ class Comment {
   List<React> reactsList;
   List<Reply> repliesList;
 
-  Comment(
-      {this.commentID,
-      this.userID,
-      this.commentContent,
-      this.commentType,
-      this.timestamp,
-      this.reactsList,
-      this.repliesList});
+  Comment({
+    this.commentID,
+    this.userID,
+    this.commentContent,
+    this.commentType,
+    this.timestamp,
+    this.reactsList = const [],
+    this.repliesList = const [],
+  });
 
   Comment.fromMap(Map<String, dynamic> json) {
     commentID = json['commentID'];
@@ -48,7 +49,7 @@ class Comment {
     data['commentID'] = this.commentID;
     data['userID'] = this.userID;
     data['commentContent'] = this.commentContent;
-    data['commentType'] = EnumToString.parse(this.commentType);
+    data['commentType'] = EnumToString.convertToString(this.commentType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
       data['reactsList'] = this.reactsList.map((v) => v.toMap()).toList();

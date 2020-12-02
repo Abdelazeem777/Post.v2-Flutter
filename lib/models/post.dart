@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:post/enums/postTypeEnum.dart';
-import 'react.dart';
+
 import 'comment.dart';
+import 'react.dart';
 
 class Post {
   String postID;
@@ -15,10 +20,10 @@ class Post {
 
   Post({
     this.postID,
-    this.userID,
-    this.postContent,
-    this.postType = PostType.Text,
-    this.timestamp,
+    @required this.userID,
+    @required this.postContent,
+    @required this.postType,
+    @required this.timestamp,
     this.reactsList = const [],
     this.numberOfShares = 0,
     this.commentsList = const [],
@@ -46,19 +51,73 @@ class Post {
   }
 
   Map<String, dynamic> toMap() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['postID'] = this.postID;
-    data['userID'] = this.userID;
-    data['postContent'] = this.postContent;
-    data['postType'] = EnumToString.parse(this.postType);
-    data['timestamp'] = this.timestamp;
-    if (this.reactsList != null) {
-      data['reactsList'] = this.reactsList.map((v) => v.toMap()).toList();
-    }
-    data['numberOfShares'] = this.numberOfShares;
-    if (this.commentsList != null) {
-      data['commentsList'] = this.commentsList.map((v) => v.toMap()).toList();
-    }
-    return data;
+    return {
+      'postID': postID,
+      'userID': userID,
+      'postContent': postContent,
+      'postType': EnumToString.convertToString(postType),
+      'timestamp': timestamp,
+      'reactsList': reactsList?.map((x) => x?.toMap())?.toList(),
+      'numberOfShares': numberOfShares,
+      'commentsList': commentsList?.map((x) => x?.toMap())?.toList(),
+    }..removeWhere((key, value) => key == null || value == null);
+  }
+
+  Post copyWith({
+    String postID,
+    String userID,
+    String postContent,
+    PostType postType,
+    int timestamp,
+    List<React> reactsList,
+    int numberOfShares,
+    List<Comment> commentsList,
+  }) {
+    return Post(
+      postID: postID ?? this.postID,
+      userID: userID ?? this.userID,
+      postContent: postContent ?? this.postContent,
+      postType: postType ?? this.postType,
+      timestamp: timestamp ?? this.timestamp,
+      reactsList: reactsList ?? this.reactsList,
+      numberOfShares: numberOfShares ?? this.numberOfShares,
+      commentsList: commentsList ?? this.commentsList,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Post.fromJson(String source) => Post.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'Post(postID: $postID, userID: $userID, postContent: $postContent,postType: ${EnumToString.convertToString(postType)}, timestamp: $timestamp, reactsList: $reactsList, numberOfShares: $numberOfShares, commentsList: $commentsList)';
+  }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is Post &&
+        o.postID == postID &&
+        o.userID == userID &&
+        o.postContent == postContent &&
+        o.postType == postType &&
+        o.timestamp == timestamp &&
+        listEquals(o.reactsList, reactsList) &&
+        o.numberOfShares == numberOfShares &&
+        listEquals(o.commentsList, commentsList);
+  }
+
+  @override
+  int get hashCode {
+    return postID.hashCode ^
+        userID.hashCode ^
+        postContent.hashCode ^
+        postType.hashCode ^
+        timestamp.hashCode ^
+        reactsList.hashCode ^
+        numberOfShares.hashCode ^
+        commentsList.hashCode;
   }
 }

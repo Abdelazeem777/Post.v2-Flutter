@@ -52,21 +52,21 @@ class User {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'userID': userID,
-      'userName': userName,
-      'phoneNumber': phoneNumber,
-      'birthDate': birthDate,
-      'bio': bio,
-      'userProfilePicURL': userProfilePicURL,
-      'active': active,
-      'email': email,
-      'password': password,
-      'accessToken': accessToken,
-      'followersList': followersList,
-      'followingRankedList': followingRankedList,
-      'postsList': postsList,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userID'] = this.userID ?? null;
+    data['userName'] = this.userName;
+    data['phoneNumber'] = this.phoneNumber;
+    data['birthDate'] = this.birthDate;
+    data['bio'] = this.bio;
+    data['userProfilePicURL'] = this.userProfilePicURL;
+    data['active'] = this.active;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['accessToken'] = this.accessToken;
+    data['followersList'] = this.followersList;
+    data['followingRankedList'] = this.followingRankedList;
+    data['postsList'] = this.postsList;
+    return data..removeWhere((key, value) => key == null || value == null);
   }
 
   User copyWith({
