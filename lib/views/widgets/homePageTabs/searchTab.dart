@@ -16,35 +16,33 @@ class SearchTab extends StatefulWidget {
 }
 
 class _SearchTabState extends State<SearchTab> {
-  final _viewModel = SearchTabViewModel();
+  SearchTabViewModel _viewModel;
 
   @override
   void initState() {
     super.initState();
+    _viewModel = Provider.of<SearchTabViewModel>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => _viewModel,
-      child: Column(
-        children: [
-          _createSearchTextField(),
-          Flexible(
-            child: Selector<SearchTabViewModel, List<User>>(
-              selector: (_, viewModel) => viewModel.usersList,
-              builder: (_, usersList, __) => ListView.builder(
-                padding: EdgeInsets.all(0),
-                // controller: this.widget._scrollController,
-                itemCount: usersList.length,
-                itemBuilder: (context, position) {
-                  return UserItem(user: usersList[position]);
-                },
-              ),
+    return Column(
+      children: [
+        _createSearchTextField(),
+        Flexible(
+          child: Selector<SearchTabViewModel, List<User>>(
+            selector: (_, viewModel) => viewModel.usersList,
+            builder: (_, usersList, __) => ListView.builder(
+              padding: EdgeInsets.all(0),
+              // controller: this.widget._scrollController,
+              itemCount: usersList.length,
+              itemBuilder: (context, position) {
+                return UserItem(user: usersList[position]);
+              },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

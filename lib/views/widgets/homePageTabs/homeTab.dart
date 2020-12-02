@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
+import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';
+import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
   final ScrollController _scrollController;
@@ -13,9 +15,11 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   List<Post> _postsList;
+  HomeTabViewModel _viewModel;
   @override
   void initState() {
     super.initState();
+    _viewModel = Provider.of<HomeTabViewModel>(context, listen: false);
     _postsList = [
       Post.fromMap({
         "postID": "2",

@@ -22,16 +22,15 @@ class _HomeState extends State<Home> {
   int _currentPage = 1;
   bool _isVisible = true;
 
-  ScrollController _scrollController;
-  FocusNode _searchFocusNode;
+  final _pageController = PageController(initialPage: 1);
+  final _scrollController = ScrollController();
+  final _searchFocusNode = FocusNode();
 
   final _viewModel = HomePageViewModel();
 
   @override
   initState() {
     super.initState();
-    _searchFocusNode = FocusNode();
-    _scrollController = ScrollController();
     _addListenerToScrollController();
   }
 
@@ -50,6 +49,15 @@ class _HomeState extends State<Home> {
         ),
         ListenableProvider<HomePageViewModel>(
           create: (context) => _viewModel,
+        ),
+        ListenableProvider<SearchTabViewModel>(
+          create: (context) => SearchTabViewModel(),
+        ),
+        ListenableProvider<HomeTabViewModel>(
+          create: (context) => HomeTabViewModel(),
+        ),
+        ListenableProvider<ProfileTabViewModel>(
+          create: (context) => ProfileTabViewModel(),
         )
       ],
       builder: (context, child) => Scaffold(
@@ -123,19 +131,24 @@ class _HomeState extends State<Home> {
 
   Widget _createHomePage() {
     return Container(
-        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top / 2),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
+      margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top / 2),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(40),
+          topRight: Radius.circular(40),
         ),
-        child: [
+      ),
+      child: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: [
           SearchTab(_scrollController, _searchFocusNode),
           HomeTab(_scrollController),
           ProfileTab(_scrollController),
-        ].elementAt(_currentPage));
+        ],
+      ),
+    );
   }
 
   Widget _createFloatingActionButton() {
@@ -182,6 +195,7 @@ class _HomeState extends State<Home> {
             onTap: (int position) {
               if (position == 0) _searchFocusNode.requestFocus();
               setState(() => _currentPage = position);
+              _pageController.jumpToPage(_currentPage);
             },
           )
         ],
