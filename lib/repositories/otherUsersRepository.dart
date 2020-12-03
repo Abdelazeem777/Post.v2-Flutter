@@ -22,15 +22,15 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
       if (response.statusCode != 200 || null == response.statusCode) {
         throw new RequestException(responseMap["message"]);
       } else {
-        var usersListOfJson = responseMap['usersList'] as List;
-        List<User> usersList = _getUsersFromJsonList(usersListOfJson);
+        var usersListOfMap = responseMap['usersList'] as List;
+        List<User> usersList = _getUsersFromMapList(usersListOfMap);
         return usersList;
       }
     });
   }
 
-  List<User> _getUsersFromJsonList(List usersListOfJson) {
-    List<User> usersList = usersListOfJson.map((userMap) {
+  List<User> _getUsersFromMapList(List usersListOfMap) {
+    List<User> usersList = usersListOfMap.map((userMap) {
       return User.fromMap(userMap);
     }).toList();
     return usersList;
@@ -46,8 +46,8 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
       if (response.statusCode != 200 || null == response.statusCode) {
         throw new RequestException(responseMap["message"]);
       } else {
-        var usersListOfJson = responseMap['usersList'] as List;
-        List<User> usersList = _getUsersFromJsonList(usersListOfJson);
+        var usersListOfMap = responseMap['usersList'] as List;
+        List<User> usersList = _getUsersFromMapList(usersListOfMap);
         _updateCurrentUserFollowersList(usersList);
         return usersList;
       }
@@ -72,7 +72,7 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
         throw new RequestException(responseMap["message"]);
       } else {
         var usersListJson = responseMap['usersList'] as List;
-        List<User> usersList = _getUsersFromJsonList(usersListJson);
+        List<User> usersList = _getUsersFromMapList(usersListJson);
         _updateCurrentUserFollowingList(usersList);
         return usersList;
       }
