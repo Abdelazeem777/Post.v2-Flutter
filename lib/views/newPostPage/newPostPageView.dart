@@ -16,6 +16,12 @@ class NewPost extends StatefulWidget {
 class _NewPostState extends State<NewPost> {
   final _viewModel = NewPostViewModel();
   @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => _viewModel,

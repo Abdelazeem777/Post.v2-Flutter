@@ -43,4 +43,10 @@ class NewPostViewModel with ChangeNotifier {
   void pickPhotoFromGallery() {}
 
   void pickVideoFromGallery() {}
+
+  @override
+  void dispose() {
+    newPostTextController.dispose();
+    super.dispose();
+  }
 }

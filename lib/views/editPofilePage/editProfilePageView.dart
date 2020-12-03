@@ -16,7 +16,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  EditProfilePageViewModel _viewModel = EditProfilePageViewModel();
+  final _viewModel = EditProfilePageViewModel();
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

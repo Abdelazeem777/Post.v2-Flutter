@@ -77,4 +77,10 @@ class EditProfilePageViewModel with ChangeNotifier {
       formKey.currentState.validate() &&
       (userNameController.text != CurrentUser().userName ||
           bioController.text != CurrentUser().bio);
+  @override
+  void dispose() {
+    userNameController.dispose();
+    bioController.dispose();
+    super.dispose();
+  }
 }
