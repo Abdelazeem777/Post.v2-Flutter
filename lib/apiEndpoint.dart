@@ -16,4 +16,6 @@ class ApiEndPoint {
   static const LOAD_FOLLOWERS_LIST = REQUEST_URL + '/users/loadFollowersList';
 
   static const DELETE_POST = REQUEST_URL + '/posts/deletePost';
+
+  static const GET_POSTS = REQUEST_URL + '/posts/getPosts';
 }

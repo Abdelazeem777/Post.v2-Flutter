@@ -40,8 +40,7 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.white,
-        child: Selector<ProfileTabViewModel, List<Post>>(
-          selector: (_, viewModel) => viewModel.postsList,
+        child: Consumer<ProfileTabViewModel>(
           builder: (context, value, child) => ListView(
             controller: this.widget._scrollController,
             padding: EdgeInsets.all(0),

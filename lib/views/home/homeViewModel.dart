@@ -47,17 +47,20 @@ class ProfileTabViewModel with ChangeNotifier {
 
   final postsList = List<Post>();
   ProfileTabViewModel() {
-    print('profileTabViewModel instantiated');
     var currentUserPostsStream = _postsRepository.getCurrentUserPosts();
-    print(currentUserPostsStream.hashCode);
     currentUserPostsStream.listen((post) {
       print('new post is added: $post');
-      this.postsList.add(post);
+      _addPostAtFirstIndex(post);
       notifyListeners();
     }).onDone(() {
       print('stream is done');
     });
   }
+
+  void _addPostAtFirstIndex(Post post) {
+    this.postsList.insert(0, post);
+  }
+
   void logout({Function onLogoutSuccess}) {
     _userRepository.logout().listen((_) {
       onLogoutSuccess();

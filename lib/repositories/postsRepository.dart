@@ -9,25 +9,52 @@ import 'package:post/utils/requestException.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class PostsRepository {
-  Stream<void> uploadNewPost(Post newPost);
-  Stream<Post> getFollowingUsersPosts();
   Stream<Post> getCurrentUserPosts();
+  Stream<Post> getFollowingUsersPosts();
 
+  Stream<void> uploadNewPost(Post newPost);
   Stream<String> deletePost(String postID, String userID, String userPassword);
 }
 
 class PostsRepositoryImpl implements PostsRepository {
   final _networkService = Injector().networkService;
-  var _followingUsersPostsStreamController = StreamController<Post>();
-  var _currentUserPostsStreamController = StreamController<Post>();
+  var _followingUsersPostsStreamController = StreamController<Post>.broadcast();
+  var _currentUserPostsStreamController = StreamController<Post>.broadcast();
   SocketService _socketService;
   PostsRepositoryImpl() {
     _socketService = SocketService()..onNewPost = this._onNewPost;
   }
 
   @override
-  Stream<void> uploadNewPost(Post newPost) {
-    return Stream.fromFuture(_socketService.uploadNewPost(newPost));
+  Stream<Post> getCurrentUserPosts() {
+    return _getPostsFromAPI(CurrentUser().userID)
+        .concatWith([_currentUserPostsStreamController.stream]);
+  }
+
+  Stream<Post> _getPostsFromAPI(String userID) {
+    String userIDParam = '/$userID';
+    return Stream.fromFuture(
+            _networkService.get(ApiEndPoint.GET_POSTS + userIDParam))
+        .flatMap((response) {
+      Map responseMap = _networkService.convertJsonToMap(response.body);
+      if (response.statusCode != 200 || null == response.statusCode) {
+        throw new RequestException(responseMap["message"]);
+      } else {
+        var postsListOfMap = responseMap['postsList'] as List;
+        var apiPostsStream = _getPostsFromMapList(postsListOfMap);
+        return apiPostsStream;
+      }
+    });
+  }
+
+  Stream<Post> _getPostsFromMapList(List postsListOfMap) async* {
+    for (var postMap in postsListOfMap) {
+      yield Post.fromMap(postMap);
+    }
+  }
+
+  void _getCurrentUserPostFromDataBase() {
+    //TODO: use this method when you add the database feature
   }
 
   @override
@@ -36,30 +63,22 @@ class PostsRepositoryImpl implements PostsRepository {
     return _newPostsStream;
   }
 
-//TODO: return creates a new stream from that stream which is not listening to any changes happen
-  @override
-  Stream<Post> getCurrentUserPosts() {
-    var _postsStream = _currentUserPostsStreamController.stream;
-
-    return _postsStream;
-  }
-
-//TODO: use this condition when u trying to add posts from db
-  bool hasNewPosts(Stream<Post> _newPostsStream) =>
-      _newPostsStream.length != Future.value(0);
-
   void _onNewPost(newPostMap) {
     final newPost = Post.fromMap(newPostMap);
-    print("bido" + newPostMap.toString());
     if (newPost.userID == CurrentUser().userID) {
-      _currentUserPostsStreamController.add(newPost);
+      _currentUserPostsStreamController.sink.add(newPost);
 
       CurrentUser()
         ..postsList.add(newPost.postID)
         ..saveUserToPreference().listen((_) {})
         ..notify();
     } else
-      _followingUsersPostsStreamController.add(newPost);
+      _followingUsersPostsStreamController.sink.add(newPost);
+  }
+
+  @override
+  Stream<void> uploadNewPost(Post newPost) {
+    return Stream.fromFuture(_socketService.uploadNewPost(newPost));
   }
 
   @override

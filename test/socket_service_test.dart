@@ -92,11 +92,13 @@ main() {
     test('send new post', () {
       newPost.userID = CurrentUser().userID;
       _postsRepository.uploadNewPost(newPost).listen(expectAsync1((_) {
-        _postsRepository.getCurrentUserPosts().listen((comingPost) {
+        _postsRepository
+            .getCurrentUserPosts()
+            .listen(expectAsync1((comingPost) {
           expect(comingPost.postContent, newPost.postContent);
           expect(comingPost.userID, newPost.userID);
           newPost.postID = comingPost.postID;
-        });
+        }));
       }));
     });
 
