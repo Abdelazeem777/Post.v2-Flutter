@@ -7,6 +7,7 @@ class TimeTextFromTimestamp extends StatelessWidget {
   TimeTextFromTimestamp(this._timestamp);
   @override
   Widget build(BuildContext context) {
+    if (_timestamp == -1) return Container();
     String time = DateTimeFormatHandler.getDurationFromTimestamp(_timestamp);
     return Text(
       time,

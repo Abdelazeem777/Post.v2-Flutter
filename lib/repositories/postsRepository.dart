@@ -10,7 +10,7 @@ import 'package:rxdart/rxdart.dart';
 
 abstract class PostsRepository {
   Stream<Post> getCurrentUserPosts();
-  Stream<Post> getFollowingUsersPosts();
+  Stream<Post> getFollowingUsersPosts(List<String> usersIDsList);
 
   Stream<void> uploadNewPost(Post newPost);
   Stream<String> deletePost(String postID, String userID, String userPassword);
@@ -58,22 +58,35 @@ class PostsRepositoryImpl implements PostsRepository {
   }
 
   @override
-  Stream<Post> getFollowingUsersPosts() {
-    var _newPostsStream = _followingUsersPostsStreamController.stream;
-    return _newPostsStream;
+  Stream<Post> getFollowingUsersPosts(List<String> usersIDsList) {
+    return _followingUsersPostsStreamController.stream.mergeWith(
+      _createPostsStreamsFromUsersIDsList(usersIDsList),
+    );
   }
+
+  ///Used to get all followers posts from the API by creating streams for every usersID and load them
+  Iterable<Stream<Post>> _createPostsStreamsFromUsersIDsList(
+          List<String> usersIDsList) =>
+      usersIDsList.map<Stream<Post>>((userID) => _getPostsFromAPI(userID));
 
   void _onNewPost(newPostMap) {
     final newPost = Post.fromMap(newPostMap);
     if (newPost.userID == CurrentUser().userID) {
-      _currentUserPostsStreamController.sink.add(newPost);
-
-      CurrentUser()
-        ..postsList.add(newPost.postID)
-        ..saveUserToPreference().listen((_) {})
-        ..notify();
+      _addPostToCurrentUserPostsStream(newPost);
+      _addPostIDToCurrentUserPostsList(newPost.postID);
     } else
       _followingUsersPostsStreamController.sink.add(newPost);
+  }
+
+  void _addPostIDToCurrentUserPostsList(String newPostID) {
+    CurrentUser()
+      ..postsList.add(newPostID)
+      ..saveUserToPreference().listen((_) {})
+      ..notify();
+  }
+
+  void _addPostToCurrentUserPostsStream(Post newPost) {
+    _currentUserPostsStreamController.sink.add(newPost);
   }
 
   @override

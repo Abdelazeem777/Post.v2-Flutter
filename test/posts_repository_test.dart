@@ -9,6 +9,7 @@ import 'package:post/services/socketService.dart';
 
 main() {
   final _currentUserRepository = Injector().currentUserRepository;
+  final _otherUsersRepository = Injector().otherUsersRepository;
   final _postsRepository = Injector().postsRepository;
   SocketService _socket = SocketService();
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,5 +81,8 @@ main() {
       }));
     });
   });
-  group('get all posts from otherUser', () {});
+
+  test('disconnect socket connection', () {
+    expect(() => _socket.disconnect(), returnsNormally);
+  });
 }

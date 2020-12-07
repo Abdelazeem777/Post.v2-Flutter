@@ -40,7 +40,37 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
   }
 }
 
-class HomeTabViewModel with ChangeNotifier {}
+class HomeTabViewModel with ChangeNotifier {
+  final followingUsers = List<User>();
+  final postsList = List<Post>();
+
+  final _postsRepository = Injector().postsRepository;
+  final _otherUsersRepository = Injector().otherUsersRepository;
+
+  HomeTabViewModel() {
+    _fetchFollowingUsersFromRepo().then(
+      (_) => _fetchFollowingPostsFromRepo(),
+    );
+  }
+
+  void _fetchFollowingPostsFromRepo() {
+    var usersIDsList = followingUsers.map((user) => user.userID).toList();
+    print(usersIDsList);
+    _postsRepository.getFollowingUsersPosts(usersIDsList).listen((post) {
+      print('new post: ' + post.toString());
+      postsList.insert(0, post);
+      notifyListeners();
+    });
+  }
+
+  Future<void> _fetchFollowingUsersFromRepo() async {
+    await for (final usersList
+        in _otherUsersRepository.loadFollowingList(CurrentUser().userID)) {
+      usersList.forEach((user) => followingUsers.add(user));
+    }
+    notifyListeners();
+  }
+}
 
 class ProfileTabViewModel with ChangeNotifier {
   final _userRepository = Injector().currentUserRepository;

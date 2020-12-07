@@ -19,8 +19,14 @@ class PostFrame extends StatefulWidget {
   final bool multiplePosts;
   final List<Post> postsList;
   final User postOwnerUser;
+  final rank;
 
-  PostFrame({this.multiplePosts = false, this.postsList, this.postOwnerUser});
+  PostFrame({
+    this.multiplePosts = false,
+    @required this.postsList,
+    @required this.postOwnerUser,
+    this.rank = -1,
+  });
 
   @override
   _PostFrameState createState() => _PostFrameState();
@@ -60,7 +66,10 @@ class _PostFrameState extends State<PostFrame> {
       ),
       child: Stack(
         children: [
-          Center(child: _createBodyThatContainsPostItems()),
+          Center(
+              child: _postsList.isNotEmpty
+                  ? _createBodyThatContainsPostItems()
+                  : Text('No posts yet')),
           _createTopPart(),
           Positioned(bottom: 0, child: _createBottomPart()),
         ],
@@ -114,7 +123,7 @@ class _PostFrameState extends State<PostFrame> {
         alignment: Alignment.center,
         overflow: Overflow.visible,
         children: [
-          Positioned(top: 16, left: 16, child: _createRank(1)),
+          Positioned(top: 16, left: 16, child: _createRank()),
           Positioned(
               top: -10,
               left: 48,
@@ -139,16 +148,17 @@ class _PostFrameState extends State<PostFrame> {
     );
   }
 
-  Widget _createRank(int rankNumber) {
+  Widget _createRank() {
     return Text(
-      "#" + rankNumber.toString(),
+      "#" + widget.rank.toString(),
       style: TextStyle(fontSize: 18, color: AppColors.PRIMARY_COLOR),
     );
   }
 
   Widget _createUserNameAndPostTimeText() {
     String userName = _user.userName;
-    int postTimestamp = _postsList[_postItemNumber].timestamp;
+    int postTimestamp =
+        (_postsList.isNotEmpty) ? _postsList[_postItemNumber].timestamp : -1;
 
     return Container(
       child: Column(
@@ -218,7 +228,6 @@ class _PostFrameState extends State<PostFrame> {
   }
 
   Widget _createBottomPart() {
-    Post currentPost = _postsList[_postItemNumber];
     return Container(
       width: SizeConfig.screenWidth,
       decoration: BoxDecoration(
