@@ -9,11 +9,13 @@ import 'currentUser.dart';
 class SocketService {
   static const New_USER_CONNECT_EVENT = 'newUserConnect';
   static const USER_DISCONNECTING_EVENT = 'userDisconnecting';
+  static const USER_PAUSED = 'userPaused';
   static const FOLLOW_EVENT = 'follow';
   static const UNFOLLOW_EVENT = 'unFollow';
   static const NEW_POST_EVENT = 'newPost';
 
   Function _onNewUserConnect;
+  Function _onPaused;
   Function _onDisconnect;
   Function _onFollow;
   Function _onUnFollow;
@@ -21,6 +23,7 @@ class SocketService {
 
   set onNewUserConnect(Function onNewUserConnect) =>
       _onNewUserConnect = onNewUserConnect;
+  set onPaused(Function onPaused) => _onPaused = onPaused;
   set onDisconnect(Function onDisconnect) => _onDisconnect = onDisconnect;
   set onFollow(Function onFollow) => _onFollow = onFollow;
   set onUnFollow(Function onUnFollow) => _onUnFollow = onUnFollow;
@@ -53,6 +56,7 @@ class SocketService {
     } else
       reconnect();
     this.socket.on(New_USER_CONNECT_EVENT, _onNewUserConnect);
+    this.socket.on(USER_PAUSED, _onPaused);
     this.socket.on(USER_DISCONNECTING_EVENT, _onDisconnect);
 
     this.socket.on(FOLLOW_EVENT, _onFollow);
@@ -89,7 +93,16 @@ class SocketService {
     socket.emit(UNFOLLOW_EVENT, data);
   }
 
-  disconnect() {
+  void pause() {
+    socket..emit(USER_PAUSED, CurrentUser().userID);
+
+    CurrentUser()
+      ..active = false
+      ..saveUserToPreference().listen((_) {})
+      ..notify();
+  }
+
+  void disconnect() {
     if (socket != null)
       socket
         ..emit(USER_DISCONNECTING_EVENT, CurrentUser().userID)

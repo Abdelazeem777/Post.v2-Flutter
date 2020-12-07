@@ -24,6 +24,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   CurrentUserRepositoryImpl() {
     _socketService = SocketService()
       ..onNewUserConnect = this._onNewUserConnect
+      ..onPaused = this._onPaused
       ..onDisconnect = this._onDisconnect
       ..onFollow = this._onFollow
       ..onUnFollow = this._onUnFollow;
@@ -210,6 +211,8 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         ..active = true
         ..notify();
   }
+
+  void _onPaused(usedID) {}
 
   void _onDisconnect(data) {}
 }

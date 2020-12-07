@@ -27,6 +27,7 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.paused:
+        _socketService.pause();
         break;
     }
   }
