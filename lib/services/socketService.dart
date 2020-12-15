@@ -119,3 +119,25 @@ class SocketService {
     socket.emit(NEW_POST_EVENT, newPostMap);
   }
 }
+
+class SocketServiceFacade {
+  var _socketService;
+  void init() {
+    _initRepositoriesObjects();
+    final _socketService = SocketService();
+    _socketService.connect();
+  }
+
+  void _initRepositoriesObjects() {
+    Injector().currentUserRepository;
+    Injector().postsRepository;
+  }
+
+  void reconnect() => _socketService.reconnect();
+  void pause() => _socketService.pause();
+
+  void destroy() {
+    Injector().dispose();
+    _socketService.disconnect();
+  }
+}

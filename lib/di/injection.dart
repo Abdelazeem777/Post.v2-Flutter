@@ -56,4 +56,9 @@ class Injector {
   AlternateLoginHandler get googleLoginHandler => GoogleLoginHandler();
 
   GalleryPicker get galleryImagePicker => GalleryImagePickerImpl();
+
+  void dispose() {
+    //release objects from flyWeight map
+    _flyweightMap.clear();
+  }
 }
