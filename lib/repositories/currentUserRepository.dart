@@ -106,7 +106,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
 
   @override
   Stream<void> logout() {
-    SocketService().disconnect();
+    SocketServiceFacade()..destroy();
     return CurrentUser().logout();
   }
 

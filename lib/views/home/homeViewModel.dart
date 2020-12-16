@@ -9,11 +9,9 @@ import 'package:post/services/socketService.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
-  final _userRepository = Injector().currentUserRepository;
-  final _postsRepository = Injector().postsRepository;
-  final _socketService = SocketService();
+  var _socketServiceFacade;
   HomePageViewModel() {
-    _socketService.connect();
+    _socketServiceFacade = SocketServiceFacade()..init();
     WidgetsBinding.instance.addObserver(this);
   }
   @override
@@ -22,12 +20,12 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
       case AppLifecycleState.detached:
         break;
       case AppLifecycleState.resumed:
-        _socketService.reconnect();
+        _socketServiceFacade.reconnect();
         break;
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.paused:
-        _socketService.pause();
+        _socketServiceFacade.pause();
         break;
     }
   }
@@ -35,7 +33,7 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _socketService.disconnect();
+    _socketServiceFacade.disconnect();
     super.dispose();
   }
 }
