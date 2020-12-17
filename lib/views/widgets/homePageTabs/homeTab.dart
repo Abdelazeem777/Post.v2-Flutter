@@ -30,28 +30,46 @@ class _HomeTabState extends State<HomeTab> {
         var usersCount = viewModel.followingUsers.length;
         return usersCount;
       },
-      builder: (_, usersCount, ___) => ListView.builder(
-          controller: this.widget._scrollController,
-          itemCount: usersCount,
-          itemBuilder: (context, index) {
-            return Selector<HomeTabViewModel, int>(
-              selector: (_, viewModel) => viewModel.postsList.length,
-              builder: (_, __, ___) {
-                final postOwnerUser = _viewModel?.followingUsers[index];
-                final postsList = _viewModel.postsList
-                    .where((post) => post.userID == postOwnerUser.userID)
-                    .toList();
-                return postOwnerUser != null
-                    ? PostFrame(
-                        multiplePosts: true,
-                        postsList: postsList,
-                        postOwnerUser: postOwnerUser,
-                        rank: index + 1,
-                      )
-                    : Container();
-              },
-            );
-          }),
+      builder: (_, usersCount, ___) => usersCount > 0
+          ? ListView.builder(
+              controller: this.widget._scrollController,
+              itemCount: usersCount,
+              itemBuilder: (context, index) {
+                return Selector<HomeTabViewModel, int>(
+                  selector: (_, viewModel) => viewModel.postsList.length,
+                  builder: (_, __, ___) {
+                    final postOwnerUser = _viewModel?.followingUsers[index];
+                    final postsList = _viewModel.postsList
+                        .where((post) => post.userID == postOwnerUser.userID)
+                        .toList();
+                    return postOwnerUser != null
+                        ? PostFrame(
+                            multiplePosts: true,
+                            postsList: postsList,
+                            postOwnerUser: postOwnerUser,
+                            rank: index + 1,
+                          )
+                        : Container();
+                  },
+                );
+              })
+          : const _ThereAreNoFollowersYetHint(),
+    );
+  }
+}
+
+class _ThereAreNoFollowersYetHint extends StatelessWidget {
+  const _ThereAreNoFollowersYetHint({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'No posts yet\nFollow new friends to see their posts.',
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

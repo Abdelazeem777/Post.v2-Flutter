@@ -32,14 +32,16 @@ class _SearchTabState extends State<SearchTab> {
         Flexible(
           child: Selector<SearchTabViewModel, List<User>>(
             selector: (_, viewModel) => viewModel.usersList,
-            builder: (_, usersList, __) => ListView.builder(
-              padding: EdgeInsets.all(0),
-              // controller: this.widget._scrollController,
-              itemCount: usersList.length,
-              itemBuilder: (context, position) {
-                return UserItem(user: usersList[position]);
-              },
-            ),
+            builder: (_, usersList, __) => usersList.length > 0
+                ? ListView.builder(
+                    padding: EdgeInsets.all(0),
+                    // controller: this.widget._scrollController,
+                    itemCount: usersList.length,
+                    itemBuilder: (context, position) {
+                      return UserItem(user: usersList[position]);
+                    },
+                  )
+                : const _FindNewFriendsHint(),
           ),
         ),
       ],
@@ -83,5 +85,21 @@ class _SearchTabState extends State<SearchTab> {
   void _removeTextFromSearchTextField() {
     _viewModel.searchTextController.clear();
     this.widget._searchFocusNode.requestFocus();
+  }
+}
+
+class _FindNewFriendsHint extends StatelessWidget {
+  const _FindNewFriendsHint({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        'Find new friends',
+        textAlign: TextAlign.center,
+      ),
+    );
   }
 }

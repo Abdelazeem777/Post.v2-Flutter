@@ -52,14 +52,18 @@ class _ProfileTabState extends State<ProfileTab> {
   List<Widget> _createListViewChildren() {
     List<Widget> listViewChildren = [];
     listViewChildren.add(_createUserProfileTopBar());
-    _viewModel.postsList.forEach(
-      (post) => listViewChildren.add(
-        PostFrame(
-          postsList: [post],
-          postOwnerUser: _currentUser,
+    if (_viewModel.postsList.length == 0)
+      listViewChildren.add(const _NoPostsYetForYouHint());
+    else
+      _viewModel.postsList.forEach(
+        (post) => listViewChildren.add(
+          PostFrame(
+            postsList: [post],
+            postOwnerUser: _currentUser,
+          ),
         ),
-      ),
-    );
+      );
+
     return listViewChildren;
   }
 
@@ -241,6 +245,22 @@ class _ProfileTabState extends State<ProfileTab> {
       Navigator.of(context).pushNamed(FollowingRankedListPage.routeName);
   void _goToFollowersListPage() =>
       Navigator.of(context).pushNamed(FollowersListPage.routeName);
+}
+
+class _NoPostsYetForYouHint extends StatelessWidget {
+  const _NoPostsYetForYouHint({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 150,
+      child: Center(
+        child: Text('No posts yet for you', textAlign: TextAlign.center),
+      ),
+    );
+  }
 }
 
 class UserProfileText extends StatelessWidget {
