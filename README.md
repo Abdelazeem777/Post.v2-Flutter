@@ -1,8 +1,8 @@
 # post v0.0.1
 
-![Post logo](https://github.com/Abdelazeem777/post.v2/blob/main/lib/assets/post_main_logo.png)
+<img align="middle" src="/lib/assets/post_main_logo.png" width="350"/>
 
-Post is new social media app with a new way for browsing posts.
+Post is new social media app like Facebook and Instagram with a new way for browsing posts.
 
 **Flutter as frontend:**
 
@@ -26,6 +26,32 @@ Post is new social media app with a new way for browsing posts.
 For the **Flutter application** repo click [here](https://github.com/Abdelazeem777/post.v2)
 
 For the **NodeJS backend** repo click [here](https://github.com/Abdelazeem777/post-api)
+
+## Screenshots for the completed features
+1. Signup & Login & Logout.
+
+<img src="/Screenshots/signup.gif" width="300"/>
+<img src="/Screenshots/log in.gif" width="300"/>
+<img src="/Screenshots/logout.gif" width="300"/>
+
+2. Signup using Google or Facebook account.
+
+<img src="/Screenshots/signup using google account.gif" width="300"/>
+<img src="/Screenshots/signup using facebook account.gif" width="300"/>
+
+3. Search for users (follow & unfollow).
+
+<img src="/Screenshots/search&follow.gif" width="300"/>
+<img src="/Screenshots/unfollow.gif" width="300"/>
+
+4. Browsing following posts & add new posts.
+
+<img src="/Screenshots/browsing posts.gif" width="300"/>
+<img src="/Screenshots/add new post.gif" width="300"/>
+
+5. Notifications.
+
+<img src="/Screenshots/notification.gif" width="300"/>
 
 ### Note.
 Currently it's not finished yet and still under-development.
