@@ -72,14 +72,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 EditProfileForm(viewModel: _viewModel),
                 Spacer(),
                 DeleteAccountButton(
-                  onPressed: () =>
-                      _viewModel.deleteAccount(onSuccess: _goToLoginPage),
+                  onPressed: showAlertDialog,
                 )
               ],
             ))
       ],
     );
   }
+
+  void showAlertDialog() => showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Delete this account?'),
+          content: const Text(
+              'If you delete this account, you won\'t be able to login again using this account and your data will be deleted.'),
+          actions: [
+            _CancelButton(context: context),
+            _Confirm(
+              onPressed: () =>
+                  _viewModel.deleteAccount(onSuccess: _goToLoginPage),
+            )
+          ],
+        ),
+      );
 
   void _goBackToProfileTab() => Navigator.of(context).pop();
   void _goToLoginPage() =>
@@ -228,6 +243,45 @@ class DeleteAccountButton extends StatelessWidget {
             backgroundColor:
                 MaterialStateColor.resolveWith((states) => Colors.red)),
       ),
+    );
+  }
+}
+
+class _Confirm extends StatelessWidget {
+  final Function onPressed;
+
+  const _Confirm({
+    Key key,
+    @required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: Text('Confirm'),
+      onPressed: onPressed,
+      style: ButtonStyle(
+          backgroundColor: MaterialStateColor.resolveWith((_) => Colors.red)),
+    );
+  }
+}
+
+class _CancelButton extends StatelessWidget {
+  const _CancelButton({
+    Key key,
+    @required this.context,
+  }) : super(key: key);
+
+  final BuildContext context;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: Text('Cancel'),
+      onPressed: () => Navigator.of(context).pop(),
+      style: ButtonStyle(
+          foregroundColor:
+              MaterialStateColor.resolveWith((_) => Colors.grey[700])),
     );
   }
 }
