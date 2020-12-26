@@ -9,14 +9,12 @@ import 'package:provider/provider.dart';
 //TODO: try to add a bottom border
 class UserItemCard extends StatelessWidget {
   final User user;
-  final rank;
   final viewModel;
   final withRank;
 
   const UserItemCard({
     Key key,
     @required this.user,
-    this.rank = -1,
     @required this.viewModel,
     this.withRank = false,
   }) : super(key: key);

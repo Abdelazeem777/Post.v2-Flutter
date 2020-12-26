@@ -39,11 +39,22 @@ class CurrentUser extends User with ChangeNotifier {
 
   void notify() => notifyListeners();
 
-  ///if this userID is not exist in followingRankedList then it will return a rank at the end of the map
+  ///it returns the rank of the input userID (the index inside followingRankedList)
+  ///
+  ///if this userID is not specified then it will return a rank at the end of the list
+  ///(the length of the list to set the new user at the end of the list )
   int getRank([String userID = 'return the last index +1']) {
     int rank = followingRankedList.indexOf(userID);
     return rank != -1 ? rank : _setRankAtTheEndOfFollowingList();
   }
 
   int _setRankAtTheEndOfFollowingList() => followingRankedList.length;
+
+  void changeRankOfUser(String targetUserID, int oldRank, int newRank) {
+    assert(followingRankedList[oldRank] == targetUserID,
+        'Not the same targetUser');
+    print('oldRank: $oldRank, newRank: $newRank');
+    followingRankedList.removeAt(oldRank);
+    followingRankedList.insert(newRank, targetUserID);
+  }
 }

@@ -50,14 +50,9 @@ class _FollowersListPageState extends State<FollowersListPage> {
         itemCount: _viewModel.usersList.length,
         itemBuilder: (BuildContext context, int i) {
           return UserItemCard(
-              key: ValueKey(_viewModel.usersList[i]),
-              user: _viewModel.usersList[i],
-              viewModel: _viewModel,
-              rank: i);
-          Divider(
-            key: ValueKey(i),
-            height: 1,
-            color: AppColors.SECONDARY_COLOR,
+            key: ValueKey(_viewModel.usersList[i]),
+            user: _viewModel.usersList[i],
+            viewModel: _viewModel,
           );
         },
       ),

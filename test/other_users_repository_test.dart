@@ -143,8 +143,6 @@ main() {
         }
       }));
     });
-    //TODO: don't forget this feature
-    test('change the rank of the user', () {});
   });
 
   test('load followersList', () {

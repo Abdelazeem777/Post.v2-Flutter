@@ -78,11 +78,8 @@ class ProfileTabViewModel with ChangeNotifier {
   ProfileTabViewModel() {
     var currentUserPostsStream = _postsRepository.getCurrentUserPosts();
     currentUserPostsStream.listen((post) {
-      print('new post is added: $post');
       _addPostAtFirstIndex(post);
       notifyListeners();
-    }).onDone(() {
-      print('stream is done');
     });
   }
 

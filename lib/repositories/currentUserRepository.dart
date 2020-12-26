@@ -16,6 +16,8 @@ abstract class CurrentUserRepository {
   Stream<String> updateProfileData(String newUserName, String newBio);
   Stream<void> follow(String currentUserID, String targetUserID, int rank);
   Stream<void> unFollow(String currentUserID, String targetUserID, int rank);
+  Stream<String> updateRank(
+      String currentUserID, String targetUserID, int oldRank, int newRank);
 }
 
 class CurrentUserRepositoryImpl implements CurrentUserRepository {
@@ -152,6 +154,30 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
         return CurrentUser().saveUserToPreference().map((_) {
           return response.body.toString();
         });
+      }
+    });
+  }
+
+  @override
+  Stream<String> updateRank(
+      String currentUserID, String targetUserID, int oldRank, int newRank) {
+    final data = {
+      'currentUserID': currentUserID,
+      'targetUserID': targetUserID,
+      'newRank': newRank,
+    };
+    final dataJSON = _networkService.convertMapToJson(data);
+    return Stream.fromFuture(
+            _networkService.post(ApiEndPoint.UPDATE_USER_RANK, dataJSON))
+        .flatMap((response) {
+      if (response.statusCode != 200 || null == response.statusCode) {
+        Map responseMap = _networkService.convertJsonToMap(response.body);
+        throw new RequestException(responseMap["message"]);
+      } else {
+        CurrentUser()
+          ..changeRankOfUser(targetUserID, oldRank, newRank)
+          ..notify();
+        return CurrentUser().saveUserToPreference().map((_) => response.body);
       }
     });
   }

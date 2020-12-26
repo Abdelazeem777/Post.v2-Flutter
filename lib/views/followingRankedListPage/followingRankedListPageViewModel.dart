@@ -16,7 +16,24 @@ class FollowingRankedListViewModel with ChangeNotifier {
       notifyListeners();
     });
   }
-  void reorder(int oldIndex, int newIndex) {}
+  void reorder(int oldIndex, int newIndex) {
+    if (oldIndex == newIndex) return;
+    if (newIndex > oldIndex) newIndex -= 1;
+    print('oldRank: $oldIndex, newRank: $newIndex');
+    final currentUserID = CurrentUser().userID;
+    final targetUserID = CurrentUser().followingRankedList[oldIndex];
+    _currentUsersRepository
+        .updateRank(currentUserID, targetUserID, oldIndex, newIndex)
+        .listen(print);
+    _updateUsersListWithTheNewRank(oldIndex, newIndex);
+  }
+
+  void _updateUsersListWithTheNewRank(int oldIndex, int newIndex) {
+    final targetUser = usersList.removeAt(oldIndex);
+    usersList.insert(newIndex, targetUser);
+    notifyListeners();
+  }
+
   void follow(String targetUserID) {
     _currentUsersRepository
         .follow(CurrentUser().userID, targetUserID, CurrentUser().getRank())

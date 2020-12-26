@@ -64,7 +64,6 @@ class _FollowingRankedListPageState extends State<FollowingRankedListPage> {
         key: ValueKey(_viewModel.usersList[i]),
         user: _viewModel.usersList[i],
         viewModel: _viewModel,
-        rank: imageCache,
         withRank: true,
       ));
     }
