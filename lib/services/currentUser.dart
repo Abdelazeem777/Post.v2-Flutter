@@ -53,7 +53,6 @@ class CurrentUser extends User with ChangeNotifier {
   void changeRankOfUser(String targetUserID, int oldRank, int newRank) {
     assert(followingRankedList[oldRank] == targetUserID,
         'Not the same targetUser');
-    print('oldRank: $oldRank, newRank: $newRank');
     followingRankedList.removeAt(oldRank);
     followingRankedList.insert(newRank, targetUserID);
   }

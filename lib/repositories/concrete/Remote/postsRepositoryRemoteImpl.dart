@@ -3,25 +3,18 @@ import 'dart:async';
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
+import 'package:post/repositories/abstract/postsRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 import 'package:post/utils/requestException.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class PostsRepository {
-  Stream<Post> getCurrentUserPosts();
-  Stream<Post> getFollowingUsersPosts(List<String> usersIDsList);
-
-  Stream<void> uploadNewPost(Post newPost);
-  Stream<String> deletePost(String postID, String userID, String userPassword);
-}
-
-class PostsRepositoryImpl implements PostsRepository {
+class PostsRepositoryRemoteImpl implements PostsRepository {
   final _networkService = Injector().networkService;
   var _followingUsersPostsStreamController = StreamController<Post>.broadcast();
   var _currentUserPostsStreamController = StreamController<Post>.broadcast();
   SocketService _socketService;
-  PostsRepositoryImpl() {
+  PostsRepositoryRemoteImpl() {
     _socketService = SocketService()..onNewPost = this._onNewPost;
   }
 
@@ -118,7 +111,8 @@ class PostsRepositoryImpl implements PostsRepository {
     });
   }
 
-  dispose() {
+  @override
+  void dispose() {
     _currentUserPostsStreamController.close();
     _followingUsersPostsStreamController.close();
   }

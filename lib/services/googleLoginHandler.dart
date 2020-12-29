@@ -1,10 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:post/di/injection.dart';
-
 import 'package:post/models/user.dart';
-import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
-
 import 'userAdapter.dart';
 
 class GoogleLoginHandler extends AlternateLoginHandler {

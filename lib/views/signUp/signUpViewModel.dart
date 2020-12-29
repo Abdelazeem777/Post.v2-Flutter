@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/currentUserRepository.dart';
+import 'package:post/repositories/abstract/currentUserRepository.dart';
 
 class SignUpViewModel with ChangeNotifier {
   final FocusNode userNameFocusNode = FocusNode();

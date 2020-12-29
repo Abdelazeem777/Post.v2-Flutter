@@ -1,16 +1,11 @@
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
+import 'package:post/repositories/abstract/otherUsersRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/utils/requestException.dart';
 
-abstract class OtherUsersRepository {
-  Stream<List<User>> searchForUsers(String userName);
-  Stream<List<User>> loadFollowingList(String userID);
-  Stream<List<User>> loadFollowersList(String userID);
-}
-
-class OtherUsersRepositoryImpl extends OtherUsersRepository {
+class OtherUsersRepositoryRemoteImpl extends OtherUsersRepository {
   final _networkService = Injector().networkService;
   @override
   Stream<List<User>> searchForUsers(String userName) {
@@ -86,4 +81,7 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
       ..saveUserToPreference().listen((_) {})
       ..notify();
   }
+
+  @override
+  void dispose() {}
 }

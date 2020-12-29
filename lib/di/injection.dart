@@ -1,6 +1,12 @@
-import 'package:post/repositories/otherUsersRepository.dart';
-import 'package:post/repositories/currentUserRepository.dart';
-import 'package:post/repositories/postsRepository.dart';
+import 'package:post/repositories/abstract/currentUserRepository.dart';
+import 'package:post/repositories/abstract/otherUsersRepository.dart';
+import 'package:post/repositories/abstract/postsRepository.dart';
+import 'package:post/repositories/concrete/Remote/currentUserRepositoryRemoteImpl.dart';
+import 'package:post/repositories/concrete/Remote/otherUsersRepositoryRemoteImpl.dart';
+import 'package:post/repositories/concrete/Remote/postsRepositoryRemoteImpl.dart';
+import 'package:post/repositories/currentUserRepositoryImpl.dart';
+import 'package:post/repositories/otherUsersRepositoryImpl.dart';
+import 'package:post/repositories/postsRepositoryImpl.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:post/services/facebookLoginHelper.dart';
 import 'package:post/services/googleLoginHandler.dart';
@@ -48,6 +54,14 @@ class Injector {
     }
     return postsRepository;
   }
+
+  CurrentUserRepository get currentUserRepositoryRemote =>
+      CurrentUserRepositoryRemoteImpl();
+
+  OtherUsersRepository get otherUsersRepositoryRemote =>
+      OtherUsersRepositoryRemoteImpl();
+
+  PostsRepository get postsRepositoryRemote => PostsRepositoryRemoteImpl();
 
   NetworkService get networkService => NetworkService();
 

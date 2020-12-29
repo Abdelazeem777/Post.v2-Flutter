@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
-import 'package:post/repositories/currentUserRepository.dart';
+import 'package:post/repositories/abstract/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/utils/GalleryPicker.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';

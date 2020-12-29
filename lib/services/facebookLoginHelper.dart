@@ -1,13 +1,8 @@
-import 'dart:convert';
-
-import 'package:http/src/response.dart';
+import 'package:http/http.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-
-import 'package:post/services/networkService.dart';
 import 'userAdapter.dart';
 
 class FaceBookLoginHandler extends AlternateLoginHandler {

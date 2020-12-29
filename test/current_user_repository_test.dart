@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/currentUserRepository.dart';
+import 'package:post/repositories/abstract/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 
@@ -279,9 +279,9 @@ main() {
     List<User> _testingUsersList = List.generate(
       4,
       (i) => User(
-        userName: "testing dummy user${i + 1}",
+        userName: "testing3 dummy user${i + 1}",
         phoneNumber: '0111863106',
-        email: 'testing_user${i + 1}@test.com',
+        email: 'testing3_user${i + 1}@test.com',
         password: 'TestingUser123',
         birthDate: DateTime.now()
             .subtract(Duration(days: 365 * 25)) //date before 25 years from now
@@ -309,7 +309,7 @@ main() {
       expect(_socket.connect, returnsNormally);
     });
     test('search for a specific user to follow', () {
-      const searchText = 'testing dummy user';
+      const searchText = 'testing3 dummy user';
       const resultUsersCount = 4;
       _otherUsersRepository
           .searchForUsers(searchText)
@@ -324,7 +324,6 @@ main() {
       }));
     });
     test('follow', () {
-      _testingUsersList.forEach((user) => print('userID: ${user?.userID}'));
       var targetUser = _testingUsersList[0];
       _currentUserRepository
           .follow(

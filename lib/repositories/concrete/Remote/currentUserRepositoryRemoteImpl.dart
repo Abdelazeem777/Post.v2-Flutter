@@ -1,29 +1,16 @@
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
+import 'package:post/repositories/abstract/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 import 'package:post/utils/requestException.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class CurrentUserRepository {
-  Stream<void> login(String email, String password);
-  Stream<void> singup(User user);
-  Stream<void> alternateLogin(User user);
-  Stream<String> deleteAccount(String email);
-  Stream<void> logout();
-  Stream<void> uploadProfilePic(Map<String, String> imageMap);
-  Stream<String> updateProfileData(String newUserName, String newBio);
-  Stream<void> follow(String currentUserID, String targetUserID, int rank);
-  Stream<void> unFollow(String currentUserID, String targetUserID, int rank);
-  Stream<String> updateRank(
-      String currentUserID, String targetUserID, int oldRank, int newRank);
-}
-
-class CurrentUserRepositoryImpl implements CurrentUserRepository {
+class CurrentUserRepositoryRemoteImpl implements CurrentUserRepository {
   final _networkService = Injector().networkService;
   SocketService _socketService;
-  CurrentUserRepositoryImpl() {
+  CurrentUserRepositoryRemoteImpl() {
     _socketService = SocketService()
       ..onNewUserConnect = this._onNewUserConnect
       ..onPaused = this._onPaused
@@ -241,4 +228,7 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   void _onPaused(usedID) {}
 
   void _onDisconnect(data) {}
+
+  @override
+  void dispose() {}
 }

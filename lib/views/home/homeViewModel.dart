@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
-import 'package:post/repositories/otherUsersRepository.dart';
-import 'package:post/repositories/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 import 'package:rxdart/rxdart.dart';

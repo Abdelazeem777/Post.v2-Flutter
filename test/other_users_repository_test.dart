@@ -11,9 +11,9 @@ main() {
   List<User> _testingUsersList = List.generate(
       10,
       (i) => User(
-            userName: "testing dummy user${i + 1}",
+            userName: "testing dummy user2${i + 1}",
             phoneNumber: '0111863106',
-            email: 'testing_user${i + 1}@test.com',
+            email: 'testing_user2${i + 1}@test.com',
             password: 'TestingUser123',
             birthDate: DateTime.now()
                 .subtract(

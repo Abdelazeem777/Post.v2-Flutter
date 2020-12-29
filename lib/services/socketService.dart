@@ -30,8 +30,6 @@ class SocketService {
   set onNewPost(Function onNewPost) => _onNewPost = onNewPost;
 
   IO.Socket socket;
-
-  NetworkService _networkService = Injector().networkService;
   static SocketService _singletone;
 
   factory SocketService() {
@@ -67,7 +65,7 @@ class SocketService {
 
   bool isConnected() => socket == null || !socket?.connected;
 
-  reconnect() {
+  void reconnect() {
     disconnect();
     connect();
   }
