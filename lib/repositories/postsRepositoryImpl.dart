@@ -1,12 +1,7 @@
 import 'dart:async';
 
-import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
-import 'package:post/services/currentUser.dart';
-import 'package:post/services/socketService.dart';
-import 'package:post/utils/requestException.dart';
-import 'package:rxdart/rxdart.dart';
 import 'abstract/postsRepository.dart';
 
 class PostsRepositoryImpl implements PostsRepository {

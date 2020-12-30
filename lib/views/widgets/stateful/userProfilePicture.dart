@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 //TODO: add onPressed to move to the user profile
 class UserProfilePicture extends StatefulWidget {
-  String imageURL;
-  bool active;
-  double activeIndicatorSize;
+  final String imageURL;
+  final bool active;
+  final double activeIndicatorSize;
   UserProfilePicture(
       {this.imageURL = "Default",
       this.active = false,

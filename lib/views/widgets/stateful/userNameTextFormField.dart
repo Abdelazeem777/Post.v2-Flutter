@@ -5,10 +5,10 @@ import 'package:post/views/widgets/stateless/mainTextFormField.dart';
 
 class UserNameTextFormField extends MainTextFormField {
   UserNameTextFormField({
-    @required FocusNode currentFocusNode,
-    @required FocusNode nextFocusNode,
-    @required TextEditingController currentController,
-    EdgeInsetsGeometry margin,
+    @required final FocusNode currentFocusNode,
+    @required final FocusNode nextFocusNode,
+    @required final TextEditingController currentController,
+    final EdgeInsetsGeometry margin,
   }) : super(
           currentController: currentController,
           currentFocusNode: currentFocusNode,

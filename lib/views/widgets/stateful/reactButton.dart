@@ -8,7 +8,7 @@ import 'package:post/utils/iconHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
 
 class ReactButton extends StatefulWidget {
-  ReactType initialReactType;
+  final ReactType initialReactType;
   ReactButton({
     this.initialReactType,
   });

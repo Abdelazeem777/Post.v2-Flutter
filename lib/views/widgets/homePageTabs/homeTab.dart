@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:post/models/post.dart';
-import 'package:post/models/user.dart';
-import 'package:post/services/currentUser.dart';
 import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';
 import 'package:provider/provider.dart';
-import 'package:tuple/tuple.dart';
 
 class HomeTab extends StatefulWidget {
   final ScrollController _scrollController;

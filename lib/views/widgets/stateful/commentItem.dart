@@ -1,16 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:post/enums/commentTypeEnum.dart';
-import 'package:post/enums/replyTypeEnum.dart';
 import 'package:post/models/comment.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/models/reply.dart';
 import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
-import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/widgets/stateful/commentReactButton.dart';
-import 'package:post/views/widgets/stateful/reactButton.dart';
 import 'package:post/views/widgets/stateful/replyItem.dart';
 import 'package:post/views/widgets/stateless/timeTextFromTimestamp.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
@@ -18,7 +15,7 @@ import 'package:post/views/widgets/stateless/replyButton.dart';
 import 'package:post/views/widgets/stateless/userNameAndBio.dart';
 
 class CommentItem extends StatefulWidget {
-  Comment comment;
+  final Comment comment;
   CommentItem({this.comment});
   @override
   expansion createState() => expansion();

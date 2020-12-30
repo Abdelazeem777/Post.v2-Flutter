@@ -1,4 +1,3 @@
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:post/models/comment.dart';
 import 'package:post/services/currentUser.dart';
@@ -8,14 +7,12 @@ import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/widgets/stateful/reactItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
-import 'package:post/views/widgets/stateless/userNameAndBio.dart';
 
 import 'commentItem.dart';
-import 'followButton.dart';
 
 class CommentsBottomSheet extends StatefulWidget {
-  List<Comment> commentsList;
-  List<React> reactsList;
+  final List<Comment> commentsList;
+  final List<React> reactsList;
   CommentsBottomSheet({
     @required this.commentsList,
     @required this.reactsList,

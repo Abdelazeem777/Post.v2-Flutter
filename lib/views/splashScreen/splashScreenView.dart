@@ -5,9 +5,7 @@ import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/utils/logoAnimation.dart';
 import 'package:post/utils/sizeConfig.dart';
-import 'package:post/utils/preferences.dart';
 import 'package:post/views/home/homeView.dart';
-import 'package:post/views/login/loginView.dart';
 import 'package:post/views/signUp/signUpView.dart';
 import 'package:post/views/splashScreen/splashScreenViewModel.dart';
 

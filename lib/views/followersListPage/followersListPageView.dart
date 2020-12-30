@@ -58,10 +58,4 @@ class _FollowersListPageState extends State<FollowersListPage> {
       ),
     );
   }
-
-  List<Widget> _getListItems() {
-    List<Widget> children = List<Widget>();
-    for (int i = 0; i < _viewModel.usersList.length; i++) {}
-    return children;
-  }
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:post/utils/sizeConfig.dart';
 
 class UserNameAndBio extends StatelessWidget {
-  String userName;
-  String bio;
+  final String userName;
+  final String bio;
   UserNameAndBio({this.userName, this.bio});
   @override
   Widget build(BuildContext context) {

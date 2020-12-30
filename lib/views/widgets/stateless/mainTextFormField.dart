@@ -10,7 +10,7 @@ abstract class MainTextFormField extends StatelessWidget {
   final Function(String) validator;
   final TextCapitalization textCapitalization;
   final Icon icon;
-  EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry margin;
 
   MainTextFormField({
     @required this.currentController,

@@ -1,7 +1,6 @@
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
-import 'package:post/services/networkService.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import 'currentUser.dart';
@@ -45,7 +44,7 @@ class SocketService {
     }
   }
   connect() {
-    if (isConnected()) {
+    if (isNotConnected()) {
       socket = IO.io(ApiEndPoint.REQUEST_URL, <String, dynamic>{
         'transports': ['websocket'],
         'query': {'userID': CurrentUser().userID},
@@ -63,7 +62,7 @@ class SocketService {
     this.socket.on(NEW_POST_EVENT, _onNewPost);
   }
 
-  bool isConnected() => socket == null || !socket?.connected;
+  bool isNotConnected() => socket == null || !socket?.connected;
 
   void reconnect() {
     disconnect();

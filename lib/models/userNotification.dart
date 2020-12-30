@@ -44,7 +44,8 @@ class UserNotification {
     data['fromUser'] = this.fromUser;
     data['fromUserProfilePicURL'] = this.fromUserProfilePicURL;
     data['notificationContent'] = this.notificationContent;
-    data['notificationType'] = EnumToString.parse(this.notificationType);
+    data['notificationType'] =
+        EnumToString.convertToString(this.notificationType);
     data['reactType'] = this.reactType;
     data['timestamp'] = this.timestamp;
     data['seen'] = this.seen;

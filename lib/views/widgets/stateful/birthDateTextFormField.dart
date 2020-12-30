@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/utils/validator.dart';
@@ -7,7 +6,7 @@ import 'package:post/utils/validator.dart';
 class BirthDateTextFormField extends StatefulWidget {
   final FocusNode currentFocusNode, nextFocusNode;
   final TextEditingController currentController;
-  EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry margin;
 
   BirthDateTextFormField({
     @required this.currentFocusNode,

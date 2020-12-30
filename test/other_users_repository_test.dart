@@ -4,7 +4,6 @@ import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
-import 'package:rxdart/rxdart.dart';
 
 main() {
   //generate 10 dummy users for testing

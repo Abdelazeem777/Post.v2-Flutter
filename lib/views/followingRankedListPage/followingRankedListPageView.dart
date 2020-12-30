@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/views/followingRankedListPage/followingRankedListPageViewModel.dart';
-import 'package:post/views/widgets/stateful/followButton.dart';
-import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 import 'package:post/views/widgets/stateless/userItemCard.dart';
 import 'package:provider/provider.dart';
 

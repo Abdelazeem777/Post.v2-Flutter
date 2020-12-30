@@ -46,10 +46,6 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
     }
   }
 
-  void _getCurrentUserPostFromDataBase() {
-    //TODO: use this method when you add the database feature
-  }
-
   @override
   Stream<Post> getFollowingUsersPosts(List<String> usersIDsList) {
     return _followingUsersPostsStreamController.stream.mergeWith(

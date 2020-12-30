@@ -52,7 +52,7 @@ main() {
       expect(result, 'Password must contains characters');
     });
     test('add invalid password not contains numbers ', () {
-      String password = 'fkjshdjkfhsjkhdfkjsd';
+      String password = 'justADummyTextForTestingNothingMore';
       var result = Validator.validatePassword(password);
       expect(result, 'Password must contains numbers');
     });

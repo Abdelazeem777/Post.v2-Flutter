@@ -7,11 +7,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/views/widgets/stateful/interactiveViewerOverlay.dart';
-import 'package:post/views/widgets/stateful/loadingAnimation.dart';
 import 'package:post/views/widgets/stateful/videoPlayer.dart';
 
 class PostItem extends StatefulWidget {
-  Post post;
+  final Post post;
   PostItem(this.post);
 
   @override

@@ -7,7 +7,7 @@ import 'package:post/utils/validator.dart';
 class PasswordTextFormField extends StatefulWidget {
   final FocusNode currentFocusNode, nextFocusNode;
   final TextEditingController currentController;
-  EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry margin;
 
   PasswordTextFormField({
     @required this.currentFocusNode,

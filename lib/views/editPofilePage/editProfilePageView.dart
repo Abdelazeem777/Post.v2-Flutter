@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:post/services/currentUser.dart';
+import 'package:provider/provider.dart';
 
+import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/sizeConfig.dart';
 import 'package:post/utils/validator.dart';
 import 'package:post/views/editPofilePage/editProfilePageViewModel.dart';
 import 'package:post/views/login/loginView.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
-import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatefulWidget {
   static const String routeName = '/editProfilePage';
@@ -68,10 +68,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: SizeConfig.screenHeight - 110,
             child: Column(
               children: [
-                CurrentUserProfilePicWithEditButton(),
-                EditProfileForm(viewModel: _viewModel),
+                const _CurrentUserProfilePicWithEditButton(),
+                const _EditProfileForm(),
                 Spacer(),
-                DeleteAccountButton(
+                _DeleteAccountButton(
                   onPressed: showAlertDialog,
                 )
               ],
@@ -101,17 +101,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
       Navigator.of(context).popAndPushNamed(Login.routeName);
 }
 
-class EditProfileForm extends StatelessWidget {
-  const EditProfileForm({
+class _EditProfileForm extends StatelessWidget {
+  const _EditProfileForm({
     Key key,
-    @required EditProfilePageViewModel viewModel,
-  })  : _viewModel = viewModel,
-        super(key: key);
-
-  final EditProfilePageViewModel _viewModel;
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _viewModel = Provider.of<EditProfilePageViewModel>(context);
     return Form(
       key: _viewModel.formKey,
       autovalidateMode: _viewModel.autoValidate
@@ -119,13 +116,13 @@ class EditProfileForm extends StatelessWidget {
           : AutovalidateMode.disabled,
       child: Column(
         children: [
-          EditProfileTextField(
+          _EditProfileTextField(
             currentController: _viewModel.userNameController,
             currentFocusNode: _viewModel.userNameFocusNode,
             nextFocusNode: _viewModel.bioFocusNode,
             label: 'User Name',
           ),
-          EditProfileTextField(
+          _EditProfileTextField(
             currentController: _viewModel.bioController,
             currentFocusNode: _viewModel.bioFocusNode,
             label: 'Bio',
@@ -136,12 +133,12 @@ class EditProfileForm extends StatelessWidget {
   }
 }
 
-class EditProfileTextField extends StatelessWidget {
+class _EditProfileTextField extends StatelessWidget {
   final FocusNode currentFocusNode, nextFocusNode;
   final TextEditingController currentController;
   final String label;
 
-  const EditProfileTextField({
+  const _EditProfileTextField({
     Key key,
     @required this.currentFocusNode,
     this.nextFocusNode,
@@ -178,12 +175,14 @@ class EditProfileTextField extends StatelessWidget {
   }
 }
 
-class CurrentUserProfilePicWithEditButton extends StatelessWidget {
-  EditProfilePageViewModel _viewModel;
+class _CurrentUserProfilePicWithEditButton extends StatelessWidget {
+  const _CurrentUserProfilePicWithEditButton({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _viewModel = Provider.of<EditProfilePageViewModel>(context);
+    final _viewModel = Provider.of<EditProfilePageViewModel>(context);
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -223,9 +222,9 @@ class CurrentUserProfilePicWithEditButton extends StatelessWidget {
   }
 }
 
-class DeleteAccountButton extends StatelessWidget {
+class _DeleteAccountButton extends StatelessWidget {
   final Function onPressed;
-  const DeleteAccountButton({
+  const _DeleteAccountButton({
     Key key,
     @required this.onPressed,
   }) : super(key: key);

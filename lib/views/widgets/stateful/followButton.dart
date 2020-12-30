@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:post/style/appColors.dart';
 
 class FollowButton extends StatefulWidget {
-  bool following;
-  Function onPressed;
+  final bool following;
+  final Function onPressed;
   FollowButton({this.following, this.onPressed});
   @override
   _FollowButtonState createState() => _FollowButtonState();

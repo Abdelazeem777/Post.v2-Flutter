@@ -14,8 +14,8 @@ import 'package:post/views/widgets/stateless/userNameAndBio.dart';
 import 'userProfilePicture.dart';
 
 class ReplyItem extends StatefulWidget {
-  Reply reply;
-  void Function() onReplyButtonPressed;
+  final Reply reply;
+  final void Function() onReplyButtonPressed;
   bool lastReply;
   ReplyItem({
     @required this.reply,

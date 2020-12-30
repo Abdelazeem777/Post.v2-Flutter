@@ -66,6 +66,7 @@ class CurrentUserRepositoryRemoteImpl implements CurrentUserRepository {
     });
   }
 
+  // ignore: non_constant_identifier_names
   String changeUserIDKeyTo_id(User user) {
     Map userMap = user.toMap()
       ..remove("userID") //to change userID key to _id

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/style/appColors.dart';
@@ -11,7 +10,6 @@ import 'package:post/views/followingRankedListPage/followingRankedListPageView.d
 import 'package:post/views/home/homeViewModel.dart';
 import 'package:post/views/login/loginView.dart';
 import 'package:post/views/widgets/stateful/postFrame.dart';
-import 'package:post/views/widgets/stateful/postItem.dart';
 import 'package:post/views/widgets/stateful/userProfilePicture.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';

@@ -15,7 +15,7 @@ class React {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userID'] = this.userID;
-    data['reactType'] = EnumToString.parse(this.reactType);
+    data['reactType'] = EnumToString.convertToString(this.reactType);
     return data;
   }
 }

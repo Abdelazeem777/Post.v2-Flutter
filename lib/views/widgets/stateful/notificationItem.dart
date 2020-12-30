@@ -1,6 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:post/enums/notificationTypeEnum.dart';
 import 'package:post/enums/reactTypeEnum.dart';
 import 'package:post/models/userNotification.dart';
@@ -8,7 +6,6 @@ import 'package:post/style/appColors.dart';
 import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/iconHandler.dart';
 import 'package:post/utils/sizeConfig.dart';
-import 'package:post/views/widgets/stateless/timeTextFromTimestamp.dart';
 
 import 'userProfilePicture.dart';
 

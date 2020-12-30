@@ -38,7 +38,7 @@ class Reply {
     data['replyID'] = this.replyID;
     data['userID'] = this.userID;
     data['replyContent'] = this.replyContent;
-    data['replyType'] = EnumToString.parse(this.replyType);
+    data['replyType'] = EnumToString.convertToString(this.replyType);
     data['timestamp'] = this.timestamp;
     if (this.reactsList != null) {
       data['reactsList'] = this.reactsList.map((v) => v.toMap()).toList();

@@ -4,7 +4,6 @@ import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
-import 'package:rxdart/rxdart.dart';
 
 class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
   var _socketServiceFacade;

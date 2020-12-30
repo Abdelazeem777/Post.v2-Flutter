@@ -4,7 +4,7 @@ import 'package:post/utils/sizeConfig.dart';
 import 'package:video_player/video_player.dart';
 
 class CustomVideoPlayer extends StatefulWidget {
-  String videoURL;
+  final String videoURL;
   CustomVideoPlayer({this.videoURL});
 
   @override

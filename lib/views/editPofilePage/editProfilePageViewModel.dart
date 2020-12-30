@@ -4,7 +4,6 @@ import 'package:post/di/injection.dart';
 import 'package:post/repositories/abstract/currentUserRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/utils/GalleryPicker.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class EditProfilePageViewModel with ChangeNotifier {
   final scaffoldKey = GlobalKey<ScaffoldState>();

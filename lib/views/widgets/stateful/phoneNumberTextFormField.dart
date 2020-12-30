@@ -5,9 +5,9 @@ import 'package:post/views/widgets/stateless/mainTextFormField.dart';
 
 class PhoneNumberTextFormField extends MainTextFormField {
   PhoneNumberTextFormField(
-      {@required FocusNode currentFocusNode,
-      @required FocusNode nextFocusNode,
-      @required TextEditingController currentController,
+      {@required final FocusNode currentFocusNode,
+      @required final FocusNode nextFocusNode,
+      @required final TextEditingController currentController,
       EdgeInsetsGeometry margin})
       : super(
           currentController: currentController,
