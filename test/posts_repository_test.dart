@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/enums/postTypeEnum.dart';
 import 'package:post/models/post.dart';
@@ -7,7 +10,14 @@ import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 
+void initHive() {
+  var path = Directory.current.path;
+  Hive.init(path + '/test/hive_testing_path');
+}
+
 main() {
+  initHive();
+
   final _currentUserRepository = Injector().currentUserRepository;
   final _otherUsersRepository = Injector().otherUsersRepository;
   final _postsRepository = Injector().postsRepository;
@@ -53,6 +63,7 @@ main() {
         expect(() {
           _postsRepository.uploadNewPost(newPost).listen(expectAsync1((_) {}));
         }, returnsNormally);
+        Future.delayed(Duration(seconds: 3));
       });
     });
 

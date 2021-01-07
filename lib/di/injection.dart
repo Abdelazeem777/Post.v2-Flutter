@@ -1,6 +1,9 @@
 import 'package:post/repositories/abstract/currentUserRepository.dart';
 import 'package:post/repositories/abstract/otherUsersRepository.dart';
 import 'package:post/repositories/abstract/postsRepository.dart';
+import 'package:post/repositories/concrete/Local/currentUserRepositoryLocalImpl.dart';
+import 'package:post/repositories/concrete/Local/otherUserRepositoryLocalImpl.dart';
+import 'package:post/repositories/concrete/Local/postsRepositoryLocalImpl.dart';
 import 'package:post/repositories/concrete/Remote/currentUserRepositoryRemoteImpl.dart';
 import 'package:post/repositories/concrete/Remote/otherUsersRepositoryRemoteImpl.dart';
 import 'package:post/repositories/concrete/Remote/postsRepositoryRemoteImpl.dart';
@@ -55,18 +58,73 @@ class Injector {
     return postsRepository;
   }
 
-  CurrentUserRepository get currentUserRepositoryRemote =>
-      CurrentUserRepositoryRemoteImpl();
+  //Remote repositories
+  CurrentUserRepository get currentUserRepositoryRemote {
+    var currentUserRepositoryRemote =
+        _flyweightMap['currentUserRepositoryRemote'];
+    if (currentUserRepositoryRemote == null) {
+      currentUserRepositoryRemote = CurrentUserRepositoryRemoteImpl();
+      _flyweightMap
+        ..addAll({'currentUserRepositoryRemote': currentUserRepositoryRemote});
+    }
+    return currentUserRepositoryRemote;
+  }
 
-  OtherUsersRepository get otherUsersRepositoryRemote =>
-      OtherUsersRepositoryRemoteImpl();
+  OtherUsersRepository get otherUsersRepositoryRemote {
+    var otherUsersRepositoryRemote =
+        _flyweightMap['otherUsersRepositoryRemote'];
+    if (otherUsersRepositoryRemote == null) {
+      otherUsersRepositoryRemote = OtherUsersRepositoryRemoteImpl();
+      _flyweightMap
+        ..addAll({'otherUsersRepositoryRemote': otherUsersRepositoryRemote});
+    }
+    return otherUsersRepositoryRemote;
+  }
 
-  PostsRepository get postsRepositoryRemote => PostsRepositoryRemoteImpl();
+  PostsRepository get postsRepositoryRemote {
+    var postsRepositoryRemote = _flyweightMap['postsRepositoryRemote'];
+    if (postsRepositoryRemote == null) {
+      postsRepositoryRemote = PostsRepositoryRemoteImpl();
+      _flyweightMap..addAll({'postsRepositoryRemote': postsRepositoryRemote});
+    }
+    return postsRepositoryRemote;
+  }
+
+  //Local repositories
+  CurrentUserRepository get currentUserRepositoryLocal {
+    var currentUserRepositoryLocal =
+        _flyweightMap['currentUserRepositoryLocal'];
+    if (currentUserRepositoryLocal == null) {
+      currentUserRepositoryLocal = CurrentUserRepositoryLocalImpl();
+      _flyweightMap
+        ..addAll({'currentUserRepositoryLocal': currentUserRepositoryLocal});
+    }
+    return currentUserRepositoryLocal;
+  }
+
+  OtherUsersRepository get otherUsersRepositoryLocal {
+    var otherUsersRepositoryLocal = _flyweightMap['otherUsersRepositoryLocal'];
+    if (otherUsersRepositoryLocal == null) {
+      otherUsersRepositoryLocal = OtherUsersRepositoryLocalImpl();
+      _flyweightMap
+        ..addAll({'otherUsersRepositoryLocal': otherUsersRepositoryLocal});
+    }
+    return otherUsersRepositoryLocal;
+  }
+
+  PostsRepository get postsRepositoryLocal {
+    var postsRepositoryLocal = _flyweightMap['postsRepositoryLocal'];
+    if (postsRepositoryLocal == null) {
+      postsRepositoryLocal = PostsRepositoryLocalImpl();
+      _flyweightMap..addAll({'postsRepositoryLocal': postsRepositoryLocal});
+    }
+    return postsRepositoryLocal;
+  }
 
   NetworkService get networkService => NetworkService();
 
+  //Alternatives for login process
   AlternateLoginHandler get facebookLoginHandler => FaceBookLoginHandler();
-
   AlternateLoginHandler get googleLoginHandler => GoogleLoginHandler();
 
   GalleryPicker get galleryImagePicker => GalleryImagePickerImpl();

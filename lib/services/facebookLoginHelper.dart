@@ -3,7 +3,7 @@ import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'userAdapter.dart';
+import './adapters/userAdapter.dart';
 
 class FaceBookLoginHandler extends AlternateLoginHandler {
   final _currentUserRepository = Injector().currentUserRepository;

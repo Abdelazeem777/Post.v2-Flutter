@@ -11,6 +11,8 @@ import 'package:rxdart/rxdart.dart';
 
 class PostsRepositoryRemoteImpl implements PostsRepository {
   final _networkService = Injector().networkService;
+  final _local = Injector().postsRepositoryLocal;
+
   var _followingUsersPostsStreamController = StreamController<Post>.broadcast();
   var _currentUserPostsStreamController = StreamController<Post>.broadcast();
   SocketService _socketService;
@@ -58,26 +60,6 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
           List<String> usersIDsList) =>
       usersIDsList.map<Stream<Post>>((userID) => _getPostsFromAPI(userID));
 
-  void _onNewPost(newPostMap) {
-    final newPost = Post.fromMap(newPostMap);
-    if (newPost.userID == CurrentUser().userID) {
-      _addPostToCurrentUserPostsStream(newPost);
-      _addPostIDToCurrentUserPostsList(newPost.postID);
-    } else
-      _followingUsersPostsStreamController.sink.add(newPost);
-  }
-
-  void _addPostIDToCurrentUserPostsList(String newPostID) {
-    CurrentUser()
-      ..postsList.add(newPostID)
-      ..saveUserToPreference().listen((_) {})
-      ..notify();
-  }
-
-  void _addPostToCurrentUserPostsStream(Post newPost) {
-    _currentUserPostsStreamController.sink.add(newPost);
-  }
-
   @override
   Stream<void> uploadNewPost(Post newPost) {
     return Stream.fromFuture(_socketService.uploadNewPost(newPost));
@@ -105,6 +87,32 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
         return response.body.toString();
       }
     });
+  }
+
+  void _onNewPost(newPostMap) {
+    final newPost = Post.fromMap(newPostMap);
+    if (newPost.userID == CurrentUser().userID) {
+      _addPostToCurrentUserPostsStream(newPost);
+      _addPostIDToCurrentUserPostsList(newPost.postID);
+    } else
+      _followingUsersPostsStreamController.sink.add(newPost);
+    _addPostToLocal(newPost);
+  }
+
+  void _addPostToCurrentUserPostsStream(Post newPost) {
+    _currentUserPostsStreamController.sink.add(newPost);
+  }
+
+  void _addPostIDToCurrentUserPostsList(String newPostID) {
+    CurrentUser()
+      ..postsList.add(newPostID)
+      ..saveUserToPreference().listen((_) {})
+      ..notify();
+  }
+
+  //TODO: check the uploadNewPost method and see it is not called
+  void _addPostToLocal(Post newPost) {
+    _local.uploadNewPost(newPost).listen((_) {});
   }
 
   @override
