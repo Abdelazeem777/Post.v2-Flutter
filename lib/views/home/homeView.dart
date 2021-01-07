@@ -45,20 +45,20 @@ class _HomeState extends State<Home> {
     return MultiProvider(
       providers: [
         ListenableProvider<CurrentUser>(
-          create: (context) => CurrentUser(),
+          create: (_) => CurrentUser(),
         ),
         ListenableProvider<HomePageViewModel>(
-          create: (context) => _viewModel,
+          create: (_) => _viewModel,
         ),
         ListenableProvider<SearchTabViewModel>(
-          create: (context) => SearchTabViewModel(),
+          create: (_) => SearchTabViewModel(),
         ),
         ListenableProvider<HomeTabViewModel>(
-          create: (context) => HomeTabViewModel(),
+          create: (_) => HomeTabViewModel(),
         ),
         ListenableProvider<ProfileTabViewModel>(
-          create: (context) => ProfileTabViewModel(),
-        )
+          create: (_) => ProfileTabViewModel(),
+        ),
       ],
       builder: (context, child) => Scaffold(
         appBar: _createAppBar(),

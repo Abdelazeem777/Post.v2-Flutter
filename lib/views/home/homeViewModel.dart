@@ -2,15 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
 import 'package:post/models/user.dart';
+import 'package:post/services/connectionChecker.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 
 class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
   var _socketServiceFacade;
+  bool _currentConnectionState = ConnectionChecker().hasConnection;
   HomePageViewModel() {
     _socketServiceFacade = SocketServiceFacade()..init();
     WidgetsBinding.instance.addObserver(this);
+
+    ConnectionChecker().connectionChange.listen(_onConnectionStateChanged);
   }
+
+  void _onConnectionStateChanged(bool isConnected) {
+    if (_currentConnectionState == false && isConnected == true)
+      notifyListeners();
+    _currentConnectionState = isConnected;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -46,6 +57,12 @@ class HomeTabViewModel with ChangeNotifier {
     _fetchFollowingUsersFromRepo().then(
       (_) => _fetchFollowingPostsFromRepo(),
     );
+    ConnectionChecker().connectionChange.listen((connectionStatus) {
+      if (connectionStatus)
+        _fetchFollowingUsersFromRepo().then(
+          (_) => _fetchFollowingPostsFromRepo(),
+        );
+    });
   }
 
   void _fetchFollowingPostsFromRepo() {
