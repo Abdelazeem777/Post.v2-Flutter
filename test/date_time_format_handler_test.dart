@@ -45,16 +45,16 @@ main() {
     int before10DaysTimestamp = before10DaysTime.millisecondsSinceEpoch;
     String result =
         DateTimeFormatHandler.getDurationFromTimestamp(before10DaysTimestamp);
-    expect(result,
-        '${getMonthName(before10DaysTime.month)} ${before10DaysTime.day}');
+    String expected = _getExpectedDurationString(before10DaysTime);
+    expect(result, expected);
   });
   test('test time before 90 days', () {
     DateTime before90DaysTime = now.subtract(Duration(days: 90));
     int before90DaysTimestamp = before90DaysTime.millisecondsSinceEpoch;
     String result =
         DateTimeFormatHandler.getDurationFromTimestamp(before90DaysTimestamp);
-    expect(result,
-        '${getMonthName(before90DaysTime.month)} ${before90DaysTime.day}');
+    String expected = _getExpectedDurationString(before90DaysTime);
+    expect(result, expected);
   });
   test('test time before 450 days', () {
     DateTime before450DaysTime = now.subtract(Duration(days: 450));
@@ -72,4 +72,10 @@ main() {
     expect(() => DateTimeFormatHandler.getDurationFromTimestamp(nowTimestamp),
         throwsA(const matcher.TypeMatcher<Exception>()));
   });
+}
+
+String _getExpectedDurationString(DateTime dateTime) {
+  return (dateTime.year == DateTime.now().year)
+      ? '${getMonthName(dateTime.month)} ${dateTime.day}'
+      : '${dateTime.year} ${getMonthName(dateTime.month)} ${dateTime.day}';
 }
