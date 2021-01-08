@@ -9,9 +9,9 @@ class FollowersListViewModel with ChangeNotifier {
   final _currentUsersRepository = Injector().currentUserRepository;
   FollowersListViewModel() {
     _otherUsersRepository
-        .loadFollowersList(CurrentUser().userID)
-        .listen((result) {
-      usersList = result;
+        .loadFollowersUsers(CurrentUser().userID)
+        .listen((user) {
+      usersList.add(user);
       notifyListeners();
     });
   }

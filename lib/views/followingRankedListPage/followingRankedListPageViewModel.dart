@@ -10,9 +10,9 @@ class FollowingRankedListViewModel with ChangeNotifier {
 
   FollowingRankedListViewModel() {
     _otherUsersRepository
-        .loadFollowingList(CurrentUser().userID)
-        .listen((result) {
-      usersList = result;
+        .loadFollowingUsers(CurrentUser().userID)
+        .listen((user) {
+      usersList.add(user);
       notifyListeners();
     });
   }

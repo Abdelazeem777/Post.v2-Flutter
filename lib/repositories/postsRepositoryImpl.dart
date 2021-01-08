@@ -13,9 +13,13 @@ class PostsRepositoryImpl implements PostsRepository {
   @override
   Stream<Post> getCurrentUserPosts() async* {
     if (await _isConnected())
-      yield* _remote.getCurrentUserPosts();
+      await for (var post in _remote.getCurrentUserPosts()) {
+        yield post;
+      }
     else
-      yield* _local.getCurrentUserPosts();
+      await for (var post in _local.getCurrentUserPosts()) {
+        yield post;
+      }
   }
 
   Future<bool> _isConnected() async =>
@@ -38,5 +42,6 @@ class PostsRepositoryImpl implements PostsRepository {
   @override
   void dispose() {
     _remote.dispose();
+    _local.dispose();
   }
 }

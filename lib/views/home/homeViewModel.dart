@@ -76,9 +76,9 @@ class HomeTabViewModel with ChangeNotifier {
   }
 
   Future<void> _fetchFollowingUsersFromRepo() async {
-    await for (final usersList
-        in _otherUsersRepository.loadFollowingList(CurrentUser().userID)) {
-      usersList.forEach((user) => followingUsers.add(user));
+    await for (final user
+        in _otherUsersRepository.loadFollowingUsers(CurrentUser().userID)) {
+      followingUsers.add(user);
     }
     notifyListeners();
   }
@@ -117,8 +117,8 @@ class SearchTabViewModel with ChangeNotifier {
 
   void onSearchTextChanged(String text) {
     if (text.isNotEmpty)
-      _otherUsersRepository.searchForUsers(text).listen((result) {
-        usersList = result;
+      _otherUsersRepository.searchForUsers(text).listen((user) {
+        usersList.add(user);
         notifyListeners();
       });
     else {

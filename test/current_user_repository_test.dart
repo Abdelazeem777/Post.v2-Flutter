@@ -308,20 +308,17 @@ main() {
     test('connect to socket', () {
       expect(_socket.connect, returnsNormally);
     });
-    test('search for a specific user to follow', () {
+    test('search for a specific user to follow', () async {
       const searchText = 'testing3 dummy user';
       const resultUsersCount = 4;
-      _otherUsersRepository
-          .searchForUsers(searchText)
-          .listen(expectAsync1((usersList) {
+      await for (var user in _otherUsersRepository.searchForUsers(searchText)) {
         _testingUsersList = _testingUsersList.map((testUser) {
-          var user = usersList
-              .singleWhere((element) => element.userName == testUser.userName);
-          testUser.userID = user.userID;
+          if (user.userName == testUser?.userName)
+            testUser.userID = user.userID;
           return testUser;
         }).toList();
-        expect(usersList.length, resultUsersCount);
-      }));
+        expect(_testingUsersList.length, resultUsersCount);
+      }
     });
     test('follow', () {
       var targetUser = _testingUsersList[0];

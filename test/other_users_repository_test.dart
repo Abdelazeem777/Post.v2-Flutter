@@ -40,20 +40,17 @@ main() {
     expect(_socket.connect, returnsNormally);
   });
   group('follow feature: ', () {
-    test('search for a specific user to follow', () {
+    test('search for a specific user to follow', () async {
       const searchText = 'testing dummy user';
       const resultUsersCount = 10;
-      _otherUsersRepository
-          .searchForUsers(searchText)
-          .listen(expectAsync1((usersList) {
+      await for (var user in _otherUsersRepository.searchForUsers(searchText)) {
         _testingUsersList = _testingUsersList.map((testUser) {
-          var user = usersList
-              .singleWhere((element) => element.userName == testUser.userName);
-          testUser.userID = user.userID;
+          if (user.userName == testUser?.userName)
+            testUser.userID = user.userID;
           return testUser;
         }).toList();
-        expect(usersList.length, resultUsersCount);
-      }));
+        expect(_testingUsersList.length, resultUsersCount);
+      }
     });
     test('follow', () {
       var targetUser = _testingUsersList[5];
@@ -131,25 +128,21 @@ main() {
         }));
       }));
     });
-    test('load followingList', () {
-      _otherUsersRepository
-          .loadFollowingList(CurrentUser().userID)
-          .listen(expectAsync1((result) {
-        for (int i = 0; i < result.length; i++) {
-          var resultUserID = result[i].userID;
-          var expectedUserID = CurrentUser().followingRankedList[i];
-          expect(resultUserID, expectedUserID);
-        }
-      }));
+    test('load followingList', () async {
+      var loadFollowingUsersStream =
+          _otherUsersRepository.loadFollowingUsers(CurrentUser().userID);
+      await for (var user in loadFollowingUsersStream) {
+        expect(CurrentUser().followingRankedList.contains(user.userID), true);
+      }
     });
   });
 
   test('load followersList', () {
     final testUser = _testingUsersList[0];
     _otherUsersRepository
-        .loadFollowersList(testUser.userID)
-        .listen(expectAsync1((result) {
-      final resultUserName = result.first.userName;
+        .loadFollowersUsers(testUser.userID)
+        .listen(expectAsync1((user) {
+      final resultUserName = user.userName;
       final expectedUserName = CurrentUser().userName;
       expect(resultUserName, expectedUserName);
     }));
