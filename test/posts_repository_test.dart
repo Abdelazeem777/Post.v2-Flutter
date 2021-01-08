@@ -10,11 +10,6 @@ import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 
-void initHive() {
-  var path = Directory.current.path;
-  Hive.init(path + '/test/hive_testing_path');
-}
-
 main() {
   initHive();
 
@@ -96,4 +91,10 @@ main() {
   test('disconnect socket connection', () {
     expect(() => _socket.disconnect(), returnsNormally);
   });
+}
+
+void initHive() {
+  var path = Directory.current.path;
+  path = path.split('/').takeWhile((item) => item != 'test').join('/');
+  Hive.init('$path/test/hive_testing_path');
 }

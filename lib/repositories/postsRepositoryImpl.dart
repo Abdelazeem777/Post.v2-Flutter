@@ -32,7 +32,7 @@ class PostsRepositoryImpl implements PostsRepository {
   Stream<String> deletePost(String postID, String userID, String userPassword) {
     return _remote
         .deletePost(postID, userID, userPassword)
-        .concatWith([_local.deletePost(postID, userID, userPassword)]);
+        .flatMap((_) => _local.deletePost(postID, userID, userPassword));
   }
 
   @override
