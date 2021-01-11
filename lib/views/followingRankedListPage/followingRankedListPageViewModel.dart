@@ -19,7 +19,6 @@ class FollowingRankedListViewModel with ChangeNotifier {
   void reorder(int oldIndex, int newIndex) {
     if (oldIndex == newIndex) return;
     if (newIndex > oldIndex) newIndex -= 1;
-    print('oldRank: $oldIndex, newRank: $newIndex');
     final currentUserID = CurrentUser().userID;
     final targetUserID = CurrentUser().followingRankedList[oldIndex];
     _currentUsersRepository

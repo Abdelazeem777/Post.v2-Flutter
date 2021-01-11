@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
-import 'package:post/enums/postTypeEnum.dart';
+import 'package:post/models/enums/postTypeEnum.dart';
 import 'package:post/models/post.dart';
 import 'package:post/services/currentUser.dart';
 

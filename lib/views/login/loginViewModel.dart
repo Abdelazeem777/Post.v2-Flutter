@@ -29,7 +29,6 @@ class LoginViewModel with ChangeNotifier {
         ..listen((_) {
           _stopLoadingOnLoginSuccess();
           onLoginSuccess();
-          print("userData: " + CurrentUser().toString());
         }).onError((err) {
           _stopLoadingOnLoginSuccess();
           _showSnackBarWithTheErrorMessage(err);

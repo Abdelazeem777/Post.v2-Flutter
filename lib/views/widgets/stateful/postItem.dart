@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:post/enums/postTypeEnum.dart';
+import 'package:post/models/enums/postTypeEnum.dart';
 import 'package:post/models/comment.dart';
 import 'package:post/models/post.dart';
 import 'package:auto_size_text/auto_size_text.dart';

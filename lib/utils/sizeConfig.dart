@@ -28,7 +28,7 @@ class SizeConfig {
     _safeBlockHorizontal = (screenWidth - _safeAreaHorizontal) / 100;
     _safeBlockVertical = (screenHeight - _safeAreaVertical) / 100;
 
-    print(screenHeight);
+    print('Screen Height: $screenHeight');
     checkScreenHeight();
   }
 

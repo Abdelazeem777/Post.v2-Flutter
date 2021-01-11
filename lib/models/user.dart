@@ -35,20 +35,20 @@ class User {
     this.postsList = const [],
   });
 
-  User.fromMap(Map<String, dynamic> json) {
-    userID = json['userID'];
-    userName = json['userName'];
-    phoneNumber = json['phoneNumber'];
-    birthDate = json['birthDate'];
-    bio = json['bio'];
-    userProfilePicURL = fixUserProfilePicURLIfNeeded(json['userProfilePicURL']);
-    active = json['active'];
-    email = json['email'];
-    password = json['password'];
-    accessToken = json['accessToken'];
-    followersList = json['followersList']?.cast<String>();
-    followingRankedList = json['followingRankedList']?.cast<String>();
-    postsList = json['postsList']?.cast<String>();
+  User.fromMap(Map<String, dynamic> map) {
+    userID = map['userID'];
+    userName = map['userName'];
+    phoneNumber = map['phoneNumber'];
+    birthDate = map['birthDate'];
+    bio = map['bio'];
+    userProfilePicURL = fixUserProfilePicURLIfNeeded(map['userProfilePicURL']);
+    active = map['active'];
+    email = map['email'];
+    password = map['password'];
+    accessToken = map['accessToken'];
+    followersList = map['followersList']?.cast<String>();
+    followingRankedList = map['followingRankedList']?.cast<String>();
+    postsList = map['postsList']?.cast<String>();
   }
 
   Map<String, dynamic> toMap() {

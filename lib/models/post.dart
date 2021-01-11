@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:post/enums/postTypeEnum.dart';
+import 'package:post/models/enums/postTypeEnum.dart';
 
 import 'comment.dart';
 import 'react.dart';
@@ -29,22 +29,22 @@ class Post {
     this.commentsList = const [],
   });
 
-  Post.fromMap(Map<String, dynamic> json) {
-    postID = json['postID'];
-    userID = json['userID'];
-    postContent = json['postContent'];
-    postType = EnumToString.fromString(PostType.values, json['postType']);
-    timestamp = json['timestamp'];
-    if (json['reactsList'] != null) {
+  Post.fromMap(Map<String, dynamic> map) {
+    postID = map['postID'];
+    userID = map['userID'];
+    postContent = map['postContent'];
+    postType = EnumToString.fromString(PostType.values, map['postType']);
+    timestamp = map['timestamp'];
+    if (map['reactsList'] != null) {
       reactsList = new List<React>();
-      json['reactsList'].forEach((v) {
+      map['reactsList'].forEach((v) {
         reactsList.add(new React.fromMap(v));
       });
     }
-    numberOfShares = json['numberOfShares'];
-    if (json['commentsList'] != null) {
+    numberOfShares = map['numberOfShares'];
+    if (map['commentsList'] != null) {
       commentsList = new List<Comment>();
-      json['commentsList'].forEach((v) {
+      map['commentsList'].forEach((v) {
         commentsList.add(new Comment.fromMap(v));
       });
     }

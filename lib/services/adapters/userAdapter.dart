@@ -18,7 +18,6 @@ class UserAdapter {
   }
 
   static User _adaptFacebookAccount(user) {
-    print(user);
     return User(
       userName: user["name"],
       userID: user['id'],

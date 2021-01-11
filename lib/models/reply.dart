@@ -1,5 +1,5 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:post/enums/replyTypeEnum.dart';
+import 'package:post/models/enums/replyTypeEnum.dart';
 
 import 'react.dart';
 
@@ -19,15 +19,15 @@ class Reply {
       this.timestamp,
       this.reactsList});
 
-  Reply.fromMap(Map<String, dynamic> json) {
-    replyID = json['replyID'];
-    userID = json['userID'];
-    replyContent = json['replyContent'];
-    replyType = EnumToString.fromString(ReplyType.values, json['replyType']);
-    timestamp = json['timestamp'];
-    if (json['reactsList'] != null) {
+  Reply.fromMap(Map<String, dynamic> map) {
+    replyID = map['replyID'];
+    userID = map['userID'];
+    replyContent = map['replyContent'];
+    replyType = EnumToString.fromString(ReplyType.values, map['replyType']);
+    timestamp = map['timestamp'];
+    if (map['reactsList'] != null) {
       reactsList = new List<React>();
-      json['reactsList'].forEach((v) {
+      map['reactsList'].forEach((v) {
         reactsList.add(new React.fromMap(v));
       });
     }

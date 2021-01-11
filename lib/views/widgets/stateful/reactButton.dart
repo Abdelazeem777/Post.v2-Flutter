@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:post/enums/reactTypeEnum.dart';
+import 'package:post/models/enums/reactTypeEnum.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/iconHandler.dart';
 import 'package:post/utils/sizeConfig.dart';

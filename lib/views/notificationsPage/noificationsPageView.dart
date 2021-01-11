@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:post/enums/notificationTypeEnum.dart';
-import 'package:post/enums/reactTypeEnum.dart';
+import 'package:post/models/enums/notificationTypeEnum.dart';
+import 'package:post/models/enums/reactTypeEnum.dart';
 import 'package:post/models/userNotification.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/views/widgets/stateful/notificationItem.dart';

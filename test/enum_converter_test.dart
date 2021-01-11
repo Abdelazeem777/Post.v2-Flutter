@@ -1,6 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:post/enums/reactTypeEnum.dart';
+import 'package:post/models/enums/reactTypeEnum.dart';
 
 void main() {
   test("convert enum to string", () {

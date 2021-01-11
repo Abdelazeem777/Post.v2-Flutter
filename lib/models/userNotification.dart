@@ -1,6 +1,6 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:post/enums/notificationTypeEnum.dart';
-import 'package:post/enums/reactTypeEnum.dart';
+import 'package:post/models/enums/notificationTypeEnum.dart';
+import 'package:post/models/enums/reactTypeEnum.dart';
 
 class UserNotification {
   int notificationID;
@@ -24,17 +24,17 @@ class UserNotification {
       this.timestamp,
       this.seen = false});
 
-  UserNotification.fromMap(Map<String, dynamic> json) {
-    notificationID = json['notificationID'];
-    fromUserID = json['fromUserID'];
-    fromUser = json['fromUser'];
-    fromUserProfilePicURL = json['fromUserProfilePicURL'];
-    notificationContent = json['notificationContent'];
+  UserNotification.fromMap(Map<String, dynamic> map) {
+    notificationID = map['notificationID'];
+    fromUserID = map['fromUserID'];
+    fromUser = map['fromUser'];
+    fromUserProfilePicURL = map['fromUserProfilePicURL'];
+    notificationContent = map['notificationContent'];
     notificationType = EnumToString.fromString(
-        NotificationType.values, json['notificationType']);
-    reactType = json['reactType'];
-    timestamp = json['timestamp'];
-    seen = json['seen'];
+        NotificationType.values, map['notificationType']);
+    reactType = map['reactType'];
+    timestamp = map['timestamp'];
+    seen = map['seen'];
   }
 
   Map<String, dynamic> toMap() {

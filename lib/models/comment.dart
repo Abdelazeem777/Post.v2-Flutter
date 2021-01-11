@@ -1,5 +1,5 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:post/enums/commentTypeEnum.dart';
+import 'package:post/models/enums/commentTypeEnum.dart';
 
 import 'react.dart';
 import 'reply.dart';
@@ -23,22 +23,22 @@ class Comment {
     this.repliesList = const [],
   });
 
-  Comment.fromMap(Map<String, dynamic> json) {
-    commentID = json['commentID'];
-    userID = json['userID'];
-    commentContent = json['commentContent'];
+  Comment.fromMap(Map<String, dynamic> map) {
+    commentID = map['commentID'];
+    userID = map['userID'];
+    commentContent = map['commentContent'];
     commentType =
-        EnumToString.fromString(CommentType.values, json['commentType']);
-    timestamp = json['timestamp'];
-    if (json['reactsList'] != null) {
+        EnumToString.fromString(CommentType.values, map['commentType']);
+    timestamp = map['timestamp'];
+    if (map['reactsList'] != null) {
       reactsList = new List<React>();
-      json['reactsList'].forEach((v) {
+      map['reactsList'].forEach((v) {
         reactsList.add(new React.fromMap(v));
       });
     }
-    if (json['repliesList'] != null) {
+    if (map['repliesList'] != null) {
       repliesList = new List<Reply>();
-      json['repliesList'].forEach((v) {
+      map['repliesList'].forEach((v) {
         repliesList.add(new Reply.fromMap(v));
       });
     }

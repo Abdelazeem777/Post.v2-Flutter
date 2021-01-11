@@ -29,33 +29,32 @@ class UserItemCard extends StatelessWidget {
     final rank = _currentUser.getRank(userID);
     final following = _currentUser.isFollowing(userID);
     return ListTile(
-        key: key,
-        contentPadding: EdgeInsets.zero,
-        leading: _createLeadingPartOfTile(rank, profileURL, active),
-        title: Text(
-          userName,
-          softWrap: false,
-          overflow: TextOverflow.fade,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(
-          bio,
-          softWrap: false,
-          overflow: TextOverflow.fade,
-          style: TextStyle(fontSize: 10.5, color: Colors.grey[700]),
-        ),
-        trailing: _isTheCurrentUser(userID)
-            ? Container()
-            : FollowButton(
-                following: following,
-                onPressed: () {
-                  print(
-                      'bido:{userID: $userID, userName: $userName, rank: $rank}');
-                  print(CurrentUser().followingRankedList);
-                  return (following)
-                      ? viewModel.unFollow(userID, rank)
-                      : viewModel.follow(userID);
-                }));
+      key: key,
+      contentPadding: EdgeInsets.zero,
+      leading: _createLeadingPartOfTile(rank, profileURL, active),
+      title: Text(
+        userName,
+        softWrap: false,
+        overflow: TextOverflow.fade,
+        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Text(
+        bio,
+        softWrap: false,
+        overflow: TextOverflow.fade,
+        style: TextStyle(fontSize: 10.5, color: Colors.grey[700]),
+      ),
+      trailing: _isTheCurrentUser(userID)
+          ? Container()
+          : FollowButton(
+              following: following,
+              onPressed: () {
+                return (following)
+                    ? viewModel.unFollow(userID, rank)
+                    : viewModel.follow(userID);
+              },
+            ),
+    );
   }
 
   Widget _createLeadingPartOfTile(int rank, String profileURL, bool active) {

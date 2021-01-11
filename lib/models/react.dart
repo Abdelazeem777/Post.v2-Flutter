@@ -1,5 +1,5 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:post/enums/reactTypeEnum.dart';
+import 'package:post/models/enums/reactTypeEnum.dart';
 
 class React {
   String userID;
@@ -7,9 +7,9 @@ class React {
 
   React({this.userID, this.reactType});
 
-  React.fromMap(Map<String, dynamic> json) {
-    userID = json['userID'];
-    reactType = EnumToString.fromString(ReactType.values, json['reactType']);
+  React.fromMap(Map<String, dynamic> map) {
+    userID = map['userID'];
+    reactType = EnumToString.fromString(ReactType.values, map['reactType']);
   }
 
   Map<String, dynamic> toMap() {

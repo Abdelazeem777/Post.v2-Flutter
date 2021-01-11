@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:post/enums/reactTypeEnum.dart';
+import 'package:post/models/enums/reactTypeEnum.dart';
 import 'package:post/models/react.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
