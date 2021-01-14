@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ConnectionChecker {
   static final ConnectionChecker _singleton = ConnectionChecker._internal();
@@ -12,7 +12,7 @@ class ConnectionChecker {
   bool _hasConnection = false;
   bool get hasConnection => _hasConnection;
 
-  final _connectionChangeController = StreamController<bool>.broadcast();
+  final _connectionChangeController = BehaviorSubject<bool>();
   final Connectivity _connectivity = Connectivity();
 
   void initialize() {
