@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/services/connectionChecker.dart';
+import 'package:post/services/flutterLocalNotificationPlugin.dart';
 
 import 'views/editPofilePage/editProfilePageView.dart';
 import 'views/followingRankedListPage/followingRankedListPageView.dart';
@@ -24,6 +25,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     _initHive();
+    _initLocalNotification();
     ConnectionChecker().initialize();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
@@ -51,6 +53,10 @@ class _MyAppState extends State<MyApp> {
   Future<void> _initHive() async {
     var hiveHelper = Injector().hiveHelper;
     await hiveHelper.initHive();
+  }
+
+  void _initLocalNotification() {
+    FlutterLocalNotificationPlugin(context).init();
   }
 
   @override
