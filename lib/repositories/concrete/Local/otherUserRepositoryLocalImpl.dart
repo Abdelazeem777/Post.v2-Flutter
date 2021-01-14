@@ -43,7 +43,7 @@ class OtherUsersRepositoryLocalImpl
   }
 
   @override
-  Stream<User> searchForUsers(String userName) {}
+  Stream<User> searchForUsers(String userName) => throw UnimplementedError();
 
   @override
   Future<void> dispose() async {

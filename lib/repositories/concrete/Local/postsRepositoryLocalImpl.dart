@@ -94,7 +94,7 @@ class PostsRepositoryLocalImpl implements BaseLocalRepository, PostsRepository {
   }
 
   @override
-  Stream<void> uploadNewPost(Post newPost) {}
+  Stream<void> uploadNewPost(Post newPost) => throw UnimplementedError();
 
   @override
   Future<void> dispose() async {

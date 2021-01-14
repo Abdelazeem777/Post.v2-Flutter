@@ -8,62 +8,45 @@ class CurrentUserRepositoryLocalImpl
   final _hiveHelper = Injector().hiveHelper;
 
   @override
-  Stream<void> singup(User user) {
-    throw UnimplementedError();
-  }
+  Stream<void> singup(User user) => throw UnimplementedError();
 
   @override
-  Stream<void> unFollow(String currentUserID, String targetUserID, int rank) {
-    throw UnimplementedError();
-  }
+  Stream<void> unFollow(String currentUserID, String targetUserID, int rank) =>
+      throw UnimplementedError();
 
   @override
-  Stream<String> updateProfileData(String newUserName, String newBio) {
-    throw UnimplementedError();
-  }
+  Stream<String> updateProfileData(String newUserName, String newBio) =>
+      throw UnimplementedError();
 
   @override
-  Stream<String> updateRank(
-      String currentUserID, String targetUserID, int oldRank, int newRank) {
-    throw UnimplementedError();
-  }
+  Stream<String> updateRank(String currentUserID, String targetUserID,
+          int oldRank, int newRank) =>
+      throw UnimplementedError();
 
   @override
-  Stream<void> uploadProfilePic(Map<String, String> imageMap) {
-    throw UnimplementedError();
-  }
+  Stream<void> uploadProfilePic(Map<String, String> imageMap) =>
+      throw UnimplementedError();
 
   @override
-  Stream<void> alternateLogin(User user) {
-    throw UnimplementedError();
-  }
+  Stream<void> alternateLogin(User user) => throw UnimplementedError();
 
   @override
-  Stream<String> deleteAccount(String email) {
-    throw UnimplementedError();
-  }
+  Stream<String> deleteAccount(String email) => throw UnimplementedError();
 
   @override
-  Stream<void> follow(String currentUserID, String targetUserID, int rank) {
-    throw UnimplementedError();
-  }
+  Stream<void> follow(String currentUserID, String targetUserID, int rank) =>
+      throw UnimplementedError();
 
   @override
-  Stream<void> login(String email, String password) {
-    throw UnimplementedError();
-  }
+  Stream<void> login(String email, String password) =>
+      throw UnimplementedError();
 
   @override
   Stream<void> logout() => Stream.fromFuture(_hiveHelper.deleteAllDB());
 
   @override
-  Stream<void> updateLocalFromRemote(data) {
-    // TODO: implement updateLocalFromRemote
-    throw UnimplementedError();
-  }
+  Stream<void> updateLocalFromRemote(data) => throw UnimplementedError();
 
   @override
-  void dispose() {
-    throw UnimplementedError();
-  }
+  void dispose() => throw UnimplementedError();
 }
