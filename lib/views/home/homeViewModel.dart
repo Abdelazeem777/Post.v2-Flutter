@@ -7,7 +7,7 @@ import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 
 class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
-  var _socketServiceFacade;
+  SocketServiceFacade _socketServiceFacade;
   bool _currentConnectionState = ConnectionChecker().hasConnection;
   HomePageViewModel() {
     _socketServiceFacade = SocketServiceFacade()..init();
@@ -41,7 +41,7 @@ class HomePageViewModel with ChangeNotifier, WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _socketServiceFacade.disconnect();
+    _socketServiceFacade.destroy();
     super.dispose();
   }
 }
@@ -54,33 +54,31 @@ class HomeTabViewModel with ChangeNotifier {
   final _otherUsersRepository = Injector().otherUsersRepository;
 
   HomeTabViewModel() {
-    _fetchFollowingUsersFromRepo().then(
-      (_) => _fetchFollowingPostsFromRepo(),
-    );
+    _fetchFollowingUsersAndPosts();
     ConnectionChecker().connectionChange.listen((connectionStatus) {
-      if (connectionStatus)
-        _fetchFollowingUsersFromRepo().then(
-          (_) => _fetchFollowingPostsFromRepo(),
-        );
+      if (connectionStatus) _fetchFollowingUsersAndPosts();
     });
   }
 
-  void _fetchFollowingPostsFromRepo() {
+  void _fetchFollowingUsersAndPosts() {
+    postsList.clear();
+    _fetchFollowingUsers().then((_) => _fetchPosts());
+  }
+
+  Future<void> _fetchFollowingUsers() async {
+    var fetFollowingUsersStream =
+        _otherUsersRepository.loadFollowingUsers(CurrentUser().userID);
+    await for (final user in fetFollowingUsersStream) {
+      if (!followingUsers.contains(user)) followingUsers.add(user);
+    }
+  }
+
+  void _fetchPosts() {
     var usersIDsList = followingUsers.map((user) => user.userID).toList();
-    print(usersIDsList);
     _postsRepository.getFollowingUsersPosts(usersIDsList).listen((post) {
-      print('new post: ' + post.toString());
-      postsList.insert(0, post);
+      if (!postsList.contains(post)) postsList.insert(0, post);
       notifyListeners();
     });
-  }
-
-  Future<void> _fetchFollowingUsersFromRepo() async {
-    await for (final user
-        in _otherUsersRepository.loadFollowingUsers(CurrentUser().userID)) {
-      followingUsers.add(user);
-    }
-    notifyListeners();
   }
 }
 
@@ -111,19 +109,26 @@ class ProfileTabViewModel with ChangeNotifier {
 
 class SearchTabViewModel with ChangeNotifier {
   final searchTextController = TextEditingController();
-  var usersList = List<User>();
+  final usersList = List<User>();
   final _otherUsersRepository = Injector().otherUsersRepository;
   final _currentUsersRepository = Injector().currentUserRepository;
 
   void onSearchTextChanged(String text) {
+    usersList.clear();
     if (text.isNotEmpty)
-      _otherUsersRepository.searchForUsers(text).listen((user) {
-        usersList.add(user);
-        notifyListeners();
-      });
-    else {
-      usersList = [];
+      _otherUsersRepository
+          .searchForUsers(text)
+          .listen(_addUserToSearchList)
+          .onDone(notifyListeners);
+    else
       notifyListeners();
+  }
+
+  void _addUserToSearchList(User user) {
+    if (user == null)
+      usersList.clear();
+    else if (!usersList.contains(user)) {
+      usersList.add(user);
     }
   }
 

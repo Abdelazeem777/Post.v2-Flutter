@@ -21,11 +21,11 @@ class _SearchTabState extends State<SearchTab> {
   @override
   void initState() {
     super.initState();
-    _viewModel = Provider.of<SearchTabViewModel>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
+    _viewModel = Provider.of<SearchTabViewModel>(context);
     return Column(
       children: [
         _createSearchTextField(),

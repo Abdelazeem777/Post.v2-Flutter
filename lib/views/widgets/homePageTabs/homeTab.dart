@@ -16,11 +16,11 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    _viewModel = Provider.of<HomeTabViewModel>(context, listen: false);
   }
 
   @override
   Widget build(BuildContext context) {
+    _viewModel = Provider.of<HomeTabViewModel>(context);
     return Selector<HomeTabViewModel, int>(
       selector: (_, viewModel) {
         var usersCount = viewModel.followingUsers.length;
