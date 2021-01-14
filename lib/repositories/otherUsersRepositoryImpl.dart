@@ -5,17 +5,10 @@ import 'abstract/otherUsersRepository.dart';
 
 class OtherUsersRepositoryImpl extends OtherUsersRepository {
   final _remote = Injector().otherUsersRepositoryRemote;
-  final _local = Injector().otherUsersRepositoryLocal;
+  final _local = Injector().otherUsersRepositoryLocal as OtherUsersRepository;
   @override
   Stream<User> searchForUsers(String userName) async* {
-    if (await _isConnected())
-      await for (var user in _remote.searchForUsers(userName)) {
-        yield user;
-      }
-    else
-      await for (var user in _local.searchForUsers(userName)) {
-        yield user;
-      }
+    if (await _isConnected()) yield* _remote.searchForUsers(userName);
   }
 
   Future<bool> _isConnected() async =>
@@ -24,25 +17,17 @@ class OtherUsersRepositoryImpl extends OtherUsersRepository {
   @override
   Stream<User> loadFollowersUsers(String userID) async* {
     if (await _isConnected())
-      await for (var user in _remote.loadFollowersUsers(userID)) {
-        yield user;
-      }
+      yield* _remote.loadFollowersUsers(userID);
     else
-      await for (var user in _local.loadFollowersUsers(userID)) {
-        yield user;
-      }
+      yield* _local.loadFollowersUsers(userID);
   }
 
   @override
   Stream<User> loadFollowingUsers(String userID) async* {
     if (await _isConnected())
-      await for (var user in _remote.loadFollowingUsers(userID)) {
-        yield user;
-      }
+      yield* _remote.loadFollowingUsers(userID);
     else
-      await for (var user in _local.loadFollowingUsers(userID)) {
-        yield user;
-      }
+      yield* _local.loadFollowingUsers(userID);
   }
 
   @override

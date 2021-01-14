@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:post/di/injection.dart';
 import 'package:post/services/connectionChecker.dart';
 
 import 'views/editPofilePage/editProfilePageView.dart';
@@ -50,12 +49,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _initHive() async {
-    await Hive.initFlutter();
+    var hiveHelper = Injector().hiveHelper;
+    await hiveHelper.initHive();
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
+    var hiveHelper = Injector().hiveHelper;
+    await hiveHelper.closeHive();
     ConnectionChecker().dispose();
+
     super.dispose();
   }
 }

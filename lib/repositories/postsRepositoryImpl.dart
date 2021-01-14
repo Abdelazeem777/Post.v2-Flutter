@@ -8,26 +8,26 @@ import 'abstract/postsRepository.dart';
 
 class PostsRepositoryImpl implements PostsRepository {
   final _remote = Injector().postsRepositoryRemote;
-  final _local = Injector().postsRepositoryLocal;
+  final _local = Injector().postsRepositoryLocal as PostsRepository;
 
   @override
   Stream<Post> getCurrentUserPosts() async* {
     if (await _isConnected())
-      await for (var post in _remote.getCurrentUserPosts()) {
-        yield post;
-      }
+      yield* _remote.getCurrentUserPosts();
     else
-      await for (var post in _local.getCurrentUserPosts()) {
-        yield post;
-      }
+      yield* _local.getCurrentUserPosts();
   }
 
   Future<bool> _isConnected() async =>
       await ConnectionChecker().checkConnection();
 
   @override
-  Stream<Post> getFollowingUsersPosts(List<String> usersIDsList) =>
-      _remote.getFollowingUsersPosts(usersIDsList);
+  Stream<Post> getFollowingUsersPosts(List<String> usersIDsList) async* {
+    if (await _isConnected())
+      yield* _remote.getFollowingUsersPosts(usersIDsList);
+    else
+      yield* _local.getFollowingUsersPosts(usersIDsList);
+  }
 
   @override
   Stream<void> uploadNewPost(Post newPost) => _remote.uploadNewPost(newPost);

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
+import 'package:post/repositories/abstract/baseLocalRepository.dart';
 import 'package:post/repositories/abstract/postsRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
@@ -11,7 +12,6 @@ import 'package:rxdart/rxdart.dart';
 
 class PostsRepositoryRemoteImpl implements PostsRepository {
   final _networkService = Injector().networkService;
-  final _local = Injector().postsRepositoryLocal;
 
   var _followingUsersPostsStreamController = StreamController<Post>.broadcast();
   var _currentUserPostsStreamController = StreamController<Post>.broadcast();
@@ -37,6 +37,7 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
       } else {
         var postsListOfMap = responseMap['postsList'] as List;
         var apiPostsStream = _getPostsFromMapList(postsListOfMap);
+        _addPostToLocal(postsListOfMap);
         return apiPostsStream;
       }
     });
@@ -96,7 +97,7 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
       _addPostIDToCurrentUserPostsList(newPost.postID);
     } else
       _followingUsersPostsStreamController.sink.add(newPost);
-    _addPostToLocal(newPost);
+    _addPostToLocal(newPostMap);
   }
 
   void _addPostToCurrentUserPostsStream(Post newPost) {
@@ -111,8 +112,14 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
   }
 
   //TODO: check the uploadNewPost method and see it is not called
-  void _addPostToLocal(Post newPost) {
-    _local.uploadNewPost(newPost).listen((_) {});
+  void _addPostToLocal(data) {
+    BaseLocalRepository _local = Injector().postsRepositoryLocal;
+    if (data is Map)
+      _local.updateLocalFromRemote(data).listen((_) {});
+    else
+      for (var postMap in data) {
+        _local.updateLocalFromRemote(postMap).listen((_) {});
+      }
   }
 
   @override

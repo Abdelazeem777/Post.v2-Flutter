@@ -10,9 +10,12 @@ import 'package:post/repositories/concrete/Remote/postsRepositoryRemoteImpl.dart
 import 'package:post/repositories/currentUserRepositoryImpl.dart';
 import 'package:post/repositories/otherUsersRepositoryImpl.dart';
 import 'package:post/repositories/postsRepositoryImpl.dart';
+import 'package:post/services/abstract/hiveHelper.dart';
+import 'package:post/services/abstract/hiveHelper.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:post/services/facebookLoginHelper.dart';
 import 'package:post/services/googleLoginHandler.dart';
+import 'package:post/services/hiveHelperImpl.dart';
 import 'package:post/services/networkService.dart';
 import 'package:post/utils/GalleryPicker.dart';
 
@@ -91,7 +94,7 @@ class Injector {
   }
 
   //Local repositories
-  CurrentUserRepository get currentUserRepositoryLocal {
+  get currentUserRepositoryLocal {
     var currentUserRepositoryLocal =
         _flyweightMap['currentUserRepositoryLocal'];
     if (currentUserRepositoryLocal == null) {
@@ -102,7 +105,7 @@ class Injector {
     return currentUserRepositoryLocal;
   }
 
-  OtherUsersRepository get otherUsersRepositoryLocal {
+  get otherUsersRepositoryLocal {
     var otherUsersRepositoryLocal = _flyweightMap['otherUsersRepositoryLocal'];
     if (otherUsersRepositoryLocal == null) {
       otherUsersRepositoryLocal = OtherUsersRepositoryLocalImpl();
@@ -112,7 +115,7 @@ class Injector {
     return otherUsersRepositoryLocal;
   }
 
-  PostsRepository get postsRepositoryLocal {
+  get postsRepositoryLocal {
     var postsRepositoryLocal = _flyweightMap['postsRepositoryLocal'];
     if (postsRepositoryLocal == null) {
       postsRepositoryLocal = PostsRepositoryLocalImpl();
@@ -121,13 +124,14 @@ class Injector {
     return postsRepositoryLocal;
   }
 
-  NetworkService get networkService => NetworkService();
-
   //Alternatives for login process
   AlternateLoginHandler get facebookLoginHandler => FaceBookLoginHandler();
   AlternateLoginHandler get googleLoginHandler => GoogleLoginHandler();
 
+//Other services
   GalleryPicker get galleryImagePicker => GalleryImagePickerImpl();
+  NetworkService get networkService => NetworkService();
+  HiveHelper get hiveHelper => HiveHelperImpl();
 
   void dispose() {
     //release objects from flyWeight map

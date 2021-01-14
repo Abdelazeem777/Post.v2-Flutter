@@ -1,12 +1,12 @@
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/repositories/abstract/currentUserRepository.dart';
+import 'package:rxdart/rxdart.dart';
 
 class CurrentUserRepositoryImpl implements CurrentUserRepository {
-  CurrentUserRepository _remote;
-  CurrentUserRepositoryImpl() {
-    _remote = Injector().currentUserRepositoryRemote;
-  }
+  final _remote = Injector().currentUserRepositoryRemote;
+  final _local = Injector().currentUserRepositoryLocal as CurrentUserRepository;
+
   @override
   Stream<void> login(String email, String password) {
     return _remote.login(email, password);
@@ -20,16 +20,6 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   @override
   Stream<void> alternateLogin(User user) {
     return _remote.alternateLogin(user);
-  }
-
-  @override
-  Stream<String> deleteAccount(String email) {
-    return _remote.deleteAccount(email);
-  }
-
-  @override
-  Stream<void> logout() {
-    return _remote.logout();
   }
 
   @override
@@ -56,6 +46,16 @@ class CurrentUserRepositoryImpl implements CurrentUserRepository {
   @override
   Stream<void> unFollow(String currentUserID, String targetUserID, int rank) {
     return _remote.unFollow(currentUserID, targetUserID, rank);
+  }
+
+  @override
+  Stream<String> deleteAccount(String email) {
+    return _remote.deleteAccount(email);
+  }
+
+  @override
+  Stream<void> logout() {
+    return _remote.logout().flatMap((_) => _local.logout());
   }
 
   @override

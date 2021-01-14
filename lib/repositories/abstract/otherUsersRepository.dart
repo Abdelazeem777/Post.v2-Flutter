@@ -1,8 +1,8 @@
 import 'package:post/models/user.dart';
 
 abstract class OtherUsersRepository {
-  Stream<List<User>> searchForUsers(String userName);
-  Stream<List<User>> loadFollowingList(String userID);
-  Stream<List<User>> loadFollowersList(String userID);
+  Stream<User> searchForUsers(String userName);
+  Stream<User> loadFollowingUsers(String userID);
+  Stream<User> loadFollowersUsers(String userID);
   void dispose();
 }

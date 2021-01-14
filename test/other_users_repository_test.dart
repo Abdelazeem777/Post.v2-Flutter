@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/services/socketService.dart';
 
 main() {
+  initHive();
+
   //generate 10 dummy users for testing
   List<User> _testingUsersList = List.generate(
       10,
@@ -160,4 +165,10 @@ main() {
   test('disconnect socket connection', () {
     expect(() => _socket.disconnect(), returnsNormally);
   });
+}
+
+void initHive() {
+  var path = Directory.current.path;
+  path = path.split('/').takeWhile((item) => item != 'test').join('/');
+  Hive.init('$path/test/hive_testing_path');
 }

@@ -96,7 +96,7 @@ class CurrentUserRepositoryRemoteImpl implements CurrentUserRepository {
 
   @override
   Stream<void> logout() {
-    SocketServiceFacade()..destroy();
+    SocketServiceFacade().destroy();
     return CurrentUser().logout();
   }
 

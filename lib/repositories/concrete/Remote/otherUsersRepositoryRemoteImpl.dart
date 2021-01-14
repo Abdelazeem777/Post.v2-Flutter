@@ -1,6 +1,7 @@
 import 'package:post/apiEndpoint.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
+import 'package:post/repositories/abstract/baseLocalRepository.dart';
 import 'package:post/repositories/abstract/otherUsersRepository.dart';
 import 'package:post/services/currentUser.dart';
 import 'package:post/utils/requestException.dart';
@@ -19,13 +20,17 @@ class OtherUsersRepositoryRemoteImpl extends OtherUsersRepository {
         throw new RequestException(responseMap["message"]);
       } else {
         var usersListOfMap = responseMap['usersList'] as List;
-        var usersList = _getUsersFromMapList(usersListOfMap);
-        return usersList;
+        var usersStream = _getUsersFromMapList(usersListOfMap);
+        return usersStream;
       }
     });
   }
 
   Stream<User> _getUsersFromMapList(List usersListOfMap) async* {
+    if (usersListOfMap.isEmpty) {
+      yield null;
+      return;
+    }
     for (var userMap in usersListOfMap) {
       yield User.fromMap(userMap);
     }
@@ -42,9 +47,11 @@ class OtherUsersRepositoryRemoteImpl extends OtherUsersRepository {
         throw new RequestException(responseMap["message"]);
       } else {
         var usersListOfMap = responseMap['usersList'] as List;
-        var usersList = _getUsersFromMapList(usersListOfMap);
+        var usersStream =
+            _getUsersFromMapList(usersListOfMap).asBroadcastStream();
         _updateCurrentUserFollowersList(usersListOfMap);
-        return usersList;
+        _addUsersToLocal(usersListOfMap);
+        return usersStream;
       }
     });
   }
@@ -54,6 +61,14 @@ class OtherUsersRepositoryRemoteImpl extends OtherUsersRepository {
       ..followersList = usersList.map<String>((user) => user['userID']).toList()
       ..saveUserToPreference().listen((_) {})
       ..notify();
+  }
+
+  void _addUsersToLocal(List usersListOfMap) {
+    BaseLocalRepository local = Injector().otherUsersRepositoryLocal;
+
+    for (var user in usersListOfMap) {
+      local.updateLocalFromRemote(user).listen((_) {});
+    }
   }
 
   @override
@@ -67,9 +82,11 @@ class OtherUsersRepositoryRemoteImpl extends OtherUsersRepository {
         throw new RequestException(responseMap["message"]);
       } else {
         var usersListMap = responseMap['usersList'] as List;
-        var usersList = _getUsersFromMapList(usersListMap);
+        var usersStream =
+            _getUsersFromMapList(usersListMap).asBroadcastStream();
         _updateCurrentUserFollowingList(usersListMap);
-        return usersList;
+        _addUsersToLocal(usersListMap);
+        return usersStream;
       }
     });
   }

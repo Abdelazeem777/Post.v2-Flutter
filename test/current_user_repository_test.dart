@@ -326,7 +326,7 @@ main() {
           .follow(
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
-        Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
+        Future.delayed(Duration(seconds: 2)).then(expectAsync1((_) {
           expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
@@ -338,7 +338,7 @@ main() {
           .follow(
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
-        Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
+        Future.delayed(Duration(seconds: 2)).then(expectAsync1((_) {
           expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
@@ -350,7 +350,7 @@ main() {
           .follow(
               CurrentUser().userID, targetUser.userID, CurrentUser().getRank())
           .listen(expectAsync1((_) {
-        Future.delayed(Duration(seconds: 3)).then(expectAsync1((_) {
+        Future.delayed(Duration(seconds: 2)).then(expectAsync1((_) {
           expect(CurrentUser().followingRankedList.contains(targetUser.userID),
               true);
         }));
