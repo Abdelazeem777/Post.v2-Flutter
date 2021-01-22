@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import '../main.dart';
+import '../../main.dart';
 
+///Not allowed to use this plugin class directly from here,
+///
+///use [LocalNotification] class instead.
 class FlutterLocalNotificationPlugin {
-  FlutterLocalNotificationPlugin(this.context);
   BuildContext context;
-
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
-  Future<void> init() async {
+
+  Future<void> init(BuildContext context) async {
+    this.context = context;
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const initializationSettingsAndroid =
         AndroidInitializationSettings('post_logo');
@@ -35,8 +38,12 @@ class FlutterLocalNotificationPlugin {
     runApp(MyApp());
   }
 
-  Future<void> showNotification(
-      {int id, String title = 'post', String body, String payload}) async {
+  Future<void> showNotification({
+    @required int id,
+    @required String title,
+    @required String body,
+    @required Map payload,
+  }) async {
     const groupKey = 'com.android.example.WORK_EMAIL';
     const groupChannelId = 'grouped channel id';
     const groupChannelName = 'grouped channel name';
@@ -57,7 +64,7 @@ class FlutterLocalNotificationPlugin {
       title,
       body,
       platformChannelSpecifics,
-      payload: payload,
+      payload: payload.toString(),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/repositories/abstract/currentUserRepository.dart';
-import 'package:post/services/currentUser.dart';
 
 class LoginViewModel with ChangeNotifier {
   final FocusNode emailFocusNode = FocusNode();

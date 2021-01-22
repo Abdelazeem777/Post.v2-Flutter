@@ -12,6 +12,7 @@ class SocketService {
   static const FOLLOW_EVENT = 'follow';
   static const UNFOLLOW_EVENT = 'unFollow';
   static const NEW_POST_EVENT = 'newPost';
+  static const NOTIFICATION = 'notification';
 
   Function _onNewUserConnect;
   Function _onPaused;
@@ -19,6 +20,7 @@ class SocketService {
   Function _onFollow;
   Function _onUnFollow;
   Function _onNewPost;
+  Function _onNotification;
 
   set onNewUserConnect(Function onNewUserConnect) =>
       _onNewUserConnect = onNewUserConnect;
@@ -27,6 +29,8 @@ class SocketService {
   set onFollow(Function onFollow) => _onFollow = onFollow;
   set onUnFollow(Function onUnFollow) => _onUnFollow = onUnFollow;
   set onNewPost(Function onNewPost) => _onNewPost = onNewPost;
+  set onNotification(Function onNotification) =>
+      _onNotification = onNotification;
 
   IO.Socket socket;
   static SocketService _singletone;
@@ -60,6 +64,8 @@ class SocketService {
     this.socket.on(UNFOLLOW_EVENT, _onUnFollow);
 
     this.socket.on(NEW_POST_EVENT, _onNewPost);
+
+    this.socket.on(NOTIFICATION, _onNotification);
   }
 
   bool isNotConnected() => socket == null || !socket?.connected;
@@ -126,6 +132,7 @@ class SocketServiceFacade {
   void _initRepositoriesObjects() {
     Injector().currentUserRepository;
     Injector().postsRepository;
+    Injector().notificationsRepository;
   }
 
   void reconnect() => SocketService().reconnect();

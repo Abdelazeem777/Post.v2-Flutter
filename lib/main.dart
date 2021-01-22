@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:post/di/injection.dart';
 import 'package:post/services/connectionChecker.dart';
-import 'package:post/services/flutterLocalNotificationPlugin.dart';
+import 'package:post/utils/notificationUtils/notificationIDHelper.dart';
 
 import 'views/editPofilePage/editProfilePageView.dart';
 import 'views/followingRankedListPage/followingRankedListPageView.dart';
@@ -56,7 +56,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _initLocalNotification() {
-    FlutterLocalNotificationPlugin(context).init();
+    var flutterLocalNotificationPlugin =
+        Injector().flutterLocalNotificationPlugin;
+    flutterLocalNotificationPlugin.init(context);
   }
 
   @override
@@ -64,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     var hiveHelper = Injector().hiveHelper;
     await hiveHelper.closeHive();
     ConnectionChecker().dispose();
-
+    await NotificationIDHelper().dispose();
     super.dispose();
   }
 }

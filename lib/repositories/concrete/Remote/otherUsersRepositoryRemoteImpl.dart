@@ -7,7 +7,7 @@ import 'package:post/services/currentUser.dart';
 import 'package:post/utils/requestException.dart';
 import 'package:rxdart/rxdart.dart';
 
-class OtherUsersRepositoryRemoteImpl extends OtherUsersRepository {
+class OtherUsersRepositoryRemoteImpl implements OtherUsersRepository {
   final _networkService = Injector().networkService;
   @override
   Stream<User> searchForUsers(String userName) {

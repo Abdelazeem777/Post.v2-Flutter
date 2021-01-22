@@ -1,4 +1,6 @@
 class ApiEndPoint {
+  //192.168.43.72
+  //192.168.1.10
   static const REQUEST_URL = 'http://192.168.1.10:3000';
 
   static const SIGN_UP = REQUEST_URL + '/account/signup';
@@ -17,6 +19,7 @@ class ApiEndPoint {
   static const LOAD_FOLLOWERS_USERS = REQUEST_URL + '/users/loadFollowersUsers';
 
   static const DELETE_POST = REQUEST_URL + '/posts/deletePost';
-
   static const GET_POSTS = REQUEST_URL + '/posts/getPosts';
+
+  static const GET_NOTIFICATIONS = REQUEST_URL + '/posts/getNotifications';
 }

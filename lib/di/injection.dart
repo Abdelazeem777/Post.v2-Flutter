@@ -1,19 +1,23 @@
 import 'package:post/repositories/abstract/currentUserRepository.dart';
+import 'package:post/repositories/abstract/notificationsRepository.dart';
 import 'package:post/repositories/abstract/otherUsersRepository.dart';
 import 'package:post/repositories/abstract/postsRepository.dart';
 import 'package:post/repositories/concrete/Local/currentUserRepositoryLocalImpl.dart';
+import 'package:post/repositories/concrete/Local/notificationRepositoryLocalImpl.dart';
 import 'package:post/repositories/concrete/Local/otherUserRepositoryLocalImpl.dart';
 import 'package:post/repositories/concrete/Local/postsRepositoryLocalImpl.dart';
 import 'package:post/repositories/concrete/Remote/currentUserRepositoryRemoteImpl.dart';
+import 'package:post/repositories/concrete/Remote/notificationsRepositoryRemoteImpl.dart';
 import 'package:post/repositories/concrete/Remote/otherUsersRepositoryRemoteImpl.dart';
 import 'package:post/repositories/concrete/Remote/postsRepositoryRemoteImpl.dart';
 import 'package:post/repositories/currentUserRepositoryImpl.dart';
+import 'package:post/repositories/notificationsRepositoryImpl.dart';
 import 'package:post/repositories/otherUsersRepositoryImpl.dart';
 import 'package:post/repositories/postsRepositoryImpl.dart';
 import 'package:post/services/abstract/hiveHelper.dart';
-import 'package:post/services/abstract/hiveHelper.dart';
 import 'package:post/services/alternativeLoginHandler.dart';
 import 'package:post/services/facebookLoginHelper.dart';
+import 'package:post/utils/notificationUtils/flutterLocalNotificationPlugin.dart';
 import 'package:post/services/googleLoginHandler.dart';
 import 'package:post/services/hiveHelperImpl.dart';
 import 'package:post/services/networkService.dart';
@@ -23,7 +27,7 @@ import 'package:post/utils/GalleryPicker.dart';
 ///
 ///[Flyweight] design pattern
 ///
-///to save specific objects from redundancy
+///to save specific objects from recreation
 class Injector {
   static final _singleton = Injector._internal();
 
@@ -61,6 +65,16 @@ class Injector {
     return postsRepository;
   }
 
+  NotificationsRepository get notificationsRepository {
+    var notificationsRepository = _flyweightMap['notificationsRepository'];
+    if (notificationsRepository == null) {
+      notificationsRepository = NotificationsRepositoryImpl();
+      _flyweightMap
+        ..addAll({'notificationsRepository': notificationsRepository});
+    }
+    return notificationsRepository;
+  }
+
   //Remote repositories
   CurrentUserRepository get currentUserRepositoryRemote {
     var currentUserRepositoryRemote =
@@ -91,6 +105,18 @@ class Injector {
       _flyweightMap..addAll({'postsRepositoryRemote': postsRepositoryRemote});
     }
     return postsRepositoryRemote;
+  }
+
+  NotificationsRepository get notificationsRepositoryRemote {
+    var notificationsRepositoryRemote =
+        _flyweightMap['notificationsRepositoryRemote'];
+    if (notificationsRepositoryRemote == null) {
+      notificationsRepositoryRemote = NotificationsRepositoryRemoteImpl();
+      _flyweightMap
+        ..addAll(
+            {'notificationsRepositoryRemote': notificationsRepositoryRemote});
+    }
+    return notificationsRepositoryRemote;
   }
 
   //Local repositories
@@ -124,11 +150,36 @@ class Injector {
     return postsRepositoryLocal;
   }
 
+  get notificationsRepositoryLocal {
+    var notificationsRepositoryLocal =
+        _flyweightMap['notificationsRepositoryLocal'];
+    if (notificationsRepositoryLocal == null) {
+      notificationsRepositoryLocal = NotificationsRepositoryLocalImpl();
+      _flyweightMap
+        ..addAll(
+            {'notificationsRepositoryLocal': notificationsRepositoryLocal});
+    }
+    return notificationsRepositoryLocal;
+  }
+
+  //Flutter local notification plugin
+  FlutterLocalNotificationPlugin get flutterLocalNotificationPlugin {
+    var flutterLocalNotificationPlugin =
+        _flyweightMap['flutterLocalNotificationPlugin'];
+    if (flutterLocalNotificationPlugin == null) {
+      flutterLocalNotificationPlugin = FlutterLocalNotificationPlugin();
+      _flyweightMap
+        ..addAll(
+            {'flutterLocalNotificationPlugin': flutterLocalNotificationPlugin});
+    }
+    return flutterLocalNotificationPlugin;
+  }
+
   //Alternatives for login process
   AlternateLoginHandler get facebookLoginHandler => FaceBookLoginHandler();
   AlternateLoginHandler get googleLoginHandler => GoogleLoginHandler();
 
-//Other services
+  //Other services
   GalleryPicker get galleryImagePicker => GalleryImagePickerImpl();
   NetworkService get networkService => NetworkService();
   HiveHelper get hiveHelper => HiveHelperImpl();

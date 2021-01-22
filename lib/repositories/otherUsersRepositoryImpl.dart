@@ -3,7 +3,7 @@ import 'package:post/models/user.dart';
 import 'package:post/services/connectionChecker.dart';
 import 'abstract/otherUsersRepository.dart';
 
-class OtherUsersRepositoryImpl extends OtherUsersRepository {
+class OtherUsersRepositoryImpl implements OtherUsersRepository {
   final _remote = Injector().otherUsersRepositoryRemote;
   final _local = Injector().otherUsersRepositoryLocal as OtherUsersRepository;
   @override

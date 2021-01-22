@@ -3,8 +3,7 @@ import 'package:post/di/injection.dart';
 import 'package:post/models/post.dart';
 import 'package:post/repositories/abstract/baseLocalRepository.dart';
 import 'package:post/repositories/abstract/postsRepository.dart';
-import 'package:post/repositories/concrete/Local/hiveBoxsConstants.dart';
-import 'package:post/services/abstract/hiveHelper.dart';
+import 'package:post/repositories/concrete/Local/hiveBoxesConstants.dart';
 import 'package:post/services/currentUser.dart';
 
 class PostsRepositoryLocalImpl implements BaseLocalRepository, PostsRepository {

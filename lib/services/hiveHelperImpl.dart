@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:post/repositories/concrete/Local/hiveBoxsConstants.dart';
+import 'package:post/repositories/concrete/Local/hiveBoxesConstants.dart';
 import 'package:post/services/abstract/hiveHelper.dart';
 
 class HiveHelperImpl implements HiveHelper {

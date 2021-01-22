@@ -3,7 +3,7 @@ import 'package:post/di/injection.dart';
 import 'package:post/models/user.dart';
 import 'package:post/repositories/abstract/baseLocalRepository.dart';
 import 'package:post/repositories/abstract/otherUsersRepository.dart';
-import 'package:post/repositories/concrete/Local/hiveBoxsConstants.dart';
+import 'package:post/repositories/concrete/Local/hiveBoxesConstants.dart';
 import 'package:post/services/currentUser.dart';
 
 class OtherUsersRepositoryLocalImpl

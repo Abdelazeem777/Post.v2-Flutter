@@ -111,9 +111,8 @@ class PostsRepositoryRemoteImpl implements PostsRepository {
       ..notify();
   }
 
-  //TODO: check the uploadNewPost method and see it is not called
   void _addPostToLocal(data) {
-    BaseLocalRepository _local = Injector().postsRepositoryLocal;
+    final BaseLocalRepository _local = Injector().postsRepositoryLocal;
     if (data is Map)
       _local.updateLocalFromRemote(data).listen((_) {});
     else

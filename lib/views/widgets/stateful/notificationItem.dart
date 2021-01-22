@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:post/models/enums/notificationTypeEnum.dart';
 import 'package:post/models/enums/reactTypeEnum.dart';
-import 'package:post/models/userNotification.dart';
+import 'package:post/models/notificationModel.dart';
+import 'package:post/models/user.dart';
 import 'package:post/style/appColors.dart';
 import 'package:post/utils/dateTimeFormatHandler.dart';
 import 'package:post/utils/iconHandler.dart';
@@ -10,8 +11,9 @@ import 'package:post/utils/sizeConfig.dart';
 import 'userProfilePicture.dart';
 
 class NotificationItem extends StatefulWidget {
-  final UserNotification _notification;
-  NotificationItem(this._notification);
+  final NotificationModel _notification;
+  final User _user;
+  NotificationItem(this._notification, this._user);
 
   @override
   _NotificationItemState createState() => _NotificationItemState();
@@ -45,8 +47,7 @@ class _NotificationItemState extends State<NotificationItem> {
               border: Border.all(color: AppColors.SECONDARY_COLOR, width: .5),
             ),
             child: UserProfilePicture(
-                imageURL: this.widget._notification.fromUserProfilePicURL,
-                active: false),
+                imageURL: this.widget._user.userProfilePicURL, active: false),
           ),
           _createNotificationIcon(
               notificationType: this.widget._notification.notificationType,
@@ -74,7 +75,7 @@ class _NotificationItemState extends State<NotificationItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            this.widget._notification.fromUser,
+            this.widget._user.userName,
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
